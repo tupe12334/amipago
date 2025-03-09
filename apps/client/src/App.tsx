@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
+import NavBar from "./components/NavBar"; // Import the NavBar component
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
@@ -12,7 +13,7 @@ function App() {
 
   return (
     <main className="container">
-      <nav className="flex"></nav>
+      <NavBar /> {/* Use the NavBar component */}
     </main>
   );
 }
