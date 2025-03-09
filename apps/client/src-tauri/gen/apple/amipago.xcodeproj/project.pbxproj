@@ -213,7 +213,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		D12B4F1CBA5C5E715277215E /* Build Rust Code */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
