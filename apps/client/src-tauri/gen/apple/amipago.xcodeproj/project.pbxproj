@@ -36,7 +36,7 @@
 		98716F0D165B39442C1DC204 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		ABF5FD036D6C22A5451A22CC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AC48DE7A3F99FBD0A7133F7F /* amipago_iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = amipago_iOS.entitlements; sourceTree = "<group>"; };
-		AF176D5AAB97C7BB752C1505 /* amipago.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = amipago.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF176D5AAB97C7BB752C1505 /* amipago_iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; name = amipago_iOS.app; path = amipago.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DD0FF57D7E2D12FBB2A768 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		C86C91344A6F7AC3E9D91469 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		F475D9B0D0A8A2BE911A6771 /* lib.rs */ = {isa = PBXFileReference; lastKnownFileType = text; path = lib.rs; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 		AAB437D689AC50B34B33C725 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AF176D5AAB97C7BB752C1505 /* amipago.app */,
+				AF176D5AAB97C7BB752C1505 /* amipago_iOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -168,7 +168,7 @@
 			);
 			name = amipago_iOS;
 			productName = amipago_iOS;
-			productReference = AF176D5AAB97C7BB752C1505 /* amipago.app */;
+			productReference = AF176D5AAB97C7BB752C1505 /* amipago_iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -213,7 +213,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		D12B4F1CBA5C5E715277215E /* Build Rust Code */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
@@ -230,7 +230,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "node tauri ios xcode-script -v --platform ${PLATFORM_DISPLAY_NAME:?} --sdk-root ${SDKROOT:?} --framework-search-paths \"${FRAMEWORK_SEARCH_PATHS:?}\" --header-search-paths \"${HEADER_SEARCH_PATHS:?}\" --gcc-preprocessor-definitions \"${GCC_PREPROCESSOR_DEFINITIONS:-}\" --configuration ${CONFIGURATION:?} ${FORCE_COLOR} ${ARCHS:?}\n";
+			shellScript = "npm run -- tauri ios xcode-script -v --platform ${PLATFORM_DISPLAY_NAME:?} --sdk-root ${SDKROOT:?} --framework-search-paths \"${FRAMEWORK_SEARCH_PATHS:?}\" --header-search-paths \"${HEADER_SEARCH_PATHS:?}\" --gcc-preprocessor-definitions \"${GCC_PREPROCESSOR_DEFINITIONS:-}\" --configuration ${CONFIGURATION:?} ${FORCE_COLOR} ${ARCHS:?}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -265,7 +265,6 @@
 					"$(inherited)",
 					"\".\"",
 				);
-				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=0";
 				INFOPLIST_FILE = amipago_iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
