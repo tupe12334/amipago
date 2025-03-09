@@ -1,4 +1,4 @@
-name: amipagoclient
+name: amipago
 options:
   bundleIdPrefix: com.amipago.app
   deploymentTarget:
@@ -24,20 +24,20 @@ targetTemplates:
     settings:
       groups: [app]
 targets:
-  amipagoclient_iOS:
+  amipago_iOS:
     type: application
     platform: iOS
     sources:
       - path: Sources
       - path: Assets.xcassets
       - path: Externals
-      - path: amipagoclient_iOS
+      - path: amipago_iOS
       - path: assets
         buildPhase: resources
         type: folder
       - path: LaunchScreen.storyboard
     info:
-      path: amipagoclient_iOS/Info.plist
+      path: amipago_iOS/Info.plist
       properties:
         LSRequiresIPhoneOS: true
         UILaunchStoryboardName: LaunchScreen
@@ -54,7 +54,7 @@ targets:
         CFBundleShortVersionString: 0.1.0
         CFBundleVersion: 0.1.0
     entitlements:
-      path: amipagoclient_iOS/amipagoclient_iOS.entitlements
+      path: amipago_iOS/amipago_iOS.entitlements
     scheme:
       environmentVariables:
         RUST_BACKTRACE: full

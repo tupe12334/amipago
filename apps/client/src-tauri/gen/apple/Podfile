@@ -1,13 +1,13 @@
 # Uncomment the next line to define a global platform for your project
 
-target 'amipagoclient_iOS' do
+target 'amipago_iOS' do
 platform :ios, '13.0'
-  # Pods for amipagoclient_iOS
+  # Pods for amipago_iOS
 end
 
-target 'amipagoclient_macOS' do
+target 'amipago_macOS' do
 platform :osx, '11.0'
-  # Pods for amipagoclient_macOS
+  # Pods for amipago_macOS
 end
 
 # Delete the deployment target for iOS and macOS, causing it to be inherited from the Podfile
