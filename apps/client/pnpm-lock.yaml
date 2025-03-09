@@ -2,6 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@react-router/dev': ^7.3.0
+  '@react-router/fs-routes': ^7.3.0
   '@react-router/node': ^7.3.0
   '@react-router/serve': ^7.3.0
   '@tailwindcss/vite': ^4.0.12
@@ -22,6 +23,7 @@ specifiers:
   vite-tsconfig-paths: ^5.1.4
 
 dependencies:
+  '@react-router/fs-routes': 7.3.0_6232c9d92f1ca8a9d70fccc5926f41a3
   '@react-router/node': 7.3.0_d739a6ca7f413096dfe07ba87ef360ec
   '@react-router/serve': 7.3.0_d739a6ca7f413096dfe07ba87ef360ec
   '@tauri-apps/api': 2.3.0
@@ -1383,6 +1385,21 @@ packages:
       typescript: 5.6.3
     dev: false
 
+  /@react-router/fs-routes/7.3.0_6232c9d92f1ca8a9d70fccc5926f41a3:
+    resolution: {integrity: sha512-GJiNer1o8qg3me1bSLUQV4jQPtL6d429qPLzEZEvC9W8Vcvgv+v3svzdVDgiXrZ4l2loUZy4sooyPJ/U3Oyfkw==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@react-router/dev': ^7.3.0
+      typescript: ^5.1.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@react-router/dev': 7.3.0_598833681d485c7538b9643d8cd42f20
+      minimatch: 9.0.5
+      typescript: 5.6.3
+    dev: false
+
   /@react-router/node/7.3.0_d739a6ca7f413096dfe07ba87ef360ec:
     resolution: {integrity: sha512-Vhww6DH0cVusO2yGhZuKmboGvFHuYOeIYEW0gpf0gFshbU0tR7MNAnOZS2Cud48hxVUSrEtgl0Kbs5BN+RQKJg==}
     engines: {node: '>=20.0.0'}
@@ -1944,7 +1961,6 @@ packages:
 
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
-    dev: true
 
   /basic-auth/2.0.1:
     resolution: {integrity: sha512-NF+epuEdnUYVlGuhaxbbq+dvJttwLnGY+YixlXlME5KpQ5W3CnXA5cVTneY3SPbPDRkcjMbifrwmFYcClgOZeg==}
@@ -1995,7 +2011,6 @@ packages:
     resolution: {integrity: sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==}
     dependencies:
       balanced-match: 1.0.2
-    dev: true
 
   /browserslist/4.24.4:
     resolution: {integrity: sha512-KDi1Ny1gSePi1vm0q4oxSF8b4DR44GF4BbmS2YdhPLOEqd8pDviZOGH/GsmRwoWJ2+5Lr085X7naowMwKHDG1A==}
@@ -3019,7 +3034,6 @@ packages:
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
       brace-expansion: 2.0.1
-    dev: true
 
   /minipass/7.1.2:
     resolution: {integrity: sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==}
