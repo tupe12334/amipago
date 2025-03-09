@@ -5,9 +5,10 @@ specifiers:
   '@react-router/fs-routes': ^7.3.0
   '@react-router/node': ^7.3.0
   '@react-router/serve': ^7.3.0
+  '@tailwindcss/postcss': ^4.0.12
   '@tailwindcss/vite': ^4.0.12
   '@tauri-apps/api': ^2
-  '@tauri-apps/cli': ^2
+  '@tauri-apps/cli': ^2.3.1
   '@tauri-apps/plugin-opener': ^2
   '@types/react': ^18.3.1
   '@types/react-dom': ^18.3.1
@@ -37,6 +38,7 @@ dependencies:
 
 devDependencies:
   '@react-router/dev': 7.3.0_598833681d485c7538b9643d8cd42f20
+  '@tailwindcss/postcss': 4.0.12
   '@tailwindcss/vite': 4.0.12_vite@6.2.1
   '@tauri-apps/cli': 2.3.1
   '@types/react': 18.3.18
@@ -51,6 +53,11 @@ devDependencies:
   vite-tsconfig-paths: 5.1.4_typescript@5.6.3+vite@6.2.1
 
 packages:
+
+  /@alloc/quick-lru/5.2.0:
+    resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
+    engines: {node: '>=10'}
+    dev: true
 
   /@ampproject/remapping/2.3.0:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -1684,6 +1691,17 @@ packages:
       '@tailwindcss/oxide-linux-x64-musl': 4.0.12
       '@tailwindcss/oxide-win32-arm64-msvc': 4.0.12
       '@tailwindcss/oxide-win32-x64-msvc': 4.0.12
+    dev: true
+
+  /@tailwindcss/postcss/4.0.12:
+    resolution: {integrity: sha512-r59Sdr8djCW4dL3kvc4aWU8PHdUAVM3O3te2nbYzXsWwKLlHPCuUoZAc9FafXb/YyNDZOMI7sTbKTKFmwOrMjw==}
+    dependencies:
+      '@alloc/quick-lru': 5.2.0
+      '@tailwindcss/node': 4.0.12
+      '@tailwindcss/oxide': 4.0.12
+      lightningcss: 1.29.2
+      postcss: 8.5.3
+      tailwindcss: 4.0.12
     dev: true
 
   /@tailwindcss/vite/4.0.12_vite@6.2.1:
