@@ -5,9 +5,9 @@ export function CreateGroupPage() {
   return (
     <div>
       <div>
-        <TopBar className="items-center gap-x-2">
+        <TopBar className="items-center gap-x-3 px-4">
           <BackButton />
-          <h1>Create Group Page</h1>
+          <h1>צור קבוצה חדשה</h1>
         </TopBar>
       </div>
     </div>
