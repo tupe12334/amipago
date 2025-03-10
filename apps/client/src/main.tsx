@@ -10,6 +10,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
+          <Route path="/group" element={<CreateGroupPage />} /> {/* create group */}
         </Routes>
       </BrowserRouter>
     </React.StrictMode>
