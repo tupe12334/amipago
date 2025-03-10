@@ -1,9 +1,13 @@
+import { TopBar } from "./TopBar/TopBar";
+
 function NavBar() {
   return (
-    <nav className="flex w-full px-2 py-3 flex-row justify-between">
-      <span>AmiPago</span>
-      <span>icon</span>
-    </nav>
+    <TopBar>
+      <nav className="flex w-full flex-row justify-between">
+        <span>AmiPago</span>
+        <span>icon</span>
+      </nav>
+    </TopBar>
   );
 }
 
