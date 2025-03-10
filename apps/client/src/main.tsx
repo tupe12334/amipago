@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <div className="m-0 lg:m-2">
+  <div className="m-0">
     <React.StrictMode>
       <BrowserRouter>
         <Routes>
