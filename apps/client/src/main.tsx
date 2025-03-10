@@ -5,11 +5,13 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-      </Routes>
-    </BrowserRouter>
-  </React.StrictMode>
+  <div className="m-0 lg:m-2">
+    <React.StrictMode>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+        </Routes>
+      </BrowserRouter>
+    </React.StrictMode>
+  </div>
 );
