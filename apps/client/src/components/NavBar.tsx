@@ -1,7 +1,8 @@
 function NavBar() {
   return (
-    <nav className="flex w-full shadow-md px-2 py-3">
+    <nav className="flex w-full px-2 py-3 flex-row flex  justify-between">
       <span>AmiPago</span>
+      <span>icon</span>
     </nav>
   );
 }
