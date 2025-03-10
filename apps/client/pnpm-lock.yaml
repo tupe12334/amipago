@@ -22,6 +22,8 @@ specifiers:
   react-router: ^7.3.0
   react-router-devtools: ^1.1.6
   tailwindcss: ^4.0.12
+  tailwindcss-rtl: ^0.9.0
+  type-fest: ^4.37.0
   typescript: ~5.6.2
   vite: ^6.0.3
   vite-tsconfig-paths: ^5.1.4
@@ -50,6 +52,8 @@ devDependencies:
   postcss: 8.5.3
   react-router-devtools: 1.1.6_f86d469ed539ec0070fdcaad94f5d158
   tailwindcss: 4.0.12
+  tailwindcss-rtl: 0.9.0
+  type-fest: 4.37.0
   typescript: 5.6.3
   vite: 6.2.1
   vite-tsconfig-paths: 5.1.4_typescript@5.6.3+vite@6.2.1
@@ -3853,6 +3857,10 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
+  /tailwindcss-rtl/0.9.0:
+    resolution: {integrity: sha512-y7yC8QXjluDBEFMSX33tV6xMYrf0B3sa+tOB5JSQb6/G6laBU313a+Z+qxu55M1Qyn8tDMttjomsA8IsJD+k+w==}
+    dev: true
+
   /tailwindcss/4.0.12:
     resolution: {integrity: sha512-bT0hJo91FtncsAMSsMzUkoo/iEU0Xs5xgFgVC9XmdM9bw5MhZuQFjPNl6wxAE0SiQF/YTZJa+PndGWYSDtuxAg==}
     dev: true
@@ -3887,6 +3895,11 @@ packages:
   /turbo-stream/2.4.0:
     resolution: {integrity: sha512-FHncC10WpBd2eOmGwpmQsWLDoK4cqsA/UT/GqNoaKOQnT8uzhtCbg3EoUDMvqpOSAI0S26mr0rkjzbOO6S3v1g==}
     dev: false
+
+  /type-fest/4.37.0:
+    resolution: {integrity: sha512-S/5/0kFftkq27FPNye0XM1e2NsnoD/3FS+pBmbjmmtLT6I+i344KoOf7pvXreaFsDamWeaJX55nczA1m5PsBDg==}
+    engines: {node: '>=16'}
+    dev: true
 
   /type-is/1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
