@@ -11,8 +11,7 @@
     "tauri:build": "tauri build",
     "tauri:dev": "tauri dev",
     "tauri:ios:init": "tauri ios init",
-    "tauri:ios:dev:host": "tauri ios dev --host",
-    "tauri:ios:dev:open": "tauri ios dev --open"
+    "tauri:ios:dev:host": "tauri ios dev --open --host"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
