@@ -2,4 +2,4 @@
 - When using style, use start and end, not right and left
 - Use flex
 - Use tailwind css class names and not style object
-- Don't use px as a unit
+- Don't use pixels as a unit
