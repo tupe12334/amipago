@@ -15,7 +15,6 @@ export const CreateGroupForm = () => {
     control,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm<CreateGroupInput>({
     resolver: zodResolver(CreateGroupInputSchema),
     defaultValues: CreateGroupDefaultInput,
