@@ -46,6 +46,7 @@ export const CreateGroupForm = () => {
           render={({ field }) => (
             <ButtonGroup<GroupType>
               options={[
+                { value: "GENERAL" as GroupType, label: "כללי" },
                 { value: "FRIENDS" as GroupType, label: "חברים" },
                 { value: "HOUSEHOLD" as GroupType, label: "משק בית" },
                 { value: "WORK" as GroupType, label: "עבודה" },
