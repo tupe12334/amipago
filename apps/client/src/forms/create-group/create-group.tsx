@@ -18,20 +18,22 @@ export const CreateGroupForm = () => {
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <InputField
-        id="name"
-        placeholder="הכנס שם קבוצה"
-        label="שם קבוצה:"
-        error={errors.name?.message}
-        {...register("name")}
-      />
-      <button
-        type="submit"
-        className="bg-blue-500 text-white py-2 px-4 rounded"
-      >
-        צור קבוצה
-      </button>
-    </form>
+    <div className="fixed inset-0 flex items-center justify-center">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <InputField
+          id="name"
+          placeholder="הכנס שם קבוצה"
+          label="שם קבוצה:"
+          error={errors.name?.message}
+          {...register("name")}
+        />
+        <button
+          type="submit"
+          className="bg-blue-500 text-white py-2 px-4 rounded"
+        >
+          צור קבוצה
+        </button>
+      </form>
+    </div>
   );
 };
