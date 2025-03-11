@@ -1,21 +1,21 @@
 import React, { FC } from "react";
 
-type Option = {
-  value: string;
+type Option<T extends string> = {
+  value: T;
   label: string;
 };
 
-type ButtonGroupProps = {
-  options: Option[];
-  selected: string;
-  onChange: (value: string) => void;
+type ButtonGroupProps<T extends string> = {
+  options: Option<T>[];
+  selected: T;
+  onChange: (value: T) => void;
 };
 
-export const ButtonGroup: FC<ButtonGroupProps> = ({
+export const ButtonGroup = <T extends string>({
   options,
   selected,
   onChange,
-}) => {
+}: ButtonGroupProps<T>) => {
   return (
     <div className="flex gap-2">
       {options.map((option) => (
@@ -29,6 +29,7 @@ export const ButtonGroup: FC<ButtonGroupProps> = ({
                 : "bg-gray-200 text-gray-700 border-gray-200"
             } 
             transition-colors duration-200`}
+          type="button"
         >
           {option.label}
         </button>
