@@ -1,7 +1,8 @@
-import i18next, { t } from "i18next";
+import i18next from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
+import { initReactI18next } from "react-i18next";
 
-i18next.use(LanguageDetector).init({
+i18next.use(initReactI18next).use(LanguageDetector).init({
   resources: {
     en: { translation: { welcome: "Welcome", goodbye: "Goodbye" } },
     he: { translation: { welcome: "ברוך הבא", goodbye: "להתראות" } },
