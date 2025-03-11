@@ -1,6 +1,7 @@
 # Instructions
 
 - The client should be in Hebrew
+- Use i18next
 
 ## Style
 
