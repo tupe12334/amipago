@@ -3,6 +3,7 @@ import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputField } from "../../components/InputField/InputField";
 import { ButtonGroup } from "../../components/ButtonGroup/ButtonGroup";
+import { GroupTypeEnum } from "../../models/GroupType";
 
 export const CreateGroupForm = () => {
   const onSubmit: SubmitHandler<CreateGroupInput> = (data) => {
@@ -17,6 +18,9 @@ export const CreateGroupForm = () => {
     formState: { errors },
   } = useForm<CreateGroupInput>({
     resolver: zodResolver(CreateGroupInputSchema),
+    defaultValues: {
+      type: "HOUSEHOLD",
+    },
   });
 
   return (
@@ -36,16 +40,16 @@ export const CreateGroupForm = () => {
           error={errors.description?.message}
           {...register("description")}
         />
-        {/* Added type input using ButtonGroup */}
+        {/* Updated type input using GroupTypeEnum */}
         <Controller
           control={control}
           name="type"
-          defaultValue="סוג 1"
           render={({ field }) => (
             <ButtonGroup
               options={[
-                { value: "סוג 1", label: "סוג 1" },
-                { value: "סוג 2", label: "סוג 2" },
+                { value: "HOUSEHOLD", label: "משק בית" },
+                { value: "WORK", label: "עבודה" },
+                { value: "FRIENDS", label: "חברים" },
               ]}
               selected={field.value}
               onChange={field.onChange}
