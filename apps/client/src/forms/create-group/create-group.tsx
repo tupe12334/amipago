@@ -1,7 +1,6 @@
 import { CreateGroupInput, CreateGroupInputSchema } from "./CreateGroupInput";
 import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { InputField } from "../../components/InputField/InputField";
 import { ButtonGroup } from "../../components/ButtonGroup/ButtonGroup";
 import { GroupType } from "../../models/GroupType";
 import { CreateGroupDefaultInput } from "./CreateGroupDefaultInput";
@@ -15,8 +14,8 @@ export const CreateGroupForm = () => {
     register,
     control,
     handleSubmit,
-    watch,
     formState: { errors },
+    getValues,
   } = useForm<CreateGroupInput>({
     resolver: zodResolver(CreateGroupInputSchema),
     defaultValues: CreateGroupDefaultInput,
@@ -25,20 +24,35 @@ export const CreateGroupForm = () => {
   return (
     <div className="inset-0 flex items-center justify-center">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <InputField
-          id="name"
-          placeholder="הכנס שם קבוצה"
-          label="שם קבוצה:"
-          error={errors.name?.message}
-          {...register("name")}
-        />
-        <InputField
-          id="description"
-          placeholder="הכנס תיאור קבוצה"
-          label="תיאור:"
-          error={errors.description?.message}
-          {...register("description")}
-        />
+        <div className="flex flex-col">
+          <label htmlFor="name">שם קבוצה:</label>
+          <input
+            id="name"
+            placeholder="הכנס שם קבוצה"
+            {...register("name")}
+            className="px-2"
+          />
+          {errors.name?.message && (
+            <span className="text-red-500 mt-1 text-start">
+              {errors.name?.message}
+            </span>
+          )}
+        </div>
+
+        <div className="flex flex-col">
+          <label htmlFor="description">תיאור:</label>
+          <input
+            id="description"
+            placeholder="הכנס תיאור קבוצה"
+            {...register("description")}
+            className="px-2"
+          />
+          {errors.description?.message && (
+            <span className="text-red-500 mt-1 text-start">
+              {errors.description?.message}
+            </span>
+          )}
+        </div>
         <Controller
           control={control}
           name="type"
