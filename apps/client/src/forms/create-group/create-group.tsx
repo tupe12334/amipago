@@ -7,6 +7,7 @@ import { CreateGroupDefaultInput } from "./CreateGroupDefaultInput";
 
 export const CreateGroupForm = () => {
   const onSubmit: SubmitHandler<CreateGroupInput> = (data) => {
+    // TODO: implement create group with server graphql mutation
     console.log(data);
   };
 
