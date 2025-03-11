@@ -1,7 +1,7 @@
 # Instructions
 
 - The client should be in Hebrew
-- Use i18next
+- Use i18next (apps/client/src/i18n/main.ts)
 
 ## Style
 
