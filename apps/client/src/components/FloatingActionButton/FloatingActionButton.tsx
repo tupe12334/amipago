@@ -37,7 +37,7 @@ const FloatingActionButton: FC<Props> = ({ children, options }) => {
             {options.map((option) => (
               <li
                 {...option}
-                className="gap-2 text-right p-2 hover:bg-gray-100 rounded cursor-pointer transition-colors flex-row flex items-center"
+                className="gap-2 text-end p-2 hover:bg-gray-100 rounded cursor-pointer transition-colors flex-row flex items-center"
               >
                 {option.icon}
                 {option.label}
