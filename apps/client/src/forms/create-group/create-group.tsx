@@ -1,6 +1,7 @@
 import { CreateGroupInput, CreateGroupInputSchema } from "./create-group-input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { InputField } from "../../components/InputField/InputField";
 
 export const CreateGroupForm = () => {
   const onSubmit: SubmitHandler<CreateGroupInput> = (data) => {
@@ -18,11 +19,13 @@ export const CreateGroupForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="name">שם קבוצה:</label>
-        <input id="name" placeholder="הכנס שם קבוצה" {...register("name")} />
-        {errors.name && <span>{errors.name.message}</span>}
-      </div>
+      <InputField
+        id="name"
+        placeholder="הכנס שם קבוצה"
+        label="שם קבוצה:"
+        error={errors.name?.message}
+        {...register("name")}
+      />
       <button type="submit">צור קבוצה</button>
     </form>
   );
