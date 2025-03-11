@@ -1,4 +1,9 @@
+# Instructions
+
 - The client should be in Hebrew
+
+## Style
+
 - When using style, use start and end, not right and left
 - Use flex
 - Use tailwind css class names and not style object
