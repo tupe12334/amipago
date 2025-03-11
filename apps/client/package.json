@@ -21,6 +21,7 @@
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-opener": "^2",
     "classnames": "^2.5.1",
+    "i18next": "^24.2.2",
     "isbot": "^5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
