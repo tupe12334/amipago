@@ -57,7 +57,7 @@ export const CreateGroupForm = () => {
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white py-2 ps-4 pe-4 rounded"
+          className="bg-blue-500 text-white py-2 px-4 rounded"
         >
           צור קבוצה
         </button>
