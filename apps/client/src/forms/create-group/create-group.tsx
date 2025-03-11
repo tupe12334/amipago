@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { InputField } from "../../components/InputField/InputField";
 import { ButtonGroup } from "../../components/ButtonGroup/ButtonGroup";
 import { GroupType } from "../../models/GroupType";
+import { CreateGroupDefaultInput } from "./CreateGroupDefaultInput";
 
 export const CreateGroupForm = () => {
   const onSubmit: SubmitHandler<CreateGroupInput> = (data) => {
@@ -18,9 +19,7 @@ export const CreateGroupForm = () => {
     formState: { errors },
   } = useForm<CreateGroupInput>({
     resolver: zodResolver(CreateGroupInputSchema),
-    defaultValues: {
-      type: "HOUSEHOLD" as GroupType,
-    },
+    defaultValues: CreateGroupDefaultInput,
   });
 
   return (
