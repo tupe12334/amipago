@@ -12,10 +12,10 @@ export const InputField: React.FC<InputFieldProps> = ({
   ...rest
 }) => {
   return (
-    <div>
+    <div className="flex flex-col">
       <label htmlFor={id}>{label}</label>
-      <input id={id} {...rest} />
-      {error && <span>{error}</span>}
+      <input id={id} {...rest} className="px-2" />
+      {error && <span className="text-red-500 mt-1 text-start">{error}</span>}
     </div>
   );
 };

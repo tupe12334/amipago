@@ -18,7 +18,7 @@ export const CreateGroupForm = () => {
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <InputField
         id="name"
         placeholder="הכנס שם קבוצה"
@@ -26,7 +26,12 @@ export const CreateGroupForm = () => {
         error={errors.name?.message}
         {...register("name")}
       />
-      <button type="submit">צור קבוצה</button>
+      <button
+        type="submit"
+        className="bg-blue-500 text-white py-2 px-4 rounded"
+      >
+        צור קבוצה
+      </button>
     </form>
   );
 };
