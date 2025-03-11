@@ -1,7 +1,8 @@
 import { CreateGroupInput, CreateGroupInputSchema } from "./CreateGroupInput";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputField } from "../../components/InputField/InputField";
+import { ButtonGroup } from "../../components/ButtonGroup/ButtonGroup";
 
 export const CreateGroupForm = () => {
   const onSubmit: SubmitHandler<CreateGroupInput> = (data) => {
@@ -10,6 +11,7 @@ export const CreateGroupForm = () => {
 
   const {
     register,
+    control,
     handleSubmit,
     watch,
     formState: { errors },
@@ -33,6 +35,22 @@ export const CreateGroupForm = () => {
           label="תיאור:"
           error={errors.description?.message}
           {...register("description")}
+        />
+        {/* Added type input using ButtonGroup */}
+        <Controller
+          control={control}
+          name="type"
+          defaultValue="סוג 1"
+          render={({ field }) => (
+            <ButtonGroup
+              options={[
+                { value: "סוג 1", label: "סוג 1" },
+                { value: "סוג 2", label: "סוג 2" },
+              ]}
+              selected={field.value}
+              onChange={field.onChange}
+            />
+          )}
         />
         <button
           type="submit"
