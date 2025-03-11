@@ -24,7 +24,7 @@ export const CreateGroupForm = () => {
   });
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center">
+    <div className="inset-0 flex items-center justify-center">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <InputField
           id="name"
