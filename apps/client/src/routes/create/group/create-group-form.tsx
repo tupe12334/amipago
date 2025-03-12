@@ -2,8 +2,10 @@ import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateGroupDefaultInput } from "./CreateGroupDefaultInput";
 import { CreateGroupInput, CreateGroupInputSchema } from "./CreateGroupInput";
-import { ButtonGroup } from "../../../components/ButtonGroup/ButtonGroup";
 import { GroupType } from "../../../models/GroupType";
+import { FormField } from "../../../components/Form/FormField";
+import { FormSelect } from "../../../components/Form/FormSelect";
+import { FormSubmitButton } from "../../../components/Form/FormSubmitButton";
 
 export const CreateGroupForm = () => {
   const onSubmit: SubmitHandler<CreateGroupInput> = (data) => {
@@ -24,57 +26,53 @@ export const CreateGroupForm = () => {
   return (
     <div className="inset-0 flex items-center justify-center">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <div className="flex flex-col">
-          <label htmlFor="name">שם קבוצה:</label>
-          <input
-            id="name"
-            placeholder="הכנס שם קבוצה"
-            {...register("name")}
-            className="px-2"
-          />
-          {errors.name?.message && (
-            <span className="text-red-500 mt-1 text-start">
-              {errors.name?.message}
-            </span>
-          )}
-        </div>
+        <FormField
+          id="name"
+          label="שם קבוצה:"
+          placeholder="הכנס שם קבוצה"
+          error={errors.name?.message}
+          {...register("name")}
+        />
 
-        <div className="flex flex-col">
-          <label htmlFor="description">תיאור:</label>
-          <input
-            id="description"
-            placeholder="הכנס תיאור קבוצה"
-            {...register("description")}
-            className="px-2"
-          />
-          {errors.description?.message && (
-            <span className="text-red-500 mt-1 text-start">
-              {errors.description?.message}
-            </span>
-          )}
-        </div>
+        <FormField
+          id="description"
+          label="תיאור:"
+          placeholder="הכנס תיאור קבוצה"
+          error={errors.description?.message}
+          {...register("description")}
+        />
+
         <Controller
           control={control}
           name="type"
           render={({ field }) => (
-            <ButtonGroup<GroupType>
+            <FormSelect
+              label="סוג קבוצה"
               options={[
-                { value: "GENERAL" as GroupType, label: "כללי" },
-                { value: "FRIENDS" as GroupType, label: "חברים" },
-                { value: "HOUSEHOLD" as GroupType, label: "משק בית" },
-                { value: "WORK" as GroupType, label: "עבודה" },
+                { value: "GENERAL" as GroupType, label: "כללי", icon: "users" },
+                {
+                  value: "FRIENDS" as GroupType,
+                  label: "חברים",
+                  icon: "user-friends",
+                },
+                {
+                  value: "HOUSEHOLD" as GroupType,
+                  label: "משק בית",
+                  icon: "home",
+                },
+                {
+                  value: "WORK" as GroupType,
+                  label: "עבודה",
+                  icon: "briefcase",
+                },
               ]}
               selected={field.value}
               onChange={field.onChange}
             />
           )}
         />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded"
-        >
-          צור קבוצה
-        </button>
+
+        <FormSubmitButton label="צור קבוצה" />
       </form>
     </div>
   );
