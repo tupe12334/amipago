@@ -8,6 +8,7 @@ import { ButtonGroup } from "../../../components/ButtonGroup/ButtonGroup";
 import { InputField } from "../../../components/InputField/InputField";
 import { Currencies } from "../../../models/Currencies";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 // Default values for the form
 const createExpenseDefaultInput: CreateExpenseInput = {
@@ -18,7 +19,26 @@ const createExpenseDefaultInput: CreateExpenseInput = {
 };
 
 export const CreateExpenseForm: React.FC = () => {
+  const { i18n } = useTranslation();
   const [formSubmitted, setFormSubmitted] = useState(false);
+
+  // Format the date according to the user's locale
+  const formatDateForInput = (date: Date): string => {
+    return date
+      .toLocaleDateString(i18n.language, {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      })
+      .split("/")
+      .reverse()
+      .join("-"); // Convert to YYYY-MM-DD for HTML date input
+  };
+
+  // Parse the date from the locale format back to a Date object
+  const parseDateFromInput = (dateString: string): Date => {
+    return new Date(dateString);
+  };
 
   const onSubmit: SubmitHandler<CreateExpenseInput> = (data) => {
     // TODO: implement create expense with server graphql mutation
@@ -69,14 +89,31 @@ export const CreateExpenseForm: React.FC = () => {
             {...register("description")}
           />
 
-          <InputField
-            label="תאריך:"
-            id="date"
-            type="date"
-            error={errors.date?.message}
-            {...register("date")}
-            defaultValue={new Date().toISOString().split("T")[0]}
-          />
+          <div className="flex flex-col">
+            <label htmlFor="date">תאריך:</label>
+            <div className="flex flex-col">
+              <Controller
+                control={control}
+                name="date"
+                render={({ field }) => (
+                  <input
+                    id="date"
+                    type="date"
+                    className="px-2"
+                    value={formatDateForInput(field.value)}
+                    onChange={(e) => {
+                      field.onChange(parseDateFromInput(e.target.value));
+                    }}
+                  />
+                )}
+              />
+              {errors.date?.message && (
+                <span className="text-red-500 mt-1 text-start">
+                  {errors.date?.message}
+                </span>
+              )}
+            </div>
+          </div>
 
           <div className="flex flex-col">
             <label>מטבע:</label>
