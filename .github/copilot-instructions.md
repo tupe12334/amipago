@@ -11,6 +11,7 @@
 ## Testing
 
 - Use playwright for client e2e testing
+- Describe testing in English
 
 ## Icons
 
