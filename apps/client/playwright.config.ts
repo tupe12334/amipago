@@ -1,5 +1,10 @@
 import { defineConfig, devices } from "@playwright/test";
+import { fileURLToPath } from "url";
 import path from "path";
+
+// ES Module replacement for __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Get the port from environment variable or use the default 1420
 const port = process.env.VITE_CLIENT_PORT || "1420";
