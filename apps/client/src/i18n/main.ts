@@ -11,7 +11,7 @@ const resources = {
       form: {
         success: {
           group: "Group created successfully!",
-        }
+        },
       },
       expense: {
         title: "New Expense",
@@ -44,7 +44,7 @@ const resources = {
       form: {
         success: {
           group: "הקבוצה נוצרה בהצלחה!",
-        }
+        },
       },
       expense: {
         title: "הוצאה חדשה",
