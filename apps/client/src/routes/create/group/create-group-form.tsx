@@ -52,6 +52,7 @@ export const CreateGroupForm = () => {
             <div
               className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
               role="alert"
+              aria-live="assertive"
             >
               <p>{error}</p>
             </div>
@@ -69,6 +70,7 @@ export const CreateGroupForm = () => {
                 error={errors.name?.message}
                 icon="users"
                 aria-required="true"
+                aria-describedby={errors.name ? "name-error" : undefined}
                 value={field.value}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
@@ -86,6 +88,9 @@ export const CreateGroupForm = () => {
                 placeholder="הכנס תיאור קבוצה"
                 error={errors.description?.message}
                 icon="info-circle"
+                aria-describedby={
+                  errors.description ? "description-error" : undefined
+                }
                 value={field.value}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
@@ -124,6 +129,7 @@ export const CreateGroupForm = () => {
                 selected={field.value}
                 onChange={field.onChange}
                 error={errors.type?.message}
+                aria-describedby={errors.type ? "type-error" : undefined}
               />
             )}
           />
