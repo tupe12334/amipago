@@ -8,5 +8,7 @@ export const StorageGroupSchema = z.object({
   name: z.string(),
   description: z.string(),
   type: GroupTypeEnum,
+  createdAt: z.date().default(() => new Date()),
+  lastActivity: z.date().optional(),
 });
 export type StorageGroup = z.infer<typeof StorageGroupSchema>;

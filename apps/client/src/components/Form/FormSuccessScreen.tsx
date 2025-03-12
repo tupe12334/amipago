@@ -1,3 +1,8 @@
+/**
+ * @file This component is used to display a success message after a form submission.
+ * It displays a message and an icon to indicate the success state.
+ * After 2 seconds, the success message will disappear and the page will return to the main page.
+ */
 import React from "react";
 
 interface FormSuccessScreenProps {

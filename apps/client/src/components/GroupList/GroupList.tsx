@@ -79,15 +79,51 @@ export const GroupList = () => {
           key={group.id}
           className="bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow"
         >
-          {/* <div className="text-gray-500 text-sm mt-2 flex items-center">
-            <i className="fa fa-clock-o me-2" aria-hidden="true"></i>
-            <span>
-              {new Date(group.lastActivity).toLocaleDateString("he-IL")}
+          <div className="flex justify-between items-start">
+            <h3 className="font-bold text-lg mb-2">{group.name}</h3>
+            <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+              {group.members?.length || 0} {t("חברים")}
             </span>
           </div>
-          <div className="text-gray-400 text-xs mt-2">
-            {t("נוצר")}: {new Date(group.createdAt).toLocaleDateString("he-IL")}
-          </div> */}
+
+          {group.description && (
+            <p className="text-gray-600 mb-3">{group.description}</p>
+          )}
+
+          <div className="flex flex-wrap gap-2 mb-3">
+            {group.tags?.map((tag, index) => (
+              <span
+                key={index}
+                className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="text-gray-500 text-sm mt-2 flex items-center">
+            <i className="fa fa-clock-o me-2" aria-hidden="true"></i>
+            <span>
+              {t("פעילות אחרונה")}:{" "}
+              {new Date(
+                group.lastActivity || group.createdAt
+              ).toLocaleDateString("he-IL")}
+            </span>
+          </div>
+
+          <div className="flex justify-between items-center mt-4 pt-2 border-t border-gray-100">
+            <div className="text-gray-400 text-xs">
+              {t("נוצר")}:{" "}
+              {new Date(group.createdAt).toLocaleDateString("he-IL")}
+            </div>
+            <button
+              className="text-blue-600 flex items-center"
+              aria-label={`${t("צפה בקבוצה")} ${group.name}`}
+            >
+              <span>{t("צפה")}</span>
+              <i className="fa fa-angle-start ms-1" aria-hidden="true"></i>
+            </button>
+          </div>
         </li>
       ))}
     </ul>
