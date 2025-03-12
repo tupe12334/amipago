@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 import { fileURLToPath } from "url";
 import path from "path";
+import fs from "fs";
 
 // ES Module replacement for __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -9,6 +10,9 @@ const __dirname = path.dirname(__filename);
 // Get the port from environment variable or use the default 1420
 const port = process.env.VITE_CLIENT_PORT || "1420";
 const baseUrl = `http://localhost:${port}`;
+
+// Define output directory path
+const outputDir = path.join(__dirname, "test-results");
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -47,11 +51,11 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "pnpm run dev",
+    command: `node -e "if (require('fs').existsSync('${outputDir}')) { require('fs').rmSync('${outputDir}', { recursive: true, force: true }); console.log('Test results directory cleaned.'); }" && pnpm run dev`,
     url: baseUrl,
     reuseExistingServer: !process.env.CI,
     stdout: "pipe",
     stderr: "pipe",
   },
-  outputDir: path.join(__dirname, "test-results"),
+  outputDir,
 });
