@@ -1,4 +1,3 @@
-import { FaArrowRight } from "react-icons/fa6";
 import { useNavigate } from "react-router";
 
 type Props = React.DetailedHTMLProps<
@@ -19,7 +18,7 @@ export function BackButton(props: Props) {
         navigate(-1);
       }}
     >
-      <FaArrowRight className="text-4xl" />
+      <i className="fa fa-arrow-right text-4xl" aria-hidden="true"></i>
     </button>
   );
 }
