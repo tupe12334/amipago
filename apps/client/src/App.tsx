@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { getLanguageDir } from "./i18n/main";
 import { AddButton } from "./components/AddButton/AddButton";
 import NavBar from "./components/NavBar/NavBar";
+import GroupList from "./components/GroupList/GroupList";
 
 function App() {
   const { i18n } = useTranslation();
@@ -26,9 +27,16 @@ function App() {
   }, [i18n]);
 
   return (
-    <main>
+    <main className="flex flex-col h-screen">
       <NavBar />
-      <AddButton />
+      <div
+        className="flex flex-col flex-1 p-4 overflow-y-auto"
+        aria-label="תוכן ראשי"
+      >
+        <h1 className="text-2xl font-bold mb-4">הקבוצות שלי</h1>
+        <GroupList />
+        <AddButton />
+      </div>
     </main>
   );
 }

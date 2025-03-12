@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { CreateGroupInput } from "../CreateGroupInput";
+import { StorageGroupSchema } from "../../../../models/StorageGroup";
+import { saveGroup } from "../../../../services/indexedDbService";
 
 export const useCreateGroupMutation = () => {
   const [loading, setLoading] = useState(false);
@@ -18,8 +20,12 @@ export const useCreateGroupMutation = () => {
         throw new Error("שם הקבוצה הוא שדה חובה");
       }
 
-      // Simulate API request
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Parse and validate the group data
+      const group = StorageGroupSchema.parse(data);
+
+      // Save group to IndexedDB
+      const groupId = await saveGroup(group);
+      console.log("Group saved with ID:", groupId);
 
       // Return success
       setLoading(false);
