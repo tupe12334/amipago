@@ -1,6 +1,7 @@
 # Instructions
 
 - The client should be in Hebrew
+- Use zod for models and form validations
 
 ## Icons
 
