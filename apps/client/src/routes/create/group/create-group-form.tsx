@@ -14,7 +14,6 @@ export const CreateGroupForm = () => {
   const { createGroup, loading, error } = useCreateGroupMutation();
 
   const {
-    register,
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -57,24 +56,41 @@ export const CreateGroupForm = () => {
               <p>{error}</p>
             </div>
           )}
-          {JSON.stringify(errors)}
-          <FormField
-            id="name"
-            label="שם קבוצה:"
-            placeholder="הכנס שם קבוצה"
-            error={errors.name?.message}
-            icon="users"
-            aria-required="true"
-            {...register("name")}
+
+          {/* Replace direct register with Controller for FormField components */}
+          <Controller
+            control={control}
+            name="name"
+            render={({ field }) => (
+              <FormField
+                id="name"
+                label="שם קבוצה:"
+                placeholder="הכנס שם קבוצה"
+                error={errors.name?.message}
+                icon="users"
+                aria-required="true"
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+              />
+            )}
           />
 
-          <FormField
-            id="description"
-            label="תיאור:"
-            placeholder="הכנס תיאור קבוצה"
-            error={errors.description?.message}
-            icon="info-circle"
-            {...register("description")}
+          <Controller
+            control={control}
+            name="description"
+            render={({ field }) => (
+              <FormField
+                id="description"
+                label="תיאור:"
+                placeholder="הכנס תיאור קבוצה"
+                error={errors.description?.message}
+                icon="info-circle"
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+              />
+            )}
           />
 
           <Controller
