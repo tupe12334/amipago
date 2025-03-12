@@ -22,6 +22,7 @@ Make sure that we support acceptability guidelines
 
 - Use aria in english
 - Add all the relevant aria fields
+- Use conventional aria keys only
 
 ## Style
 
