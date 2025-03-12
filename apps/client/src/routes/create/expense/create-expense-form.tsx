@@ -1,11 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
   CreateExpenseInput,
   CreateExpenseInputSchema,
 } from "./CreateExpenseInput";
+import { useCreateExpenseMutation } from "./hooks/useCreateExpenseMutation";
 
 // Default values for the form
 const createExpenseDefaultInput: CreateExpenseInput = {
@@ -18,6 +19,7 @@ const createExpenseDefaultInput: CreateExpenseInput = {
 export const CreateExpenseForm: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const { createExpense, loading, error } = useCreateExpenseMutation();
 
   // Format the date according to the user's locale
   const formatDateForInput = (date: Date): string => {
@@ -37,10 +39,11 @@ export const CreateExpenseForm: React.FC = () => {
     return new Date(dateString);
   };
 
-  const onSubmit: SubmitHandler<CreateExpenseInput> = (data) => {
-    // TODO: implement create expense with server graphql mutation
-    console.log(data);
-    setFormSubmitted(true);
+  const onSubmit: SubmitHandler<CreateExpenseInput> = async (data) => {
+    const success = await createExpense(data);
+    if (success) {
+      setFormSubmitted(true);
+    }
   };
 
   const {
@@ -52,6 +55,14 @@ export const CreateExpenseForm: React.FC = () => {
     resolver: zodResolver(CreateExpenseInputSchema),
     defaultValues: createExpenseDefaultInput,
   });
+
+  // Set direction based on language
+  useEffect(() => {
+    const form = document.querySelector("form");
+    if (form) {
+      form.dir = i18n.language === "he" ? "rtl" : "ltr";
+    }
+  }, [i18n.language]);
 
   return (
     <div className="inset-0 flex items-center justify-center">

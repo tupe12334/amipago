@@ -74,6 +74,13 @@ i18next
     react: {
       useSuspense: false,
     },
+    // Add language direction configuration
+    supportedLngs: ["en", "he"],
   });
+
+// Export language direction helper function
+export const getLanguageDir = (language: string): "rtl" | "ltr" => {
+  return language === "he" ? "rtl" : "ltr";
+};
 
 export default i18next;
