@@ -13,6 +13,8 @@ const baseUrl = `http://localhost:${port}`;
 
 // Define output directory path
 const outputDir = path.join(__dirname, "test-results");
+// Define snapshots directory
+const snapshotsDir = path.join(__dirname, "e2e", "__snapshots__");
 
 export default defineConfig({
   testDir: "./e2e",
@@ -24,9 +26,19 @@ export default defineConfig({
   use: {
     baseURL: baseUrl,
     trace: "on",
-    screenshot: "on",
+    screenshot: "only-on-failure",
     actionTimeout: 15000,
   },
+  // Set snapshot configuration for comparisons
+  expect: {
+    toHaveScreenshot: {
+      maxDiffPixels: 100,
+      threshold: 0.2,
+    },
+    timeout: 10000,
+  },
+  // Set snapshots directory at project level
+  snapshotDir: snapshotsDir,
   projects: [
     {
       name: "chromium",
