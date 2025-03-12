@@ -1,9 +1,9 @@
-import { CreateGroupInput, CreateGroupInputSchema } from "./CreateGroupInput";
 import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ButtonGroup } from "../../components/ButtonGroup/ButtonGroup";
-import { GroupType } from "../../models/GroupType";
 import { CreateGroupDefaultInput } from "./CreateGroupDefaultInput";
+import { CreateGroupInput, CreateGroupInputSchema } from "./CreateGroupInput";
+import { ButtonGroup } from "../../../components/ButtonGroup/ButtonGroup";
+import { GroupType } from "../../../models/GroupType";
 
 export const CreateGroupForm = () => {
   const onSubmit: SubmitHandler<CreateGroupInput> = (data) => {
