@@ -4,7 +4,7 @@
 
 ## Icons
 
-- Use font-awesome html <i> component
+- Use font-awesome html <i> component with class "fa"
 
 ## Acceptability
 
