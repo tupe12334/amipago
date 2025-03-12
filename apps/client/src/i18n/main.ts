@@ -8,6 +8,11 @@ const resources = {
     translation: {
       welcome: "Welcome",
       goodbye: "Goodbye",
+      form: {
+        success: {
+          group: "Group created successfully!",
+        }
+      },
       expense: {
         title: "New Expense",
         amount: "Amount:",
@@ -36,6 +41,11 @@ const resources = {
     translation: {
       welcome: "ברוך הבא",
       goodbye: "להתראות",
+      form: {
+        success: {
+          group: "הקבוצה נוצרה בהצלחה!",
+        }
+      },
       expense: {
         title: "הוצאה חדשה",
         amount: "סכום:",

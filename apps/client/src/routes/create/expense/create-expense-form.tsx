@@ -11,6 +11,7 @@ import { FormField } from "../../../components/Form/FormField";
 import { FormDatePicker } from "../../../components/Form/FormDatePicker";
 import { FormSelect } from "../../../components/Form/FormSelect";
 import { FormSubmitButton } from "../../../components/Form/FormSubmitButton";
+import { FormSuccessScreen } from "../../../components/Form/FormSuccessScreen";
 
 // Default values for the form
 const createExpenseDefaultInput: CreateExpenseInput = {
@@ -53,15 +54,7 @@ export const CreateExpenseForm: React.FC = () => {
   return (
     <div className="inset-0 flex items-center justify-center">
       {formSubmitted ? (
-        <div className="flex flex-col items-center gap-4">
-          <div className="flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">
-            <i
-              className="fa fa-check-circle text-4xl text-green-500"
-              aria-hidden="true"
-            ></i>
-          </div>
-          <p className="text-xl font-bold">{t("expense.success")}</p>
-        </div>
+        <FormSuccessScreen message={t("expense.success")} />
       ) : (
         <form
           onSubmit={handleSubmit(onSubmit)}
