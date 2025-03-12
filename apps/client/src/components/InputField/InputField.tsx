@@ -11,11 +11,27 @@ export const InputField: React.FC<InputFieldProps> = ({
   id,
   ...rest
 }) => {
+  const errorId = id ? `${id}-error` : undefined;
+
   return (
     <div className="flex flex-col">
       <label htmlFor={id}>{label}</label>
-      <input id={id} {...rest} className="px-2" />
-      {error && <span className="text-red-500 mt-1 text-start">{error}</span>}
+      <input
+        id={id}
+        {...rest}
+        className="px-2"
+        aria-describedby={error ? errorId : undefined}
+        aria-invalid={error ? "true" : "false"}
+      />
+      {error && (
+        <span
+          id={errorId}
+          className="text-red-500 mt-1 text-start"
+          role="alert"
+        >
+          {error}
+        </span>
+      )}
     </div>
   );
 };

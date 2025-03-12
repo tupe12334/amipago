@@ -13,6 +13,7 @@ type FormSelectProps<T extends string> = {
   onChange: (value: T) => void;
   error?: string;
   columns?: number;
+  id?: string;
 };
 
 export const FormSelect = <T extends string>({
@@ -22,16 +23,27 @@ export const FormSelect = <T extends string>({
   onChange,
   error,
   columns = 2,
+  id,
 }: FormSelectProps<T>) => {
+  const selectId = id || `select-${label.replace(/\s+/g, "-").toLowerCase()}`;
+  const errorId = `${selectId}-error`;
+
   return (
     <div className="flex flex-col">
       <label className="text-sm font-medium text-gray-700 mb-1">{label}</label>
-      <div className={`grid grid-cols-${columns} gap-3`}>
+      <div
+        className={`grid grid-cols-${columns} gap-3`}
+        role="radiogroup"
+        aria-labelledby={selectId}
+        aria-describedby={error ? errorId : undefined}
+      >
         {options.map((option) => (
           <button
             key={option.value}
             type="button"
             onClick={() => onChange(option.value)}
+            role="radio"
+            aria-checked={selected === option.value}
             className={`flex items-center justify-center gap-2 py-3 rounded-lg border transition-all ${
               selected === option.value
                 ? "bg-blue-50 border-blue-500 text-blue-700 font-medium"
@@ -46,7 +58,13 @@ export const FormSelect = <T extends string>({
         ))}
       </div>
       {error && (
-        <span className="text-red-500 text-sm mt-1 text-start">{error}</span>
+        <span
+          id={errorId}
+          className="text-red-500 text-sm mt-1 text-start"
+          role="alert"
+        >
+          {error}
+        </span>
       )}
     </div>
   );

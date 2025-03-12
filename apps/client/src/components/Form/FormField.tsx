@@ -24,6 +24,8 @@ export const FormField: React.FC<FormFieldProps> = ({
   inputMode,
   ...rest
 }) => {
+  const errorId = id ? `${id}-error` : undefined;
+
   return (
     <div className="flex flex-col">
       <label htmlFor={id} className="text-sm font-medium text-gray-700 mb-1">
@@ -38,6 +40,8 @@ export const FormField: React.FC<FormFieldProps> = ({
         <input
           id={id}
           inputMode={inputMode}
+          aria-describedby={error ? errorId : undefined}
+          aria-invalid={error ? "true" : "false"}
           {...rest}
           className={`w-full rounded-lg border-gray-300 border py-3 ${
             icon ? "pe-10" : "pe-4"
@@ -45,7 +49,13 @@ export const FormField: React.FC<FormFieldProps> = ({
         />
       </div>
       {error && (
-        <span className="text-red-500 text-sm mt-1 text-start">{error}</span>
+        <span
+          id={errorId}
+          className="text-red-500 text-sm mt-1 text-start"
+          role="alert"
+        >
+          {error}
+        </span>
       )}
     </div>
   );

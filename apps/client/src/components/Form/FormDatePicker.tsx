@@ -16,6 +16,8 @@ export const FormDatePicker: React.FC<FormDatePickerProps> = ({
   error,
   id = name,
 }) => {
+  const errorId = `${id}-error`;
+
   // Format the date according to the user's locale
   const formatDateForInput = (date: Date): string => {
     const year = date.getFullYear();
@@ -50,11 +52,19 @@ export const FormDatePicker: React.FC<FormDatePickerProps> = ({
               onChange={(e) => {
                 field.onChange(parseDateFromInput(e.target.value));
               }}
+              aria-describedby={error ? errorId : undefined}
+              aria-invalid={error ? "true" : "false"}
             />
           )}
         />
         {error && (
-          <span className="text-red-500 text-sm mt-1 text-start">{error}</span>
+          <span
+            id={errorId}
+            className="text-red-500 text-sm mt-1 text-start"
+            role="alert"
+          >
+            {error}
+          </span>
         )}
       </div>
     </div>
