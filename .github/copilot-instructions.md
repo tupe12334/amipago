@@ -3,7 +3,7 @@
 - The client should be in Hebrew
 - Use zod for models and form validations
 - If you use a package, import only the relevant imports and not the entire package
-- Add descriptive id to every html element
+- Add descriptive id to every html element, try not using generated ids
 
 ## Docs
 
