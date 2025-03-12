@@ -22,7 +22,8 @@ Examples:
 
 ### Direction
 
-Make sure you use RTL-friendly terms
+Make sure you use RTL-friendly and LTR-friendly terms
+Make sure icons are supported as well
 Examples:
 
 - When using style, use start and end, not right and left
