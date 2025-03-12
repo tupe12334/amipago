@@ -15,14 +15,19 @@ export const FormSuccessScreen: React.FC<FormSuccessScreenProps> = ({
   icon = "check-circle",
 }) => {
   return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">
+    <div id="form-success-screen" className="flex flex-col items-center gap-4">
+      <div
+        id="success-icon-container"
+        className="flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4"
+      >
         <i
+          id="success-icon"
           className={`fa fa-${icon} text-4xl text-green-500`}
-          aria-hidden="true"
+          role="img"
+          aria-label="Success icon"
         ></i>
       </div>
-      <p className="text-xl font-bold" aria-live="polite">
+      <p id="success-message" className="text-xl font-bold" aria-live="polite">
         {message}
       </p>
     </div>
