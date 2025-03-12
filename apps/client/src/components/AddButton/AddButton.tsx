@@ -3,6 +3,7 @@ import FloatingActionButton from "../FloatingActionButton/FloatingActionButton";
 import { FaUserGroup } from "react-icons/fa6";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { useNavigate } from "react-router";
+import { createGroupPath } from "../../paths";
 
 export function AddButton() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export function AddButton() {
         {
           label: "צור קבוצה",
           icon: <FaUserGroup />,
-          onClick: () => navigate("/group"),
+          onClick: () => navigate(createGroupPath),
         },
         {
           label: "הוצאה חדשה",
