@@ -3,7 +3,11 @@ import { test as base, expect } from "@playwright/test";
 /**
  * Extended test fixture with snapshot verification utilities
  */
-export const test = base.extend({
+type SnapshotFixtures = {
+  verifySnapshot: (name: string) => Promise<void>;
+};
+
+export const test = base.extend<SnapshotFixtures>({
   // Add a method to verify UI snapshots
   verifySnapshot: async ({ page }, use) => {
     // Helper method to capture and compare snapshots during tests
