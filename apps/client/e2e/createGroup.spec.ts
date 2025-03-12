@@ -5,8 +5,10 @@ test.describe("Create New Group", () => {
     page,
     verifySnapshot,
   }) => {
-    // Navigate directly to create group page instead of trying to go through groups page
-    await page.goto("/create/group");
+    // Navigate to home page and click on create group link
+    await page.goto("/");
+    await page.click("#floating-action-button-button");
+    await page.click("#floating-action-button-option-0");
 
     // Check we are on create group page
     await expect(page.locator("h1")).toHaveText("צור קבוצה חדשה");
@@ -44,8 +46,10 @@ test.describe("Create New Group", () => {
     page,
     verifySnapshot,
   }) => {
-    // Navigate directly to create group page
-    await page.goto("/create/group");
+    // Navigate to home page and click on create group link
+    await page.goto("/");
+    await page.click("#floating-action-button-button");
+    await page.click("#floating-action-button-option-0");
 
     // Check form is visible
     await expect(page.locator("form")).toBeVisible();
@@ -85,6 +89,40 @@ test.describe("Create New Group", () => {
     page,
     verifySnapshot,
   }) => {
-    // Not implemented yet
+    const groupTypes = [
+      { value: "GENERAL", label: "כללי" },
+      { value: "FRIENDS", label: "חברים" },
+      { value: "HOUSEHOLD", label: "משק בית" },
+      { value: "WORK", label: "עבודה" },
+    ];
+
+    for (const type of groupTypes) {
+      // Navigate to homepage and click create group link
+      await page.goto("/");
+      await page.click("#floating-action-button-button");
+      await page.click("#floating-action-button-option-0");
+      await expect(page.locator("h1")).toHaveText("צור קבוצה חדשה");
+
+      // Fill form fields based on the current type
+      await page
+        .locator('input[name="name"]')
+        .fill(`קבוצת בדיקה - ${type.label}`);
+      await page
+        .locator('input[name="description"]')
+        .fill(`תיאור - ${type.label}`);
+      await page
+        .locator(`button[role="radio"]:has-text("${type.label}")`)
+        .click();
+      await verifySnapshot(
+        `create-group-form-${type.value.toLowerCase()}-filled`
+      );
+
+      // Submit form and check success
+      await page.click('button[type="submit"]');
+      await expect(page.locator('[aria-live="polite"]')).toHaveText(
+        "הקבוצה נוצרה בהצלחה!"
+      );
+      await expect(page.locator("i.fa.fa-check-circle")).toBeVisible();
+    }
   });
 });

@@ -18,7 +18,7 @@ test.describe("No Scroll Tests", () => {
         height: device.height,
       });
 
-      // Navigate to the app
+      // Navigate to the root page
       await page.goto("/");
 
       // Wait for content to load
@@ -76,9 +76,6 @@ test.describe("No Scroll Tests", () => {
   }) => {
     // Set mobile viewport
     await page.setViewportSize({ width: 375, height: 667 });
-
-    // Navigate to the app
-    await page.goto("/");
 
     // Wait for the group list container to be visible
     await page.waitForSelector('[data-testid="group-list-container"]');
