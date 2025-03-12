@@ -14,7 +14,7 @@
 - Use playwright for client e2e testing
 - Describe testing in English
 - The e2e test should be in an apps/client/e2e folder and not inside src
-- Every test start from the root "/" path and don't use goto function
+- Every test start from the root goto("/") path and don't use goto function
 
 ## Icons
 
