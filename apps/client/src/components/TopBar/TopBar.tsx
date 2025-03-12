@@ -6,7 +6,10 @@ type Props = React.PropsWithChildren & {
 };
 export const TopBar: FC<Props> = ({ children, className }) => {
   return (
-    <div className={classNames("flex w-full px-2 py-3", className)}>
+    <div
+      id="topbar-container"
+      className={classNames("flex w-full px-2 py-3", className)}
+    >
       {children}
     </div>
   );

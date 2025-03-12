@@ -12,7 +12,7 @@ export const InputField: React.FC<InputFieldProps> = ({
   ...rest
 }) => {
   const generatedId = useId();
-  const componentId = id || generatedId;
+  const componentId = id || `input-field-${generatedId}`;
   const errorId = `${componentId}-error`;
 
   return (
