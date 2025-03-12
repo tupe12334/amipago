@@ -12,7 +12,7 @@ import { useCreateExpenseMutation } from "./hooks/useCreateExpenseMutation";
 const createExpenseDefaultInput: CreateExpenseInput = {
   amount: 0,
   description: "",
-  date: new Date(),
+  date: new Date(), // Today's date as default
   currency: "ILS",
 };
 
@@ -23,18 +23,13 @@ export const CreateExpenseForm: React.FC = () => {
 
   // Format the date according to the user's locale
   const formatDateForInput = (date: Date): string => {
-    return date
-      .toLocaleDateString(i18n.language, {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      })
-      .split("/")
-      .reverse()
-      .join("-"); // Convert to YYYY-MM-DD for HTML date input
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`; // Format as YYYY-MM-DD for HTML date input
   };
 
-  // Parse the date from the locale format back to a Date object
+  // Parse the date from the input format back to a Date object
   const parseDateFromInput = (dateString: string): Date => {
     return new Date(dateString);
   };
@@ -97,9 +92,14 @@ export const CreateExpenseForm: React.FC = () => {
                 id="amount"
                 type="number"
                 step="0.01"
+                min="0.01"
                 placeholder={t("expense.placeholder.amount")}
                 className="w-full rounded-lg border-gray-300 border py-3 pe-10 ps-4 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none transition-colors"
-                {...register("amount")}
+                {...register("amount", {
+                  valueAsNumber: true,
+                })}
+                inputMode="decimal"
+                pattern="[0-9]*\.?[0-9]+"
               />
             </div>
             {errors.amount?.message && (
@@ -196,7 +196,7 @@ export const CreateExpenseForm: React.FC = () => {
                     }`}
                   >
                     <i className="fa fa-shekel" aria-hidden="true"></i>
-                    <span>₪ שקל</span>
+                    <span>{t("currencies.ILS")}</span>
                   </button>
                   <button
                     type="button"
@@ -208,7 +208,7 @@ export const CreateExpenseForm: React.FC = () => {
                     }`}
                   >
                     <i className="fa fa-dollar" aria-hidden="true"></i>
-                    <span>$ דולר</span>
+                    <span>{t("currencies.USD")}</span>
                   </button>
                 </div>
               )}
@@ -223,9 +223,14 @@ export const CreateExpenseForm: React.FC = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="flex items-center justify-center gap-2 bg-blue-600 text-white py-3 px-4 rounded-lg mt-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+            disabled={loading}
+            className="flex items-center justify-center gap-2 bg-blue-600 text-white py-3 px-4 rounded-lg mt-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:bg-blue-300"
           >
-            <i className="fa fa-save" aria-hidden="true"></i>
+            {loading ? (
+              <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>
+            ) : (
+              <i className="fa fa-save" aria-hidden="true"></i>
+            )}
             <span>{t("expense.save")}</span>
           </button>
         </form>
