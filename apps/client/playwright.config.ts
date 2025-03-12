@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import path from "path";
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -9,8 +10,9 @@ export default defineConfig({
   reporter: "html",
   use: {
     baseURL: "http://localhost:5173",
-    trace: "on-first-retry",
-    screenshot: "only-on-failure",
+    trace: "on",
+    screenshot: "on",
+    actionTimeout: 15000,
   },
   projects: [
     {
@@ -42,4 +44,5 @@ export default defineConfig({
     stdout: "pipe",
     stderr: "pipe",
   },
+  outputDir: path.join(__dirname, "test-results"),
 });
