@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 
 type FormFieldProps = {
   label: string;
@@ -24,21 +24,30 @@ export const FormField: React.FC<FormFieldProps> = ({
   inputMode,
   ...rest
 }) => {
-  const errorId = id ? `${id}-error` : undefined;
+  const generatedId = useId();
+  const componentId = id || generatedId;
+  const errorId = `${componentId}-error`;
 
   return (
-    <div className="flex flex-col">
-      <label htmlFor={id} className="text-sm font-medium text-gray-700 mb-1">
+    <div id={`${componentId}-container`} className="flex flex-col">
+      <label
+        id={`${componentId}-label`}
+        htmlFor={componentId}
+        className="text-sm font-medium text-gray-700 mb-1"
+      >
         {label}
       </label>
-      <div className="relative">
+      <div id={`${componentId}-input-wrapper`} className="relative">
         {icon && (
-          <div className="absolute inset-y-0 end-0 flex items-center pe-3 pointer-events-none">
+          <div
+            id={`${componentId}-icon`}
+            className="absolute inset-y-0 end-0 flex items-center pe-3 pointer-events-none"
+          >
             <i className={`fa fa-${icon} text-gray-400`} aria-hidden="true"></i>
           </div>
         )}
         <input
-          id={id}
+          id={componentId}
           inputMode={inputMode}
           aria-describedby={error ? errorId : undefined}
           {...rest}

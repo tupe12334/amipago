@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 
 type InputFieldProps = {
   label: string;
@@ -11,13 +11,17 @@ export const InputField: React.FC<InputFieldProps> = ({
   id,
   ...rest
 }) => {
-  const errorId = id ? `${id}-error` : undefined;
+  const generatedId = useId();
+  const componentId = id || generatedId;
+  const errorId = `${componentId}-error`;
 
   return (
-    <div className="flex flex-col">
-      <label htmlFor={id}>{label}</label>
+    <div id={`${componentId}-container`} className="flex flex-col">
+      <label id={`${componentId}-label`} htmlFor={componentId}>
+        {label}
+      </label>
       <input
-        id={id}
+        id={componentId}
         {...rest}
         className="px-2"
         aria-describedby={error ? errorId : undefined}

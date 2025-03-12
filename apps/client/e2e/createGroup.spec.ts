@@ -80,4 +80,11 @@ test.describe("Create New Group", () => {
     // Add snapshot verification for success state
     await verifySnapshot("validation-success");
   });
+
+  test("should create a group for each group type", async ({
+    page,
+    verifySnapshot,
+  }) => {
+    // Not implemented yet
+  });
 });

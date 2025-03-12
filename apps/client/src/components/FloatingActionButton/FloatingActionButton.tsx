@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useId } from "react";
 type NonEmptyArray<T> = [T, ...T[]];
 type OptionProps = {
   label: string;
@@ -14,6 +14,7 @@ type Props = React.PropsWithChildren & {
 
 const FloatingActionButton: FC<Props> = ({ children, options }) => {
   const [isActive, setIsActive] = useState(false);
+  const fabId = useId();
 
   const handleClick = () => {
     setIsActive(!isActive);
@@ -22,8 +23,9 @@ const FloatingActionButton: FC<Props> = ({ children, options }) => {
   };
 
   return (
-    <div className="fixed bottom-6 end-6">
+    <div id={`${fabId}-container`} className="fixed bottom-6 end-6">
       <button
+        id={`${fabId}-button`}
         onClick={handleClick}
         className="flex items-center justify-center w-14 h-14 rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-600 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 transform hover:scale-105"
         aria-label="Add Item"
@@ -32,10 +34,14 @@ const FloatingActionButton: FC<Props> = ({ children, options }) => {
       </button>
 
       {isActive && options && (
-        <div className="absolute bottom-20 end-0 bg-white rounded-lg shadow-xl p-4 w-48 transition-all duration-300">
-          <ul className="space-y-2">
-            {options.map((option) => (
+        <div
+          id={`${fabId}-floating-container`}
+          className="absolute bottom-20 end-0 bg-white rounded-lg shadow-xl p-4 w-48 transition-all duration-300"
+        >
+          <ul id={`${fabId}-options-list`} className="space-y-2">
+            {options.map((option, index) => (
               <li
+                id={`${fabId}-option-${index}`}
                 key={option.label}
                 {...option}
                 className="gap-2 text-end p-2 hover:bg-gray-100 rounded cursor-pointer transition-colors flex-row flex items-center"

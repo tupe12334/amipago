@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useId } from "react";
 
 type Option<T extends string> = {
   value: T;
@@ -16,10 +16,13 @@ export const ButtonGroup = <T extends string>({
   selected,
   onChange,
 }: ButtonGroupProps<T>) => {
+  const groupId = useId();
+
   return (
-    <div className="flex gap-2">
+    <div id={`${groupId}-container`} className="flex gap-2">
       {options.map((option) => (
         <button
+          id={`${groupId}-button-${option.value}`}
           key={option.value}
           onClick={() => onChange(option.value)}
           className={`flex-1 py-2 ps-4 pe-4 rounded border 
