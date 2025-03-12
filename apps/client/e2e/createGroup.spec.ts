@@ -101,5 +101,6 @@ test.describe("Create New Group", () => {
     await page.waitForTimeout(2100);
     const url = new URL(page.url());
     expect(url.pathname).toBe("/");
+    await verifySnapshot("create-group-redirection");
   });
 });
