@@ -53,7 +53,6 @@ export const FormDatePicker: React.FC<FormDatePickerProps> = ({
                 field.onChange(parseDateFromInput(e.target.value));
               }}
               aria-describedby={error ? errorId : undefined}
-              aria-invalid={error ? "true" : "false"}
             />
           )}
         />

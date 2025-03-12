@@ -21,7 +21,6 @@ export const InputField: React.FC<InputFieldProps> = ({
         {...rest}
         className="px-2"
         aria-describedby={error ? errorId : undefined}
-        aria-invalid={error ? "true" : "false"}
       />
       {error && (
         <span
