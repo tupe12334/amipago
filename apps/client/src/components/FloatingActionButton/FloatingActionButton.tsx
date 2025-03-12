@@ -36,6 +36,7 @@ const FloatingActionButton: FC<Props> = ({ children, options }) => {
           <ul className="space-y-2">
             {options.map((option) => (
               <li
+                key={option.label}
                 {...option}
                 className="gap-2 text-end p-2 hover:bg-gray-100 rounded cursor-pointer transition-colors flex-row flex items-center"
               >
