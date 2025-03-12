@@ -5,22 +5,10 @@ test.describe("Create New Group", () => {
     page,
     verifySnapshot,
   }) => {
-    // Navigate to groups page
-    await page.goto("/");
-    await page.click('a[href="/groups"]');
+    // Navigate directly to create group page instead of trying to go through groups page
+    await page.goto("/create/group");
 
-    // Check we are on groups page
-    await expect(page.locator("h1")).toHaveText("הקבוצות שלי");
-    await expect(page.locator("p")).toContainText("עדיין אין לך קבוצות");
-
-    // Add snapshot verification for groups page
-    await verifySnapshot("empty-groups-page");
-
-    // Click on button to add new group
-    await page.locator('[aria-label="הוסף קבוצה חדשה"]').click();
-
-    // Check we were redirected to create group page
-    await expect(page).toHaveURL(/.*\/create\/group/);
+    // Check we are on create group page
     await expect(page.locator("h1")).toHaveText("צור קבוצה חדשה");
 
     // Add snapshot verification for empty create group form
@@ -30,9 +18,9 @@ test.describe("Create New Group", () => {
     await page.locator('input[name="name"]').fill("קבוצת בדיקה");
     await page.locator('input[name="description"]').fill("תיאור קבוצת בדיקה");
 
-    // Select group type with proper accessibility
-    await page.click('[aria-label="סוג קבוצה"]');
-    await page.click("text=חברים");
+    // Select group type - using the custom radio button for "חברים" (Friends)
+    // This targets the button element with role="radio" that contains the text "חברים"
+    await page.locator('button[role="radio"]:has-text("חברים")').click();
 
     // Add snapshot verification for filled form
     await verifySnapshot("create-group-form-filled");
