@@ -40,7 +40,9 @@ export const CreateGroupForm = () => {
               aria-hidden="true"
             ></i>
           </div>
-          <p className="text-xl font-bold">הקבוצה נוצרה בהצלחה!</p>
+          <p className="text-xl font-bold" aria-live="polite">
+            הקבוצה נוצרה בהצלחה!
+          </p>
         </div>
       ) : (
         <form
@@ -58,13 +60,14 @@ export const CreateGroupForm = () => {
             </div>
           )}
 
-          {/* Replace direct register with Controller for FormField components */}
+          {/* Pass name attribute to the input components */}
           <Controller
             control={control}
             name="name"
             render={({ field }) => (
               <FormField
                 id="name"
+                name="name"
                 label="שם קבוצה:"
                 placeholder="הכנס שם קבוצה"
                 error={errors.name?.message}
@@ -84,6 +87,7 @@ export const CreateGroupForm = () => {
             render={({ field }) => (
               <FormField
                 id="description"
+                name="description"
                 label="תיאור:"
                 placeholder="הכנס תיאור קבוצה"
                 error={errors.description?.message}
@@ -104,6 +108,7 @@ export const CreateGroupForm = () => {
             render={({ field }) => (
               <FormSelect
                 label="סוג קבוצה"
+                id="type"
                 options={[
                   {
                     value: "GENERAL" as GroupType,

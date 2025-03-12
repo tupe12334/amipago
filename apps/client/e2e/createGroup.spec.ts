@@ -51,8 +51,8 @@ test.describe("קבוצה חדשה", () => {
     await expect(page.locator('[aria-describedby="name-error"]')).toBeVisible();
     await expect(page.locator("#name-error")).toContainText("שדה זה הוא חובה");
 
-    // Fill only group name and submit form
-    await page.locator('input[name="name"]').fill("קבוצת בדיקה");
+    // Fill only group name and submit form - use ID selector instead of name
+    await page.locator("#name").fill("קבוצת בדיקה");
     await page.click('button[type="submit"]');
 
     // Check form submitted successfully even without description (not required)
