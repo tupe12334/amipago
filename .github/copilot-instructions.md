@@ -20,9 +20,8 @@
 
 Make sure that we support acceptability guidelines
 
-Examples:
-
 - Use aria in english
+- Add all the relevant aria fields
 
 ## Style
 
