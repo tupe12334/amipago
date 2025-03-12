@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router";
-import { useId } from "react";
 
 type Props = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -8,7 +7,7 @@ type Props = React.DetailedHTMLProps<
 
 export function BackButton(props: Props) {
   const navigate = useNavigate();
-  const buttonId = useId();
+  const buttonId = "back-button";
 
   return (
     <button

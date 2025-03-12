@@ -1,4 +1,4 @@
-import React, { FC, useId } from "react";
+import React from "react";
 
 type Option<T extends string> = {
   value: T;
@@ -16,7 +16,8 @@ export const ButtonGroup = <T extends string>({
   selected,
   onChange,
 }: ButtonGroupProps<T>) => {
-  const groupId = useId();
+  // Replace dynamic id with static id
+  const groupId = "button-group";
 
   return (
     <div id={`${groupId}-container`} className="flex gap-2">

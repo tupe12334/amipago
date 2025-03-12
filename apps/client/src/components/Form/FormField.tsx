@@ -1,4 +1,4 @@
-import React, { useId } from "react";
+import React from "react";
 
 type FormFieldProps = {
   label: string;
@@ -24,8 +24,8 @@ export const FormField: React.FC<FormFieldProps> = ({
   inputMode,
   ...rest
 }) => {
-  const generatedId = useId();
-  const componentId = id || generatedId;
+  // Use a static id instead of generated id
+  const componentId = id || "form-field";
   const errorId = `${componentId}-error`;
 
   return (

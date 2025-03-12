@@ -1,4 +1,4 @@
-import React, { useId } from "react";
+import React from "react";
 
 type FormSubmitButtonProps = {
   label: string;
@@ -16,10 +16,11 @@ export const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   className = "",
   ...props
 }) => {
-  const generatedId = useId();
+  // Replace dynamic id with static id
+  const staticId = "form-submit-button";
   return (
     <button
-      id={generatedId}
+      id={staticId}
       type="submit"
       disabled={isLoading || props.disabled}
       className={`flex items-center justify-center gap-2 bg-blue-600 text-white py-3 px-4 rounded-lg mt-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:bg-blue-300 ${className}`}

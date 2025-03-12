@@ -1,4 +1,4 @@
-import React, { FC, useState, useId } from "react";
+import React, { FC, useState } from "react";
 type NonEmptyArray<T> = [T, ...T[]];
 type OptionProps = {
   label: string;
@@ -14,7 +14,7 @@ type Props = React.PropsWithChildren & {
 
 const FloatingActionButton: FC<Props> = ({ children, options }) => {
   const [isActive, setIsActive] = useState(false);
-  const fabId = useId();
+  const fabId = "floating-action-button";
 
   const handleClick = () => {
     setIsActive(!isActive);
