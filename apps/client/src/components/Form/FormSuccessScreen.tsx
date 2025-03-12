@@ -3,7 +3,8 @@
  * It displays a message and an icon to indicate the success state.
  * After 2 seconds, the success message will disappear and the page will return to the main page.
  */
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 interface FormSuccessScreenProps {
   message: string;
@@ -14,6 +15,15 @@ export const FormSuccessScreen: React.FC<FormSuccessScreenProps> = ({
   message,
   icon = "check-circle",
 }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigate("/");
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [navigate]);
+
   return (
     <div id="form-success-screen" className="flex flex-col items-center gap-4">
       <div
