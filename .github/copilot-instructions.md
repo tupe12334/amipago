@@ -4,6 +4,10 @@
 - Use zod for models and form validations
 - If you use a package, import only the relevant imports and not the entire package
 
+## Docs
+
+- Please add comments only in English
+
 ## Testing
 
 - Use playwright for client e2e testing
