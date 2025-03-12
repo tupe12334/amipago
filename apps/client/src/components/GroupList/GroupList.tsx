@@ -72,66 +72,79 @@ export const GroupList = () => {
     );
   }
 
-  return (
-    <ul
-      className="space-y-4 flex-1 overflow-y-auto"
-      aria-label="רשימת קבוצות"
-      data-testid="group-list-container"
-    >
-      {groups.map((group) => (
-        <li
-          key={group.id}
-          className="bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow"
+  if (groups.length !== 0) {
+    return (
+      <div className="relative">
+        <ul
+          className="space-y-4 flex-1 overflow-y-auto"
+          aria-label="רשימת קבוצות"
+          data-testid="group-list-container"
         >
-          <div className="flex justify-between items-start">
-            <h3 className="font-bold text-lg mb-2">{group.name}</h3>
-            <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-              {group.members?.length || 0} {t("חברים")}
-            </span>
-          </div>
-
-          {group.description && (
-            <p className="text-gray-600 mb-3">{group.description}</p>
-          )}
-
-          <div className="flex flex-wrap gap-2 mb-3">
-            {group.tags?.map((tag, index) => (
-              <span
-                key={index}
-                className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <div className="text-gray-500 text-sm mt-2 flex items-center">
-            <i className="fa fa-clock-o me-2" aria-hidden="true"></i>
-            <span>
-              {t("פעילות אחרונה")}:{" "}
-              {new Date(
-                group.lastActivity || group.createdAt
-              ).toLocaleDateString("he-IL")}
-            </span>
-          </div>
-
-          <div className="flex justify-between items-center mt-4 pt-2 border-t border-gray-100">
-            <div className="text-gray-400 text-xs">
-              {t("נוצר")}:{" "}
-              {new Date(group.createdAt).toLocaleDateString("he-IL")}
-            </div>
-            <button
-              className="text-blue-600 flex items-center"
-              aria-label={`${t("צפה בקבוצה")} ${group.name}`}
+          {groups.map((group) => (
+            <li
+              key={group.id}
+              className="bg-white rounded-lg shadow-lg p-4 hover:shadow-md transition-shadow"
             >
-              <span>{t("צפה")}</span>
-              <i className="fa fa-angle-start ms-1" aria-hidden="true"></i>
-            </button>
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
+              <div className="flex justify-between items-start">
+                <h3 className="font-bold text-lg mb-2">{group.name}</h3>
+                <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                  {group.members?.length || 0} {t("חברים")}
+                </span>
+              </div>
+
+              {group.description && (
+                <p className="text-gray-600 mb-3">{group.description}</p>
+              )}
+
+              <div className="flex flex-wrap gap-2 mb-3">
+                {group.tags?.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <div className="text-gray-500 text-sm mt-2 flex items-center">
+                <i className="fa fa-clock-o me-2" aria-hidden="true"></i>
+                <span>
+                  {t("פעילות אחרונה")}:{" "}
+                  {new Date(
+                    group.lastActivity || group.createdAt
+                  ).toLocaleDateString("he-IL")}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center mt-4 pt-2 border-t border-gray-100">
+                <div className="text-gray-400 text-xs">
+                  {t("נוצר")}:{" "}
+                  {new Date(group.createdAt).toLocaleDateString("he-IL")}
+                </div>
+                <button
+                  className="text-blue-600 flex items-center"
+                  aria-label={`${t("צפה בקבוצה")} ${group.name}`}
+                >
+                  <span>{t("צפה")}</span>
+                  <i className="fa fa-angle-start ms-1" aria-hidden="true"></i>
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div
+          className="absolute bottom-0 start-1/2 transform -translate-x-1/2 mb-2 text-gray-500 text-sm flex items-center"
+          aria-hidden="true"
+        >
+          <i className="fa fa-arrow-down ms-1" aria-hidden="true"></i>
+          <span>גלול כדי לראות עוד</span>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
 };
 
 export default GroupList;
