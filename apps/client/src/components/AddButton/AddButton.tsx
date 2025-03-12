@@ -1,7 +1,4 @@
-import { FaPlus } from "react-icons/fa6";
 import FloatingActionButton from "../FloatingActionButton/FloatingActionButton";
-import { FaUserGroup } from "react-icons/fa6";
-import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { useNavigate } from "react-router";
 import { createExpensePath, createGroupPath } from "../../paths";
 
@@ -13,17 +10,17 @@ export function AddButton() {
       options={[
         {
           label: "צור קבוצה",
-          icon: <FaUserGroup />,
+          icon: <i className="fa fa-users" aria-hidden="true"></i>,
           onClick: () => navigate(createGroupPath),
         },
         {
           label: "הוצאה חדשה",
-          icon: <FaMoneyBillTransfer />,
+          icon: <i className="fa fa-money" aria-hidden="true"></i>,
           onClick: () => navigate(createExpensePath),
         },
       ]}
     >
-      <FaPlus />
+      <i className="fa fa-plus" aria-hidden="true"></i>
     </FloatingActionButton>
   );
 }
