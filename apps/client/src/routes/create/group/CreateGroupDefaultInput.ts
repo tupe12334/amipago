@@ -1,7 +1,7 @@
 import { CreateGroupInput } from "./CreateGroupInput";
 
-export const CreateGroupDefaultInput :CreateGroupInput= {
-    name:"",
-    type:"GENERAL",
-    
+export const CreateGroupDefaultInput: CreateGroupInput = {
+  name: "",
+  description: "",
+  type: "GENERAL",
 };
