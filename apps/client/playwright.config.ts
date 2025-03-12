@@ -1,6 +1,10 @@
 import { defineConfig, devices } from "@playwright/test";
 import path from "path";
 
+// Get the port from environment variable or use the default 1420
+const port = process.env.VITE_CLIENT_PORT || "1420";
+const baseUrl = `http://localhost:${port}`;
+
 export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: true,
@@ -9,7 +13,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: "html",
   use: {
-    baseURL: "http://localhost:5173",
+    baseURL: baseUrl,
     trace: "on",
     screenshot: "on",
     actionTimeout: 15000,
@@ -39,7 +43,7 @@ export default defineConfig({
   ],
   webServer: {
     command: "pnpm run dev",
-    url: "http://localhost:5173",
+    url: baseUrl,
     reuseExistingServer: !process.env.CI,
     stdout: "pipe",
     stderr: "pipe",
