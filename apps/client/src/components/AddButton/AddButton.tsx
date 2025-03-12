@@ -3,7 +3,7 @@ import FloatingActionButton from "../FloatingActionButton/FloatingActionButton";
 import { FaUserGroup } from "react-icons/fa6";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { useNavigate } from "react-router";
-import { createGroupPath } from "../../paths";
+import { createExpensePath, createGroupPath } from "../../paths";
 
 export function AddButton() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export function AddButton() {
         {
           label: "הוצאה חדשה",
           icon: <FaMoneyBillTransfer />,
-          onClick: () => console.log("Create Expense"),
+          onClick: () => navigate(createExpensePath),
         },
       ]}
     >
