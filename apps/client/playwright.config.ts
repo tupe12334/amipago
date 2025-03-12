@@ -15,7 +15,7 @@ const baseUrl = `http://localhost:${port}`;
 const outputDir = path.join(__dirname, "test-results");
 
 export default defineConfig({
-  testDir: "./tests/e2e",
+  testDir: "./e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
