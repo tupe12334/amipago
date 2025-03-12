@@ -18,6 +18,7 @@
 - The e2e test should be in an apps/client/e2e folder and not inside src
 - Every test start from the root goto("/") path and don't use goto function
 - Don't put comments in tests
+- Save screen shot after any meaningful action
 
 ## Icons
 

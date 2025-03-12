@@ -80,4 +80,26 @@ test.describe("Create New Group", () => {
       await expect(page.locator("i.fa.fa-check-circle")).toBeVisible();
     }
   });
+
+  test("should redirect to root after 2 seconds", async ({
+    page,
+    verifySnapshot,
+  }) => {
+    await page.goto("/");
+    await page.click("#floating-action-button-button");
+    await page.click("#floating-action-button-option-0");
+    await expect(page.locator("h1")).toHaveText("צור קבוצה חדשה");
+    await page.locator('input[name="name"]').fill("קבוצת בדיקה");
+    await page.locator('input[name="description"]').fill("תיאור קבוצת בדיקה");
+    await page.locator('button[role="radio"]:has-text("חברים")').click();
+    await page.click('button[type="submit"]');
+    await expect(page.locator('[aria-live="polite"]')).toHaveText(
+      "הקבוצה נוצרה בהצלחה!"
+    );
+    await expect(page.locator("i.fa.fa-check-circle")).toBeVisible();
+    // wait beyond 2 seconds for redirection
+    await page.waitForTimeout(2100);
+    const url = new URL(page.url());
+    expect(url.pathname).toBe("/");
+  });
 });
