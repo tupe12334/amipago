@@ -73,7 +73,11 @@ export const GroupList = () => {
   }
 
   return (
-    <ul className="space-y-4" aria-label="רשימת קבוצות">
+    <ul
+      className="space-y-4 flex-1 overflow-y-auto"
+      aria-label="רשימת קבוצות"
+      data-testid="group-list-container"
+    >
       {groups.map((group) => (
         <li
           key={group.id}

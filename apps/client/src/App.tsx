@@ -26,6 +26,25 @@ function App() {
     };
   }, [i18n]);
 
+  // Add effect to disable scrolling
+  useEffect(() => {
+    // Disable scrolling on html and body elements
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.height = "100%";
+    document.body.style.width = "100%";
+
+    return () => {
+      // Restore scrolling when component unmounts
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.height = "";
+      document.body.style.width = "";
+    };
+  }, []);
+
   return (
     <main className="flex flex-col h-screen">
       <NavBar />
