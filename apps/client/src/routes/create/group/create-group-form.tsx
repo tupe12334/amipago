@@ -113,12 +113,11 @@ export const CreateGroupForm = () => {
                   {
                     value: "GENERAL" as GroupType,
                     label: "כללי",
-                    icon: "users",
                   },
                   {
                     value: "FRIENDS" as GroupType,
                     label: "חברים",
-                    icon: "user-friends",
+                    icon: "users",
                   },
                   {
                     value: "HOUSEHOLD" as GroupType,
