@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
-import App from "./App";
+import App from "./routes/App";
 import "./index.css";
 import { createExpensePath, createGroupPath } from "./paths";
 import { CreateExpensePage } from "./routes/create/expense/create-expense";

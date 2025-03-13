@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { getLanguageDir } from "./i18n/main";
-import { AddButton } from "./components/AddButton/AddButton";
-import NavBar from "./components/NavBar/NavBar";
-import GroupList from "./components/GroupList/GroupList";
+import { getLanguageDir } from "../i18n/main";
+import { AddButton } from "../components/AddButton/AddButton";
+import NavBar from "../components/NavBar/NavBar";
+import GroupList from "../components/GroupList/GroupList";
 
 function App() {
   const { i18n } = useTranslation();
