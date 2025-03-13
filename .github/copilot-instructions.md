@@ -11,16 +11,22 @@
 ## Docs
 
 - Please add comments only in English
+- Don't put comments in tests
 
 ## Testing
 
-- Use playwright for client e2e testing
-- Use vitest for unit testing
 - Describe testing in English
+
+### E2E
+
+- Use playwright for client e2e testing
 - The e2e test should be in an apps/client/e2e folder and not inside src
 - Every test start from the root goto("/") path and don't use goto function
-- Don't put comments in tests
-- Save snapshot after any meaningful action, use the native feature of the testing lib
+- Save snapshot after any meaningful action, make sure the page has been settle down before taking the snapshot
+
+### Unit testing
+
+- Use vitest for unit testing
 - When writing util functions, add a spec file to them
 
 ## Icons
