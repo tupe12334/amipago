@@ -24,6 +24,7 @@ specifiers:
   font-awesome: ^4.7.0
   i18next: ^24.2.3
   i18next-browser-languagedetector: ^8.0.4
+  idb: ^8.0.2
   isbot: ^5.1.23
   postcss: ^8.5.3
   react: ^18.3.1
@@ -55,6 +56,7 @@ dependencies:
   font-awesome: 4.7.0
   i18next: 24.2.3_typescript@5.6.3
   i18next-browser-languagedetector: 8.0.4
+  idb: 8.0.2
   isbot: 5.1.23
   react: 18.3.1
   react-dom: 18.3.1_react@18.3.1
@@ -3022,6 +3024,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       safer-buffer: 2.1.2
+    dev: false
+
+  /idb/8.0.2:
+    resolution: {integrity: sha512-CX70rYhx7GDDQzwwQMDwF6kDRQi5vVs6khHUumDrMecBylKkwvZ8HWvKV08AGb7VbpoGCWUQ4aHzNDgoUiOIUg==}
     dev: false
 
   /ieee754/1.2.1:
