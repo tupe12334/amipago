@@ -6,6 +6,7 @@
 - Add descriptive id to every html element, try not using generated ids
 - Prefer to work with async/await and not callbacks
 - The client use `react-router`
+- When ever possible, use external libs
 
 ## Docs
 
@@ -14,11 +15,13 @@
 ## Testing
 
 - Use playwright for client e2e testing
+- Use vitest for unit testing
 - Describe testing in English
 - The e2e test should be in an apps/client/e2e folder and not inside src
 - Every test start from the root goto("/") path and don't use goto function
 - Don't put comments in tests
 - Save screen shot after any meaningful action
+- When writing util functions, add a spec file to them
 
 ## Icons
 
