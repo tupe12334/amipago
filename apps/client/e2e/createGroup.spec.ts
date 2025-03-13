@@ -1,4 +1,4 @@
-import { test, expect } from "./utils/baseTest";
+import { expect, test } from "@playwright/test";
 
 test.describe("Create New Group", () => {
   test("should create a new group successfully", async ({ page }) => {
