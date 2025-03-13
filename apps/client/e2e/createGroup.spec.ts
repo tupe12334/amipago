@@ -71,6 +71,10 @@ test.describe("Create New Group", () => {
       await page
         .locator(`button[role="radio"]:has-text("${type.label}")`)
         .click();
+
+      // Wait for the page to stabilize before taking screenshot
+      await page.waitForTimeout(500);
+
       expect(await page.screenshot()).toMatchSnapshot(
         `create-group-form-${type.value.toLowerCase()}-filled.png`
       );
