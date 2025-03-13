@@ -86,27 +86,34 @@ export const getAllGroups = async (): Promise<
   });
 };
 
-// Get a group by ID from IndexedDB
+/**
+ * Retrieves a group by its ID from IndexedDB
+ */
 export const getGroupById = async (
-  id: number
-): Promise<z.infer<typeof StorageGroupSchema> | undefined> => {
-  const db = await initDatabase();
+  id: string
+): Promise<z.infer<typeof StorageGroupSchema> | null> => {
+  try {
+    const db = await initDatabase();
 
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction([GROUPS_STORE], "readonly");
-    const store = transaction.objectStore(GROUPS_STORE);
-    const request = store.get(id);
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction([GROUPS_STORE], "readonly");
+      const store = transaction.objectStore(GROUPS_STORE);
+      const request = store.get(id);
 
-    request.onsuccess = () => {
-      resolve(request.result);
-    };
+      request.onsuccess = () => {
+        resolve(request.result || null);
+      };
 
-    request.onerror = () => {
-      reject("Error retrieving group: " + request.error);
-    };
+      request.onerror = () => {
+        reject("Error retrieving group: " + request.error);
+      };
 
-    transaction.oncomplete = () => {
-      db.close();
-    };
-  });
+      transaction.oncomplete = () => {
+        db.close();
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching group from IndexedDB:", error);
+    throw error;
+  }
 };
