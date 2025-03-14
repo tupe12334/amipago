@@ -16,6 +16,7 @@ export const CreateExpenseInputSchema = z.object({
     })
     .default(() => new Date()),
   currency: CurrenciesSchema,
+  groupId: z.string().optional(),
 });
 
 export type CreateExpenseInput = z.infer<typeof CreateExpenseInputSchema>;

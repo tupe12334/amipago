@@ -15,10 +15,16 @@ export const useCreateExpenseMutation = () => {
       // Mock a server request with a timeout
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      // Log the expense data (replace with actual GraphQL mutation)
-      console.log("Creating expense:", input);
+      // Log the expense data with group information if present
+      if (input.groupId) {
+        console.log(`Creating expense for group ${input.groupId}:`, input);
+      } else {
+        console.log("Creating expense without a group:", input);
+      }
 
-      // Simulate success
+      // Here you would save the expense to your database
+      // For now we'll just simulate a successful save
+
       return true;
     } catch (err) {
       setError(

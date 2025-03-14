@@ -6,6 +6,7 @@ import { GroupTypeHebrewLabel } from "../models/GroupType";
 import NavBar from "../components/NavBar/NavBar";
 import { TopBar } from "../components/TopBar/TopBar";
 import { BackButton } from "../components/BackButton/BackButton";
+import { getCreateExpenseForGroupPath } from "../paths";
 
 export const GroupPage = () => {
   const { groupId } = useParams<{ groupId: string }>();
@@ -42,6 +43,12 @@ export const GroupPage = () => {
 
   const handleBackClick = () => {
     navigate("/");
+  };
+
+  const handleAddExpenseClick = () => {
+    if (groupId) {
+      navigate(getCreateExpenseForGroupPath(groupId));
+    }
   };
 
   if (loading) {
@@ -161,6 +168,8 @@ export const GroupPage = () => {
               <button
                 id="group-actions-button"
                 className="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors flex items-center"
+                onClick={handleAddExpenseClick}
+                aria-label="הוסף הוצאה לקבוצה"
               >
                 <i className="fa fa-plus-circle ml-2" aria-hidden="true"></i>
                 הוסף הוצאה לקבוצה

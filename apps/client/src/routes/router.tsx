@@ -1,6 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import App from "./App";
-import { createExpensePath, createGroupPath, groupPath } from "../paths";
+import {
+  createExpensePath,
+  createExpenseForGroupPath,
+  createGroupPath,
+  groupPath,
+} from "../paths";
 import { CreateGroupPage } from "./create/group/create-group";
 import { CreateExpensePage } from "./create/expense/create-expense";
 import { GroupPage } from "./group";
@@ -12,6 +17,10 @@ export const Router = () => {
         <Route path="/" element={<App />} />
         <Route path={createGroupPath} element={<CreateGroupPage />} />
         <Route path={createExpensePath} element={<CreateExpensePage />} />
+        <Route
+          path={createExpenseForGroupPath}
+          element={<CreateExpensePage />}
+        />
         <Route path={groupPath} element={<GroupPage />} />
       </Routes>
     </BrowserRouter>
