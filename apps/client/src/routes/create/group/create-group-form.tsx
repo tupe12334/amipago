@@ -39,7 +39,6 @@ export const CreateGroupForm = () => {
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-4 max-w-md"
-          dir="rtl"
         >
           {error && (
             <div
