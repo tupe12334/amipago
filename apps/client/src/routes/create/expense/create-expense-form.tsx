@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
@@ -14,19 +14,21 @@ import { FormSelect } from "../../../components/Form/FormSelect";
 import { FormSubmitButton } from "../../../components/Form/FormSubmitButton";
 import { FormSuccessScreen } from "../../../components/Form/FormSuccessScreen";
 import { getGroupPath } from "../../../paths";
+import { getAllGroups } from "../../../services/indexedDbService";
 
 interface CreateExpenseFormProps {
   groupId?: string;
 }
 
-// Default values for the form
+// Update default values to include 'payer'
 const getExpenseDefaultInput = (
   groupId?: string
 ): Partial<CreateExpenseInput> => ({
   description: "",
   date: new Date(), // Today's date as default
   currency: "ILS",
-  groupId: groupId,
+  groupId: groupId || "",
+  payer: "",
 });
 
 export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
@@ -36,6 +38,27 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
   const navigate = useNavigate();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const { createExpense, loading, error } = useCreateExpenseMutation();
+  const [groupOptions, setGroupOptions] = useState<
+    Array<{ value: string; label: string; icon?: string }>
+  >([]);
+
+  // Fetch groups from indexed DB and map to select options
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const groups = await getAllGroups();
+        const options = groups.map((group) => ({
+          value: group.id.toString(), // converting id to string
+          label: group.name, // assuming each group has a 'name' property
+          icon: "group",
+        }));
+        setGroupOptions(options);
+      } catch (err) {
+        console.error("Failed to fetch groups", err);
+      }
+    };
+    fetchGroups();
+  }, []);
 
   const onSubmit: SubmitHandler<CreateExpenseInput> = async (data) => {
     const success = await createExpense(data);
@@ -75,12 +98,70 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
           className="flex flex-col gap-6 w-full max-w-md"
           id="expense-form"
         >
-          {/* Use Controller for hidden groupId */}
+          {/* Controller for payer */}
           <Controller
             control={control}
-            name="groupId"
-            render={({ field }) => <input type="hidden" {...field} />}
+            name="payer"
+            render={({ field, fieldState: { error } }) => (
+              <>
+                <FormField
+                  id="expense-payer"
+                  label={t("expense.payer")}
+                  placeholder={t("expense.placeholder.payer")}
+                  icon="user"
+                  error={error?.message}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                />
+                {error && (
+                  <div
+                    className="error-message"
+                    id="expense-payer-error"
+                    aria-live="polite"
+                  >
+                    {error.message}
+                  </div>
+                )}
+              </>
+            )}
           />
+
+          {groupId ? (
+            // Use hidden input if group is preset via URL
+            <Controller
+              control={control}
+              name="groupId"
+              render={({ field }) => <input type="hidden" {...field} />}
+            />
+          ) : (
+            // Group selector now gets its options from indexed DB
+            <Controller
+              control={control}
+              name="groupId"
+              render={({ field, fieldState: { error } }) => (
+                <>
+                  <FormSelect
+                    id="expense-group-selector"
+                    label={t("expense.groupSelector")}
+                    options={groupOptions}
+                    selected={field.value}
+                    onChange={field.onChange}
+                    error={error?.message}
+                  />
+                  {error && (
+                    <div
+                      className="error-message"
+                      id="expense-group-error"
+                      aria-live="polite"
+                    >
+                      {error.message}
+                    </div>
+                  )}
+                </>
+              )}
+            />
+          )}
 
           <Controller
             control={control}
@@ -103,7 +184,11 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
                   onBlur={field.onBlur}
                 />
                 {error && (
-                  <div className="error-message" id="amount-error" aria-live="polite">
+                  <div
+                    className="error-message"
+                    id="amount-error"
+                    aria-live="polite"
+                  >
                     {error.message}
                   </div>
                 )}
@@ -140,6 +225,7 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
             name="currency"
             render={({ field }) => (
               <FormSelect
+                id="expense-currency"
                 label={t("expense.currency")}
                 options={[
                   { value: "ILS", label: t("currencies.ILS"), icon: "shekel" },

@@ -15,11 +15,17 @@ export const useCreateExpenseMutation = () => {
       // Mock a server request with a timeout
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      // Log the expense data with group information if present
+      // Log the expense data with group and payer information if present
       if (input.groupId) {
-        console.log(`Creating expense for group ${input.groupId}:`, input);
+        console.log(
+          `Creating expense for group ${input.groupId} by ${input.payer}:`,
+          input
+        );
       } else {
-        console.log("Creating expense without a group:", input);
+        console.log(
+          `Creating expense without a preselected group. Payer: ${input.payer}`,
+          input
+        );
       }
 
       // Here you would save the expense to your database

@@ -21,9 +21,12 @@ const resources = {
         currency: "Currency:",
         save: "Save Expense",
         success: "Expense created successfully!",
+        payer: "Payer", // added key
+        groupSelector: "Select Group", // added key
         placeholder: {
           amount: "Enter amount",
           description: "Enter expense description",
+          payer: "Enter payer's name", // added key
         },
         validation: {
           positiveAmount: "Amount must be positive",
@@ -54,9 +57,12 @@ const resources = {
         currency: "מטבע:",
         save: "שמור הוצאה",
         success: "ההוצאה נוצרה בהצלחה!",
+        payer: "משלם", // added key
+        groupSelector: "בחר קבוצה", // added key
         placeholder: {
           amount: "הכנס סכום",
           description: "הכנס תיאור הוצאה",
+          payer: "הזן שם משלם", // added key
         },
         validation: {
           positiveAmount: "הסכום חייב להיות חיובי",
