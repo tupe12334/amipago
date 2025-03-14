@@ -38,11 +38,12 @@ const FloatingActionButton: FC<Props> = ({ children, options }) => {
           id={`${fabId}-floating-container`}
           className="absolute bottom-20 end-0 bg-white rounded-lg shadow-xl p-4 w-48 transition-all duration-300"
         >
-          <ul id={`${fabId}-options-list`} className="space-y-2">
+          <menu id={`${fabId}-options-list`} role="menu" className="space-y-2">
             {options.map((option, index) => (
               <li
                 id={`${fabId}-option-${index}`}
                 key={option.label}
+                role="menuitem" // Added role attribute for proper accessibility
                 {...option}
                 className="gap-2 text-end p-2 hover:bg-gray-100 rounded cursor-pointer transition-colors flex-row flex items-center"
               >
@@ -50,7 +51,7 @@ const FloatingActionButton: FC<Props> = ({ children, options }) => {
                 {option.label}
               </li>
             ))}
-          </ul>
+          </menu>
         </div>
       )}
     </div>
