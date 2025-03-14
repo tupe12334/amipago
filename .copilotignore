@@ -38,3 +38,15 @@ build/
 **/*.swo
 **/*.swn
 
+# Additional patterns to ignore
+coverage/
+.cache/
+.next/
+.nuxt/
+.out/
+.DS_Store
+Thumbs.db
+
+# Ignore test snapshots
+**/__snapshots__/
+
