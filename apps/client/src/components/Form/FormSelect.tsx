@@ -36,6 +36,8 @@ export const FormSelect = <T extends string>({
         role="radiogroup"
         aria-labelledby={selectId}
         aria-describedby={error ? errorId : undefined}
+        aria-invalid={error ? "true" : "false"}
+        aria-errormessage={error ? errorId : undefined}
       >
         {options.map((option) => (
           <button

@@ -50,6 +50,8 @@ export const FormField: React.FC<FormFieldProps> = ({
           id={componentId}
           inputMode={inputMode}
           aria-describedby={error ? errorId : undefined}
+          aria-invalid={error ? "true" : "false"}
+          aria-errormessage={error ? errorId : undefined}
           {...rest}
           className={`w-full rounded-lg border-gray-300 border py-3 ${
             icon ? "pe-10" : "pe-4"
