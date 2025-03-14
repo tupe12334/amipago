@@ -54,3 +54,7 @@ Make sure icons are supported as well
 Examples:
 
 - When using style, use start and end, not right and left
+
+### UI
+
+- Work with a container/view ui components model
