@@ -9,7 +9,7 @@ test.describe("Create New Expense", () => {
     await page.getByRole("button", { name: "Add Item" }).click();
 
     // Now select the "Add Expense" option from the menu that appears
-    await page.getByRole("menuitem", { name: /הוספת הוצאה/i }).click();
+    await page.getByRole("menuitem", { name: /הוצאה חדשה/i }).click();
 
     // Wait for the form to be visible
     await expect(page.locator("#expense-form")).toBeVisible();
@@ -49,7 +49,7 @@ test.describe("Create New Expense", () => {
     await page.goto("/");
     // Update navigation here too
     await page.getByRole("button", { name: "Add Item" }).click();
-    await page.getByRole("menuitem", { name: /הוספת הוצאה/i }).click();
+    await page.getByRole("menuitem", { name: /הוצאה חדשה/i }).click();
 
     // Clear amount field and set to invalid value
     await page.locator("#amount").fill("-50");
