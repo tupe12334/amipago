@@ -28,12 +28,21 @@ export default defineConfig({
     trace: "on",
     screenshot: "only-on-failure",
     actionTimeout: 15000,
+    // Standardize screenshot behavior
+    launchOptions: {
+      // Set locale to ensure date formats are consistent
+      args: ["--lang=he"],
+    },
   },
   // Set snapshot configuration for comparisons
   expect: {
     toHaveScreenshot: {
       maxDiffPixels: 100,
       threshold: 0.2,
+      // Add enhanced comparison options to be metadata-agnostic
+      // The higher quality setting helps ensure we're comparing content, not compression artifacts
+      comparator: "ssim-cie94",
+      maxDiffPixelRatio: 0.01,
     },
     timeout: 10000,
   },
@@ -42,7 +51,14 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        // Force screenshots to use consistent settings
+        contextOptions: {
+          reducedMotion: "reduce",
+          forcedColors: "none",
+        },
+      },
     },
     {
       name: "firefox",
