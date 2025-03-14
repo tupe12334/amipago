@@ -1,12 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getLanguageDir } from "../i18n/main";
 import { AddButton } from "../components/AddButton/AddButton";
 import NavBar from "../components/NavBar/NavBar";
 import GroupList from "../components/GroupList/GroupList";
+import { ButtonGroup } from "../components/ButtonGroup/ButtonGroup"; // Import ButtonGroup
 
 function App() {
   const { i18n } = useTranslation();
+  const [activeView, setActiveView] = useState<"groups" | "activity">("groups"); // New state
 
   useEffect(() => {
     // Set the document direction based on the current language
@@ -52,8 +54,26 @@ function App() {
         className="flex flex-col flex-1 p-4 overflow-y-auto"
         aria-label="תוכן ראשי"
       >
-        <h1 className="text-2xl font-bold mb-4">הקבוצות שלי</h1>
-        <GroupList />
+        <h1 id="main-heading" className="text-2xl font-bold mb-4">
+          הקבוצות שלי
+        </h1>
+        <ButtonGroup
+          options={[
+            { value: "groups", label: "הקבוצות שלי" },
+            { value: "activity", label: "פעילות אחרונה" },
+          ]}
+          selected={activeView}
+          onChange={setActiveView}
+        />
+        {activeView === "groups" && <GroupList />}
+        {activeView === "activity" && (
+          <div
+            id="activity-view"
+            className="text-center p-8 bg-gray-100 rounded-md"
+          >
+            <p>פעילות אחרונה עדיין לא זמינה</p>
+          </div>
+        )}
         <AddButton />
       </div>
     </main>

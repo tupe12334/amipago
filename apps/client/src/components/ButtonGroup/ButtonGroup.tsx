@@ -16,7 +16,7 @@ export const ButtonGroup = <T extends string>({
   selected,
   onChange,
 }: ButtonGroupProps<T>) => {
-  // Replace dynamic id with static id
+  // Using static id for consistency
   const groupId = "button-group";
 
   return (
@@ -26,13 +26,11 @@ export const ButtonGroup = <T extends string>({
           id={`${groupId}-button-${option.value}`}
           key={option.value}
           onClick={() => onChange(option.value)}
-          className={`flex-1 py-2 ps-4 pe-4 rounded border 
-            ${
-              selected === option.value
-                ? "bg-blue-500 text-white border-blue-500"
-                : "bg-gray-200 text-gray-700 border-gray-200"
-            } 
-            transition-colors duration-200`}
+          className={`flex-1 py-2 ps-4 pe-4 rounded border transition-colors duration-200 ${
+            selected === option.value
+              ? "bg-blue-500 text-white border-blue-500"
+              : "bg-gray-200 text-gray-700 border-gray-200"
+          }`}
           type="button"
         >
           {option.label}
