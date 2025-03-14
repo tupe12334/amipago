@@ -13,10 +13,11 @@ test.describe("Create New Expense", () => {
 
     // Wait for the form to be visible
     await expect(page.locator("#expense-form")).toBeVisible();
-    await page.screenshot({
-      path: "screenshots/expense-form-initial.png",
-      animations: "disabled",
-    });
+    expect(
+      await page.screenshot({
+        animations: "disabled",
+      })
+    ).toMatchSnapshot("expense-form-initial.png");
 
     // Fill in the form with valid data
     await page.locator("#amount").fill("100.50");
@@ -25,19 +26,21 @@ test.describe("Create New Expense", () => {
     // The form uses today's date by default
 
     // Form should be filled now
-    await page.screenshot({
-      path: "screenshots/expense-form-filled.png",
-      animations: "disabled",
-    });
+    expect(
+      await page.screenshot({
+        animations: "disabled",
+      })
+    ).toMatchSnapshot("expense-form-filled.png");
 
     // Submit the form
     await page.locator("button[type='submit']").click();
 
     // Wait for success message
-    await page.screenshot({
-      path: "screenshots/expense-success.png",
-      animations: "disabled",
-    });
+    expect(
+      await page.screenshot({
+        animations: "disabled",
+      })
+    ).toMatchSnapshot("expense-success.png");
 
     // Verify we can navigate back
     await expect(page).toHaveURL("/");
@@ -54,10 +57,9 @@ test.describe("Create New Expense", () => {
     await page.locator("#description").click(); // Click elsewhere to trigger validation
 
     // Take snapshot of errors
-    await page.screenshot({
-      path: "screenshots/expense-form-errors.png",
+    expect(await page.screenshot({
       animations: "disabled",
-    });
+    })).toMatchSnapshot("expense-form-errors.png");
 
     // Check for error messages (assumes the message is displayed near the field)
     const amountErrorMessage = await page
