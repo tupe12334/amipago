@@ -60,3 +60,5 @@ Examples:
 
 - Work with a container/view ui components model
 - When a component need to load data, make sure the loading is happening in the container component
+- Implement code-splitting with React.lazy and Suspense
+- Use windowing for long lists (react-window)
