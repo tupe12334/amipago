@@ -10,7 +10,7 @@ test.describe("Create New Group", () => {
     // Wait for page to stabilize
     await page.waitForLoadState("networkidle");
 
-    expect(await page.screenshot()).toMatchSnapshot(
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
       "create-group-form-empty.png"
     );
     await page.locator('input[name="name"]').fill("קבוצת בדיקה");
@@ -20,7 +20,7 @@ test.describe("Create New Group", () => {
     // Wait for page to stabilize after filling form
     await page.waitForLoadState("networkidle");
 
-    expect(await page.screenshot()).toMatchSnapshot(
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
       "create-group-form-filled.png"
     );
     await page.click('button[type="submit"]');
@@ -32,7 +32,7 @@ test.describe("Create New Group", () => {
     // Wait for success message to fully appear
     await page.waitForLoadState("networkidle");
 
-    expect(await page.screenshot()).toMatchSnapshot("create-group-success.png");
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot("create-group-success.png");
   });
 
   test("should validate form errors correctly", async ({ page }) => {
@@ -44,7 +44,7 @@ test.describe("Create New Group", () => {
     // Wait for form to be fully rendered
     await page.waitForLoadState("networkidle");
 
-    expect(await page.screenshot()).toMatchSnapshot(
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
       "validation-empty-form.png"
     );
     await page.click('button[type="submit"]');
@@ -54,7 +54,7 @@ test.describe("Create New Group", () => {
     // Wait for validation errors to fully appear
     await page.waitForLoadState("networkidle");
 
-    expect(await page.screenshot()).toMatchSnapshot(
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
       "validation-errors-shown.png"
     );
     await page.locator("#name").fill("קבוצת בדיקה");
@@ -62,7 +62,7 @@ test.describe("Create New Group", () => {
     // Wait for input change to reflect
     await page.waitForTimeout(300);
 
-    expect(await page.screenshot()).toMatchSnapshot(
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
       "validation-name-only-filled.png"
     );
     await page.click('button[type="submit"]');
@@ -74,7 +74,7 @@ test.describe("Create New Group", () => {
     // Wait for success message to fully appear
     await page.waitForLoadState("networkidle");
 
-    expect(await page.screenshot()).toMatchSnapshot("validation-success.png");
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot("validation-success.png");
   });
 
   test("should create a group for each group type", async ({ page }) => {
@@ -140,7 +140,7 @@ test.describe("Create New Group", () => {
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(300); // Allow any final animations to complete
 
-    expect(await page.screenshot()).toMatchSnapshot(
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
       "create-group-redirection.png"
     );
   });
