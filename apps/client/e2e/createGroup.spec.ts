@@ -6,12 +6,20 @@ test.describe("Create New Group", () => {
     await page.click("#floating-action-button-button");
     await page.click("#floating-action-button-option-0");
     await expect(page.locator("h1")).toHaveText("צור קבוצה חדשה");
+
+    // Wait for page to stabilize
+    await page.waitForLoadState("networkidle");
+
     expect(await page.screenshot()).toMatchSnapshot(
       "create-group-form-empty.png"
     );
     await page.locator('input[name="name"]').fill("קבוצת בדיקה");
     await page.locator('input[name="description"]').fill("תיאור קבוצת בדיקה");
     await page.locator('button[role="radio"]:has-text("חברים")').click();
+
+    // Wait for page to stabilize after filling form
+    await page.waitForLoadState("networkidle");
+
     expect(await page.screenshot()).toMatchSnapshot(
       "create-group-form-filled.png"
     );
@@ -20,6 +28,10 @@ test.describe("Create New Group", () => {
       "הקבוצה נוצרה בהצלחה!"
     );
     await expect(page.locator("i.fa.fa-check-circle")).toBeVisible();
+
+    // Wait for success message to fully appear
+    await page.waitForLoadState("networkidle");
+
     expect(await page.screenshot()).toMatchSnapshot("create-group-success.png");
   });
 
@@ -28,16 +40,28 @@ test.describe("Create New Group", () => {
     await page.click("#floating-action-button-button");
     await page.click("#floating-action-button-option-0");
     await expect(page.locator("form")).toBeVisible();
+
+    // Wait for form to be fully rendered
+    await page.waitForLoadState("networkidle");
+
     expect(await page.screenshot()).toMatchSnapshot(
       "validation-empty-form.png"
     );
     await page.click('button[type="submit"]');
     await expect(page.locator('[aria-describedby="name-error"]')).toBeVisible();
     await expect(page.locator("#name-error")).toContainText("שדה זה הוא חובה");
+
+    // Wait for validation errors to fully appear
+    await page.waitForLoadState("networkidle");
+
     expect(await page.screenshot()).toMatchSnapshot(
       "validation-errors-shown.png"
     );
     await page.locator("#name").fill("קבוצת בדיקה");
+
+    // Wait for input change to reflect
+    await page.waitForTimeout(300);
+
     expect(await page.screenshot()).toMatchSnapshot(
       "validation-name-only-filled.png"
     );
@@ -46,6 +70,10 @@ test.describe("Create New Group", () => {
       "הקבוצה נוצרה בהצלחה!",
       { timeout: 5000 }
     );
+
+    // Wait for success message to fully appear
+    await page.waitForLoadState("networkidle");
+
     expect(await page.screenshot()).toMatchSnapshot("validation-success.png");
   });
 
@@ -72,8 +100,9 @@ test.describe("Create New Group", () => {
         .locator(`button[role="radio"]:has-text("${type.label}")`)
         .click();
 
-      // Wait for the page to stabilize before taking screenshot
-      await page.waitForTimeout(500);
+      // Wait for the page to fully stabilize
+      await page.waitForLoadState("networkidle");
+      await page.waitForTimeout(500); // Additional wait for animations or UI updates
 
       expect(await page.screenshot()).toMatchSnapshot(
         `create-group-form-${type.value.toLowerCase()}-filled.png`
@@ -83,6 +112,9 @@ test.describe("Create New Group", () => {
         "הקבוצה נוצרה בהצלחה!"
       );
       await expect(page.locator("i.fa.fa-check-circle")).toBeVisible();
+
+      // Wait for success UI to be fully visible
+      await page.waitForLoadState("networkidle");
     }
   });
 
@@ -103,6 +135,11 @@ test.describe("Create New Group", () => {
     await page.waitForTimeout(2100);
     const url = new URL(page.url());
     expect(url.pathname).toBe("/");
+
+    // Wait for the page to fully load after redirection
+    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(300); // Allow any final animations to complete
+
     expect(await page.screenshot()).toMatchSnapshot(
       "create-group-redirection.png"
     );
