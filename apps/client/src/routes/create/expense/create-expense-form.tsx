@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
@@ -20,8 +20,9 @@ interface CreateExpenseFormProps {
 }
 
 // Default values for the form
-const getExpenseDefaultInput = (groupId?: string): CreateExpenseInput => ({
-  amount: 0,
+const getExpenseDefaultInput = (
+  groupId?: string
+): Partial<CreateExpenseInput> => ({
   description: "",
   date: new Date(), // Today's date as default
   currency: "ILS",
@@ -44,7 +45,6 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
   };
 
   const {
-    register,
     control,
     handleSubmit,
     formState: { errors },
@@ -52,14 +52,6 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
     resolver: zodResolver(CreateExpenseInputSchema),
     defaultValues: getExpenseDefaultInput(groupId),
   });
-
-  // Set direction based on language
-  useEffect(() => {
-    const form = document.querySelector("form");
-    if (form) {
-      form.dir = i18n.language === "he" ? "rtl" : "ltr";
-    }
-  }, [i18n.language]);
 
   const handleSuccessContinue = () => {
     if (groupId) {
@@ -75,10 +67,7 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
     <div className="inset-0 flex items-center justify-center">
       {formSubmitted ? (
         <div className="w-full max-w-md">
-          <FormSuccessScreen
-            message={t("expense.success")}
-           
-          />
+          <FormSuccessScreen message={t("expense.success")} />
         </div>
       ) : (
         <form
@@ -86,30 +75,57 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
           className="flex flex-col gap-6 w-full max-w-md"
           id="expense-form"
         >
-          {/* Hidden input for groupId */}
-          <input type="hidden" {...register("groupId")} />
-
-          <FormField
-            id="amount"
-            label={t("expense.amount")}
-            type="number"
-            step="0.01"
-            min="0.01"
-            placeholder={t("expense.placeholder.amount")}
-            icon="money"
-            error={errors.amount?.message}
-            inputMode="decimal"
-            pattern="[0-9]*\.?[0-9]+"
-            {...register("amount", { valueAsNumber: true })}
+          {/* Use Controller for hidden groupId */}
+          <Controller
+            control={control}
+            name="groupId"
+            render={({ field }) => <input type="hidden" {...field} />}
           />
 
-          <FormField
-            id="description"
-            label={t("expense.description")}
-            placeholder={t("expense.placeholder.description")}
-            icon="file-text"
-            error={errors.description?.message}
-            {...register("description")}
+          <Controller
+            control={control}
+            name="amount"
+            render={({ field, fieldState: { error } }) => (
+              <>
+                <FormField
+                  id="amount"
+                  label={t("expense.amount")}
+                  type="number"
+                  step="0.01"
+                  min="0.01"
+                  placeholder={t("expense.placeholder.amount")}
+                  icon="money"
+                  error={error?.message}
+                  inputMode="decimal"
+                  pattern="[0-9]*\\.?[0-9]+"
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                />
+                {error && (
+                  <div className="error-message" id="amount-error" aria-live="polite">
+                    {error.message}
+                  </div>
+                )}
+              </>
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="description"
+            render={({ field }) => (
+              <FormField
+                id="description"
+                label={t("expense.description")}
+                placeholder={t("expense.placeholder.description")}
+                icon="file-text"
+                error={errors.description?.message}
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+              />
+            )}
           />
 
           <FormDatePicker

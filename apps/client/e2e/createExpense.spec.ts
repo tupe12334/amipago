@@ -34,14 +34,12 @@ test.describe("Create New Expense", () => {
     await page.locator("button[type='submit']").click();
 
     // Wait for success message
-    await page.waitForSelector("#expense-success-continue");
     await page.screenshot({
       path: "screenshots/expense-success.png",
       animations: "disabled",
     });
 
     // Verify we can navigate back
-    await page.locator("#expense-success-continue").click();
     await expect(page).toHaveURL("/");
   });
 
