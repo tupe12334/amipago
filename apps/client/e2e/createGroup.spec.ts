@@ -104,7 +104,7 @@ test.describe("Create New Group", () => {
       await page.waitForLoadState("networkidle");
       await page.waitForTimeout(500); // Additional wait for animations or UI updates
 
-      expect(await page.screenshot()).toMatchSnapshot(
+      expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
         `create-group-form-${type.value.toLowerCase()}-filled.png`
       );
       await page.click('button[type="submit"]');
