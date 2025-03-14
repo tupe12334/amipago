@@ -13,6 +13,7 @@ specifiers:
   '@tauri-apps/cli': ^2.3.1
   '@tauri-apps/plugin-opener': ^2.2.6
   '@testing-library/react': ^16.2.0
+  '@testing-library/react-hooks': ^8.0.1
   '@types/node': ^22.13.10
   '@types/react': ^18.3.18
   '@types/react-dom': ^18.3.5
@@ -74,6 +75,7 @@ devDependencies:
   '@tailwindcss/vite': 4.0.14_vite@6.2.1
   '@tauri-apps/cli': 2.3.1
   '@testing-library/react': 16.2.0_34e0721c3d81b55ec0389e234509ec46
+  '@testing-library/react-hooks': 8.0.1_12b407fdc557fca40d4a67282c9bddba
   '@types/node': 22.13.10
   '@types/react': 18.3.18
   '@types/react-dom': 18.3.5_@types+react@18.3.18
@@ -1880,6 +1882,29 @@ packages:
     dependencies:
       '@tauri-apps/api': 2.3.0
     dev: false
+
+  /@testing-library/react-hooks/8.0.1_12b407fdc557fca40d4a67282c9bddba:
+    resolution: {integrity: sha512-Aqhl2IVmLt8IovEVarNDFuJDVWVvhnr9/GCU6UUnrYXwgDFF9h2L2o2P9KBni1AST5sT6riAyoukFLyjQUgD/g==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      '@types/react': ^16.9.0 || ^17.0.0
+      react: ^16.9.0 || ^17.0.0
+      react-dom: ^16.9.0 || ^17.0.0
+      react-test-renderer: ^16.9.0 || ^17.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react-dom:
+        optional: true
+      react-test-renderer:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.26.10
+      '@types/react': 18.3.18
+      react: 18.3.1
+      react-dom: 18.3.1_react@18.3.1
+      react-error-boundary: 3.1.4_react@18.3.1
+    dev: true
 
   /@testing-library/react/16.2.0_34e0721c3d81b55ec0389e234509ec46:
     resolution: {integrity: sha512-2cSskAvA1QNtKc8Y9VJQRv0tm3hLVgxRGDB+KYhIaPQJ1I+RHbhIXcM+zClKXzMes/wshsMVzf4B9vS4IZpqDQ==}
@@ -3724,6 +3749,16 @@ packages:
       react: 18.3.1
       scheduler: 0.23.2
     dev: false
+
+  /react-error-boundary/3.1.4_react@18.3.1:
+    resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
+    engines: {node: '>=10', npm: '>=6'}
+    peerDependencies:
+      react: '>=16.13.1'
+    dependencies:
+      '@babel/runtime': 7.26.10
+      react: 18.3.1
+    dev: true
 
   /react-hook-form/7.54.2_react@18.3.1:
     resolution: {integrity: sha512-eHpAUgUjWbZocoQYUHposymRb4ZP6d0uwUnooL2uOybA9/3tPUvoAKqEWK1WaSiTxxOfTpffNZP7QwlnM3/gEg==}
