@@ -21,7 +21,7 @@
 
 - Use playwright for client e2e testing
 - The e2e test should be in an apps/client/e2e folder and not inside src
-- Every test start from the root goto("/") path and don't use goto function
+- Every test start from the root goto("/") path and navigate the app only using the UI
 - Save snapshot after any meaningful action, make sure the page has been settle down before taking the snapshot
 - Disable animation in E2E testing using await page.screenshot({ animations: "disabled" })
 
