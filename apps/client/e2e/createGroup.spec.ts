@@ -32,7 +32,9 @@ test.describe("Create New Group", () => {
     // Wait for success message to fully appear
     await page.waitForLoadState("networkidle");
 
-    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot("create-group-success.png");
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
+      "create-group-success.png"
+    );
   });
 
   test("should validate form errors correctly", async ({ page }) => {
@@ -74,7 +76,9 @@ test.describe("Create New Group", () => {
     // Wait for success message to fully appear
     await page.waitForLoadState("networkidle");
 
-    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot("validation-success.png");
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
+      "validation-success.png"
+    );
   });
 
   test("should create a group for each group type", async ({ page }) => {
