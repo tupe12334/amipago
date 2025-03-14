@@ -32,8 +32,8 @@ const resources = {
         },
       },
       currencies: {
-        ILS: "₪ NIS",
-        USD: "$ USD",
+        ILS: "NIS",
+        USD: "USD",
       },
     },
   },
@@ -65,8 +65,8 @@ const resources = {
         },
       },
       currencies: {
-        ILS: "₪ שקל",
-        USD: "$ דולר",
+        ILS: "שקל",
+        USD: "דולר",
       },
     },
   },
