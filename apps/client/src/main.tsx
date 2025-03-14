@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import { Router } from "./routes/Router";
+import { Router } from "./routes/router";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <div className="m-0 select-none">

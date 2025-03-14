@@ -1,0 +1,155 @@
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router";
+import { getGroupById } from "../services/indexedDbService";
+import { StorageGroup } from "../models/StorageGroup";
+import { GroupTypeHebrewLabel } from "../models/GroupType";
+import NavBar from "../components/NavBar/NavBar";
+import { TopBar } from "../components/TopBar/TopBar";
+
+export const GroupPage = () => {
+  const { groupId } = useParams<{ groupId: string }>();
+  const [group, setGroup] = useState<StorageGroup | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchGroup = async () => {
+      if (!groupId) {
+        setError("מזהה קבוצה לא נמצא");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const groupData = await getGroupById(groupId);
+        if (groupData) {
+          setGroup(groupData);
+        } else {
+          setError("הקבוצה לא נמצאה");
+        }
+      } catch (err) {
+        setError("אירעה שגיאה בטעינת הקבוצה");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGroup();
+  }, [groupId]);
+
+  const handleBackClick = () => {
+    navigate("/");
+  };
+
+  if (loading) {
+    return (
+      <div className="flex flex-col h-screen">
+        <NavBar />
+        <div
+          className="flex justify-center items-center flex-1"
+          aria-live="polite"
+        >
+          <i className="fa fa-spinner fa-pulse text-3xl" aria-hidden="true"></i>
+          <span className="sr-only">טוען פרטי קבוצה...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !group) {
+    return (
+      <div className="flex flex-col h-screen">
+        <NavBar />
+        <div className="flex flex-col items-center justify-center flex-1 p-4">
+          <div
+            className="bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-4 max-w-md w-full"
+            role="alert"
+          >
+            <p>{error || "הקבוצה לא נמצאה"}</p>
+          </div>
+          <button
+            onClick={handleBackClick}
+            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+            id="back-to-groups-button"
+          >
+            <i className="fa fa-arrow-right ml-2" aria-hidden="true"></i>
+            חזור לרשימת הקבוצות
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col h-screen">
+      <NavBar />
+      <TopBar>
+        <button
+          id="back-button"
+          onClick={handleBackClick}
+          className="flex items-center text-blue-600"
+          aria-label="חזור לרשימת הקבוצות"
+        >
+          <i className="fa fa-arrow-right ml-2" aria-hidden="true"></i>
+          חזור
+        </button>
+      </TopBar>
+
+      <div className="p-4 flex-1 overflow-y-auto">
+        <div className="bg-white rounded-lg shadow-lg p-6 max-w-3xl mx-auto">
+          <div className="flex justify-between items-start mb-6">
+            <h1 id="group-title" className="text-2xl font-bold">
+              {group.name}
+            </h1>
+            <span className="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
+              {GroupTypeHebrewLabel[group.type]}
+            </span>
+          </div>
+
+          {group.description && (
+            <div className="mb-6">
+              <h2 id="description-title" className="text-lg font-medium mb-2">
+                תיאור
+              </h2>
+              <p id="group-description" className="text-gray-600">
+                {group.description}
+              </p>
+            </div>
+          )}
+
+          <div className="border-t border-gray-200 pt-4">
+            <div className="flex items-center text-gray-500 text-sm">
+              <i className="fa fa-clock-o ml-2" aria-hidden="true"></i>
+              <span id="group-created-at">
+                נוצר בתאריך:{" "}
+                {new Date(group.createdAt).toLocaleDateString("he-IL")}
+              </span>
+            </div>
+
+            {group.lastActivity && (
+              <div className="flex items-center text-gray-500 text-sm mt-2">
+                <i className="fa fa-refresh ml-2" aria-hidden="true"></i>
+                <span id="group-last-activity">
+                  פעילות אחרונה:{" "}
+                  {new Date(group.lastActivity).toLocaleDateString("he-IL")}
+                </span>
+              </div>
+            )}
+
+            <div className="mt-6 flex justify-center">
+              <button
+                id="group-actions-button"
+                className="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors flex items-center"
+              >
+                <i className="fa fa-plus-circle ml-2" aria-hidden="true"></i>
+                הוסף הוצאה לקבוצה
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { getAllGroups } from "../../services/indexedDbService";
 import { StorageGroup, StorageGroupSchema } from "../../models/StorageGroup";
+import { getGroupPath } from "../../paths";
 
 export const GroupList = () => {
   const { t } = useTranslation();
   const [groups, setGroups] = useState<StorageGroup[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch groups from IndexedDB
@@ -40,6 +43,10 @@ export const GroupList = () => {
 
     fetchGroups();
   }, []);
+
+  const handleGroupClick = (groupId: string) => {
+    navigate(getGroupPath(groupId));
+  };
 
   if (isLoading) {
     return (
@@ -83,7 +90,9 @@ export const GroupList = () => {
           {groups.map((group) => (
             <li
               key={group.id}
-              className="bg-white rounded-lg shadow-lg p-4 hover:shadow-md transition-shadow"
+              className="bg-white rounded-lg shadow-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
+              onClick={() => handleGroupClick(group.id)}
+              aria-label={`קבוצה: ${group.name}`}
             >
               <div className="flex justify-between items-start">
                 <h3 className="font-bold text-lg mb-2">{group.name}</h3>
@@ -125,6 +134,10 @@ export const GroupList = () => {
                 <button
                   className="text-blue-600 flex items-center"
                   aria-label={`${t("צפה בקבוצה")} ${group.name}`}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent triggering parent onClick
+                    handleGroupClick(group.id);
+                  }}
                 >
                   <span>{t("צפה")}</span>
                   <i className="fa fa-angle-start ms-1" aria-hidden="true"></i>
