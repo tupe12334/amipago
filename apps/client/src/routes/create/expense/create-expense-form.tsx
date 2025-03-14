@@ -77,15 +77,7 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
         <div className="w-full max-w-md">
           <FormSuccessScreen
             message={t("expense.success")}
-            actionButton={
-              <button
-                onClick={handleSuccessContinue}
-                className="mt-4 bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition-colors"
-                id="expense-success-continue"
-              >
-                {groupId ? "חזור לקבוצה" : "חזור לדף הבית"}
-              </button>
-            }
+           
           />
         </div>
       ) : (
