@@ -5,6 +5,7 @@ import { StorageGroup } from "../models/StorageGroup";
 import { GroupTypeHebrewLabel } from "../models/GroupType";
 import NavBar from "../components/NavBar/NavBar";
 import { TopBar } from "../components/TopBar/TopBar";
+import { BackButton } from "../components/BackButton/BackButton";
 
 export const GroupPage = () => {
   const { groupId } = useParams<{ groupId: string }>();
@@ -26,7 +27,7 @@ export const GroupPage = () => {
         if (groupData) {
           setGroup(groupData);
         } else {
-          setError("הקבוצה לא נמצאה");
+          setError(`הקבוצה עם המזהה "${groupId}" לא נמצאה`);
         }
       } catch (err) {
         setError("אירעה שגיאה בטעינת הקבוצה");
@@ -62,19 +63,37 @@ export const GroupPage = () => {
     return (
       <div className="flex flex-col h-screen">
         <NavBar />
+        <TopBar className="items-center">
+          <BackButton />
+          <h1 id="error-heading" className="text-xl font-medium">
+            חזרה לדף הבית
+          </h1>
+        </TopBar>
+
         <div className="flex flex-col items-center justify-center flex-1 p-4">
           <div
             className="bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-4 max-w-md w-full"
             role="alert"
+            aria-live="assertive"
+            id="group-error-alert"
           >
-            <p>{error || "הקבוצה לא נמצאה"}</p>
+            <div className="flex items-center mb-2">
+              <i
+                className="fa fa-exclamation-triangle ml-2"
+                aria-hidden="true"
+              ></i>
+              <p className="font-bold">שגיאה בטעינת הקבוצה</p>
+            </div>
+            <p>{error || "הקבוצה המבוקשת לא נמצאה"}</p>
           </div>
+
           <button
             onClick={handleBackClick}
-            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+            className="mt-4 bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors flex items-center"
             id="back-to-groups-button"
+            aria-label="חזור לרשימת הקבוצות"
           >
-            <i className="fa fa-arrow-right ml-2" aria-hidden="true"></i>
+            <i className="fa fa-home ml-2" aria-hidden="true"></i>
             חזור לרשימת הקבוצות
           </button>
         </div>
