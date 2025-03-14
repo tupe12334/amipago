@@ -1,6 +1,12 @@
 node_modules/
 dist/
 build/
+
+**/*.js
+**/*.js.map
+**/*.png
+
+
 **/*.log
 **/*.tgz
 **/*.zip
@@ -31,5 +37,4 @@ build/
 **/*.swn
 **/*.swo
 **/*.swn
-**/*.js
-**/*.js.map
+
