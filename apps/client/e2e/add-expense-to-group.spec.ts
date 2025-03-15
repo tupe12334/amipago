@@ -1,14 +1,10 @@
 import { test, expect } from "@playwright/test";
-import { setMockUser } from "../testHelpers/mockUser";
 
 // This test covers the complete flow of creating a group and adding an expense to it
 test("create a group and add an expense to it", async ({ page }) => {
   // Navigate to home page
   await page.goto("/");
   await page.waitForLoadState("networkidle");
-
-  // Set up mock user in localStorage (mock user data)
-  await setMockUser(page);
 
   // Take a named screenshot of the initial state
   const homePage = await page.screenshot({ animations: "disabled" });

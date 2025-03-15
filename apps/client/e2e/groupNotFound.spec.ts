@@ -1,5 +1,4 @@
 import { test, expect } from "@playwright/test";
-import { setMockUser } from "../testHelpers/mockUser";
 
 test.describe("Group Not Found", () => {
   test("should display error when navigating to a non-existent group", async ({
@@ -7,7 +6,6 @@ test.describe("Group Not Found", () => {
   }) => {
     // Start from the root path
     await page.goto("/");
-    await setMockUser(page); // added mock user
 
     // Wait for the page to be fully loaded
     await page.waitForSelector("#floating-action-button-button");

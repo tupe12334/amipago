@@ -1,5 +1,4 @@
 import { test, expect } from "@playwright/test";
-import { setMockUser } from "../testHelpers/mockUser";
 
 test.describe("Create New Expense", () => {
   /**
@@ -9,7 +8,6 @@ test.describe("Create New Expense", () => {
   test("should create a new expense successfully", async ({ page }) => {
     // --- Sub flow: Create a test group ---
     await page.goto("/");
-    await setMockUser(page); // added mock user
     await page.click("#floating-action-button-button");
     await page.click("#floating-action-button-option-0");
     await expect(page.locator("h1")).toHaveText(new RegExp("צור קבוצה חדשה"));
