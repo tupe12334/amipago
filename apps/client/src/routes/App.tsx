@@ -4,11 +4,14 @@ import { getLanguageDir } from "../i18n/main";
 import { AddButton } from "../components/AddButton/AddButton";
 import NavBar from "../components/NavBar/NavBar";
 import GroupList from "../components/GroupList/GroupList";
-import { ButtonGroup } from "../components/ButtonGroup/ButtonGroup"; // Import ButtonGroup
+import { ButtonGroup } from "../components/ButtonGroup/ButtonGroup";
+import { useUser } from "../context/UserContext";
 
 function App() {
   const { i18n } = useTranslation();
-  const [activeView, setActiveView] = useState<"groups" | "activity">("groups"); // New state
+  const { userId, isLoading: userLoading, error: userError } = useUser();
+  const [activeView, setActiveView] = useState<"groups" | "activity">("groups");
+  const [showUserMessage, setShowUserMessage] = useState(true);
 
   useEffect(() => {
     // Set the document direction based on the current language
@@ -47,6 +50,17 @@ function App() {
     };
   }, []);
 
+  // Hide the user message after 3 seconds
+  useEffect(() => {
+    if (userId && !userLoading) {
+      const timer = setTimeout(() => {
+        setShowUserMessage(false);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [userId, userLoading]);
+
   return (
     <main className="flex flex-col h-screen">
       <NavBar />
@@ -57,6 +71,39 @@ function App() {
         <h1 id="main-heading" className="text-2xl font-bold mb-4">
           הקבוצות שלי
         </h1>
+
+        {userLoading ? (
+          <div
+            className="bg-blue-50 p-3 mb-4 rounded"
+            id="user-loading-message"
+          >
+            <p className="text-blue-700 text-center">
+              <i className="fa fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
+              מאתחל את המערכת...
+            </p>
+          </div>
+        ) : userError ? (
+          <div className="bg-red-50 p-3 mb-4 rounded" id="user-error-message">
+            <p className="text-red-700 text-center">
+              <i
+                className="fa fa-exclamation-circle ml-2"
+                aria-hidden="true"
+              ></i>
+              שגיאה באתחול מזהה משתמש
+            </p>
+          </div>
+        ) : userId && showUserMessage ? (
+          <div
+            className="bg-green-50 p-3 mb-4 rounded"
+            id="user-success-message"
+          >
+            <p className="text-green-700 text-center">
+              <i className="fa fa-check-circle ml-2" aria-hidden="true"></i>
+              המשתמש אותחל בהצלחה עם מזהה ייחודי
+            </p>
+          </div>
+        ) : null}
+
         <ButtonGroup
           options={[
             { value: "groups", label: "הקבוצות שלי" },

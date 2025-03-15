@@ -1,5 +1,6 @@
 import { StorageGroupSchema } from "../models/StorageGroup";
 import { StorageExpenseSchema } from "../models/StorageExpense";
+import { StorageUserSchema, CreateUserInput } from "../models/StorageUser";
 import { z } from "zod";
 import { openDB, DBSchema } from "idb";
 
@@ -15,13 +16,19 @@ interface AmipagoDBSchema extends DBSchema {
     value: z.infer<typeof StorageExpenseSchema>;
     indexes: { "by-group": string };
   };
+  user: {
+    key: string;
+    value: z.infer<typeof StorageUserSchema>;
+  };
 }
 
 // Database configuration
 const DB_NAME = "amipagoDb";
-const DB_VERSION = 2;
+const DB_VERSION = 3; // Increased version to handle schema migration
 const GROUPS_STORE = "groups";
 const EXPENSES_STORE = "expenses";
+const USER_STORE = "user";
+const USER_ID_KEY = "current-user"; // This is the key used to identify the current user entry
 
 // Initialize the database with idb
 const dbPromise = openDB<AmipagoDBSchema>(DB_NAME, DB_VERSION, {
@@ -41,6 +48,13 @@ const dbPromise = openDB<AmipagoDBSchema>(DB_NAME, DB_VERSION, {
         autoIncrement: true,
       });
       expensesStore.createIndex("by-group", "groupId");
+    }
+
+    // Create object store for user data
+    if (!db.objectStoreNames.contains(USER_STORE)) {
+      db.createObjectStore(USER_STORE, {
+        keyPath: "id",
+      });
     }
   },
 });
@@ -151,6 +165,120 @@ export const getAllExpenses = async (): Promise<
     return await db.getAll(EXPENSES_STORE);
   } catch (error) {
     console.error("Error retrieving expenses:", error);
+    throw error;
+  }
+};
+
+/**
+ * Get user data from IndexedDB
+ * Returns the current user data
+ */
+export const getUserData = async (): Promise<z.infer<
+  typeof StorageUserSchema
+> | null> => {
+  try {
+    const db = await dbPromise;
+    const userData = await db.get(USER_STORE, USER_ID_KEY);
+
+    if (!userData) {
+      return null;
+    }
+
+    // Update the last active timestamp whenever we get the user data
+    if (userData) {
+      try {
+        const updatedUserData = {
+          ...userData,
+          lastActive: new Date(),
+        };
+        await db.put(USER_STORE, updatedUserData);
+      } catch (updateError) {
+        console.warn(
+          "Could not update user last active timestamp",
+          updateError
+        );
+      }
+    }
+
+    return userData;
+  } catch (error) {
+    console.error("Error retrieving user data:", error);
+    throw error;
+  }
+};
+
+/**
+ * Save user data to IndexedDB
+ * The userData.id is the actual unique user ID
+ * We use a fixed storage key (USER_ID_KEY) to ensure we're always
+ * accessing and updating the same record
+ */
+export const saveUserData = async (
+  userData: CreateUserInput
+): Promise<void> => {
+  try {
+    const db = await dbPromise;
+
+    // Validate with zod schema before saving
+    const validUserData = StorageUserSchema.parse({
+      id: USER_ID_KEY, // Use fixed key for storage
+      userId: userData.id, // Store the actual globally unique ID as userId
+      createdAt: userData.createdAt,
+      lastActive: new Date(),
+    });
+
+    await db.put(USER_STORE, validUserData);
+  } catch (error) {
+    console.error("Error saving user data:", error);
+    throw error;
+  }
+};
+
+/**
+ * Get only the user's globally unique ID
+ */
+export const getUserGlobalId = async (): Promise<string | null> => {
+  try {
+    const userData = await getUserData();
+    // If using the old format where id was stored directly
+    if (userData && userData.id && userData.id !== USER_ID_KEY) {
+      return userData.id;
+    }
+    // For the new format where userId contains the actual global ID
+    if (userData && userData.userId) {
+      return userData.userId;
+    }
+    return null;
+  } catch (error) {
+    console.error("Error retrieving user global ID:", error);
+    throw error;
+  }
+};
+
+/**
+ * Update user settings
+ */
+export const updateUserSettings = async (
+  settings: Partial<z.infer<typeof StorageUserSchema>["settings"]>
+): Promise<void> => {
+  try {
+    const db = await dbPromise;
+    const userData = await db.get(USER_STORE, USER_ID_KEY);
+
+    if (userData) {
+      const updatedUserData = {
+        ...userData,
+        settings: {
+          ...(userData.settings || {}),
+          ...settings,
+        },
+        lastActive: new Date(),
+      };
+
+      await db.put(USER_STORE, updatedUserData);
+    }
+  } catch (error) {
+    console.error("Error updating user settings:", error);
     throw error;
   }
 };
