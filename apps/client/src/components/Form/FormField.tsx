@@ -29,7 +29,10 @@ export const FormField: React.FC<FormFieldProps> = ({
   const errorId = `${componentId}-error`;
 
   return (
-    <div id={`${componentId}-container`} className="flex flex-col">
+    <div
+      id={`${componentId}-container`}
+      className={`flex flex-col form-field ${className || ""}`}
+    >
       <label
         id={`${componentId}-label`}
         htmlFor={componentId}
@@ -55,7 +58,9 @@ export const FormField: React.FC<FormFieldProps> = ({
           {...rest}
           className={`w-full rounded-lg border-gray-300 border py-3 ${
             icon ? "pe-10" : "pe-4"
-          } ps-4 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none transition-colors ${className}`}
+          } ps-4 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none transition-colors ${
+            className || ""
+          }`}
         />
       </div>
       {error && (
