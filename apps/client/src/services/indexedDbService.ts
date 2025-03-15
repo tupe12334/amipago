@@ -16,10 +16,6 @@ interface AmipagoDBSchema extends DBSchema {
     value: z.infer<typeof StorageExpenseSchema>;
     indexes: { "by-group": string };
   };
-  user: {
-    key: string;
-    value: z.infer<typeof StorageUserSchema>;
-  };
 }
 
 // Database configuration
@@ -48,13 +44,6 @@ const dbPromise = openDB<AmipagoDBSchema>(DB_NAME, DB_VERSION, {
         autoIncrement: true,
       });
       expensesStore.createIndex("by-group", "groupId");
-    }
-
-    // Create object store for user data
-    if (!db.objectStoreNames.contains(USER_STORE)) {
-      db.createObjectStore(USER_STORE, {
-        keyPath: "id",
-      });
     }
   },
 });
