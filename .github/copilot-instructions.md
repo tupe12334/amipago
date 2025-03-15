@@ -8,6 +8,7 @@
 - The client use `react-router`
 - When ever possible, use external libs
 - Don't put comments that describe what have you done
+- Don't use `export default`
 
 ## Docs
 
