@@ -10,5 +10,7 @@ export const StorageGroupSchema = z.object({
   type: GroupTypeEnum,
   createdAt: z.date().default(() => new Date()),
   lastActivity: z.date().optional(),
+  userId: z.string().optional(), // User ID of the group creator
+  members: z.array(z.string()).optional(), // Array of user IDs who are members
 });
 export type StorageGroup = z.infer<typeof StorageGroupSchema>;

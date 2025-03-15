@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
-import { getAllGroups } from "../../services/indexedDbService";
+import { getAllGroups, getUserGlobalId } from "../../services/indexedDbService";
 import { StorageGroup, StorageGroupSchema } from "../../models/StorageGroup";
 import { getGroupPath } from "../../paths";
 
@@ -10,14 +10,20 @@ export const GroupList = () => {
   const [groups, setGroups] = useState<StorageGroup[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch groups from IndexedDB
-    const fetchGroups = async () => {
+    // Fetch groups from IndexedDB and the current user ID
+    const fetchData = async () => {
       try {
         setIsLoading(true);
-        const dbGroups = await getAllGroups();
+        const [dbGroups, userId] = await Promise.all([
+          getAllGroups(),
+          getUserGlobalId(),
+        ]);
+
+        setCurrentUserId(userId);
 
         // Validate data with zod
         const validatedGroups = dbGroups
@@ -41,7 +47,7 @@ export const GroupList = () => {
       }
     };
 
-    fetchGroups();
+    fetchData();
   }, []);
 
   const handleGroupClick = (groupId: string) => {
@@ -96,9 +102,20 @@ export const GroupList = () => {
             >
               <div className="flex justify-between items-start">
                 <h3 className="font-bold text-lg mb-2">{group.name}</h3>
-                <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                  {group.members?.length || 0} {t("חברים")}
-                </span>
+                <div className="flex flex-col items-end gap-1">
+                  {currentUserId && group.userId === currentUserId && (
+                    <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                      <i
+                        className="fa fa-user-circle ml-1"
+                        aria-hidden="true"
+                      ></i>
+                      {t("המנהל שלי")}
+                    </span>
+                  )}
+                  <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                    {group.members?.length || 0} {t("חברים")}
+                  </span>
+                </div>
               </div>
 
               {group.description && (

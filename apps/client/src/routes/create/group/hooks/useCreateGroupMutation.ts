@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { CreateGroupInput } from "../CreateGroupInput";
 import { StorageGroupSchema } from "../../../../models/StorageGroup";
-import { saveGroup } from "../../../../services/indexedDbService";
+import {
+  saveGroup,
+  getUserGlobalId,
+} from "../../../../services/indexedDbService";
 
 export const useCreateGroupMutation = () => {
   const [loading, setLoading] = useState(false);
@@ -12,16 +15,23 @@ export const useCreateGroupMutation = () => {
     setError(null);
 
     try {
-      // TODO: Replace with actual API call to create group
-      console.log("Creating group with data:", data);
+      // Get current user ID
+      const userId = await getUserGlobalId();
 
       // Validate that name is not empty
       if (!data.name || data.name.trim() === "") {
         throw new Error("שם הקבוצה הוא שדה חובה");
       }
 
+      // Add additional data to the group object
+      const groupData = {
+        ...data,
+        userId, // Add the user ID of the creator
+        members: userId ? [userId] : [], // Initialize members array with creator
+      };
+
       // Parse and validate the group data
-      const group = StorageGroupSchema.parse(data);
+      const group = StorageGroupSchema.parse(groupData);
 
       // Save group to IndexedDB
       const groupId = await saveGroup(group);
