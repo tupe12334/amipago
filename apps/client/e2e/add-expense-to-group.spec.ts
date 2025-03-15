@@ -39,6 +39,8 @@ test("create a group and add an expense to it", async ({ page }) => {
   // Submit the form
   await page.getByRole("button", { name: "צור קבוצה" }).click();
   await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
+  await page.waitForLoadState("load");
 
   // Take a screenshot of success state
   const successState = await page.screenshot({ animations: "disabled" });

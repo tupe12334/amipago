@@ -9,6 +9,9 @@ test.describe("Group Not Found", () => {
 
     // Wait for the page to be fully loaded
     await page.waitForSelector("#floating-action-button-button");
+    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("load");
 
     // Take a snapshot of the homepage
     expect(await page.screenshot()).toMatchSnapshot(
