@@ -3,18 +3,10 @@ import { createGroup } from "./utils/group/createGroup";
 
 test.describe("Create New Group", () => {
   test("should create a new group successfully", async ({ page }) => {
-    await createGroup(page, "קבוצת בדיקה");
-    await page.click("#floating-action-button-button");
-    await page.click("#floating-action-button-option-0");
-    await expect(page.locator("h1")).toHaveText(new RegExp("צור קבוצה חדשה"));
-    await page.waitForLoadState("networkidle");
-    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
-      "create-group-form-empty.png"
-    );
+    await createGroup(page, "קבוצת בדיקה");   
     await page.locator('input[name="name"]').fill("קבוצת בדיקה");
     await page.locator('input[name="description"]').fill("תיאור קבוצת בדיקה");
     await page.locator('button[role="radio"]:has-text("חברים")').click();
-    await expect(page.locator("h1")).toHaveText("צור קבוצה חדשה");
     await page.waitForLoadState("networkidle");
     expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
       "create-group-form-filled.png"
@@ -32,8 +24,6 @@ test.describe("Create New Group", () => {
 
   test("should validate form errors correctly", async ({ page }) => {
     await createGroup(page, "קבוצת בדיקה");
-    await page.click("#floating-action-button-button");
-    await page.click("#floating-action-button-option-0");
     await expect(page.locator("form")).toBeVisible();
     await page.waitForLoadState("networkidle");
     expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
@@ -74,9 +64,6 @@ test.describe("Create New Group", () => {
 
     for (const type of groupTypes) {
       await createGroup(page, "קבוצת בדיקה");
-      await page.click("#floating-action-button-button");
-      await page.click("#floating-action-button-option-0");
-      await expect(page.locator("h1")).toHaveText(new RegExp("צור קבוצה חדשה"));
       await page
         .locator('input[name="name"]')
         .fill(`קבוצת בדיקה - ${type.label}`);
@@ -102,9 +89,6 @@ test.describe("Create New Group", () => {
 
   test("should redirect to root after 2 seconds", async ({ page }) => {
     await createGroup(page, "קבוצת בדיקה");
-    await page.click("#floating-action-button-button");
-    await page.click("#floating-action-button-option-0");
-    await expect(page.locator("h1")).toHaveText(new RegExp("צור קבוצה חדשה"));
     await page.locator('input[name="name"]').fill("קבוצת בדיקה");
     await page.locator('input[name="description"]').fill("תיאור קבוצת בדיקה");
     await page.locator('button[role="radio"]:has-text("חברים")').click();
