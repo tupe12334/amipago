@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { CreateGroupInput } from "../CreateGroupInput";
 import { StorageGroupSchema } from "../../../../models/StorageGroup";
+import { saveGroup } from "../../../../services/indexedDbService";
 import {
-  saveGroup,
-  getUserGlobalId,
   getUserData,
-} from "../../../../services/indexedDbService";
+  getUserGlobalId,
+} from "../../../../services/localStorageService";
 
 export const useCreateGroupMutation = () => {
   const [loading, setLoading] = useState(false);

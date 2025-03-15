@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { getUserData, saveUserData } from "./indexedDbService";
+import { getUserData, saveUserData } from "./localStorageService";
 
 // Ensure the user object exists in localStorage, create one if missing
 export const ensureUserId = async (): Promise<string> => {

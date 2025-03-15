@@ -6,13 +6,13 @@ import React, {
   useState,
 } from "react";
 import { StorageUser } from "../models/StorageUser";
-import { getUserData } from "../services/indexedDbService";
 import {
   ensureUserId,
   updateUserName as updateName,
   updateUserLanguage,
   updateUserTheme,
 } from "../services/userService";
+import { getUserData } from "../services/localStorageService";
 
 // Define the context type
 interface UserContextType {

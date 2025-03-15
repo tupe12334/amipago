@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
-import { getAllGroups, getUserGlobalId } from "../../services/indexedDbService";
+import { getAllGroups } from "../../services/indexedDbService";
 import { StorageGroup, StorageGroupSchema } from "../../models/StorageGroup";
 import { getGroupPath } from "../../paths";
+import { getUserGlobalId } from "../../services/localStorageService";
 
 export const GroupList = () => {
   const { t } = useTranslation();
