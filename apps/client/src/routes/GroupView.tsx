@@ -1,7 +1,7 @@
-import { GroupTypeHebrewLabel } from "../models/GroupType";
+import { BackButton } from "../components/BackButton/BackButton";
 import NavBar from "../components/NavBar/NavBar";
 import { TopBar } from "../components/TopBar/TopBar";
-import { BackButton } from "../components/BackButton/BackButton";
+import { GroupTypeHebrewLabel } from "../models/GroupType";
 
 interface GroupPageProps {
   group: any; // ...existing type StorageGroup...
