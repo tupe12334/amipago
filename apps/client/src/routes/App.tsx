@@ -6,6 +6,7 @@ import NavBar from "../components/NavBar/NavBar";
 import GroupList from "../components/GroupList/GroupList";
 import { ButtonGroup } from "../components/ButtonGroup/ButtonGroup";
 import { useUser } from "../context/UserContext";
+import { RecentActivityView } from "./RecentActivityView";
 
 function App() {
   const { i18n } = useTranslation();
@@ -70,12 +71,7 @@ function App() {
         />
         {activeView === "groups" && <GroupList />}
         {activeView === "activity" && (
-          <div
-            id="activity-view"
-            className="text-center p-8 bg-gray-100 rounded-md"
-          >
-            <p>פעילות אחרונה עדיין לא זמינה</p>
-          </div>
+          <RecentActivityView />
         )}
         <AddButton />
       </div>

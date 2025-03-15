@@ -158,4 +158,23 @@ export const getAllExpenses = async (): Promise<
   }
 };
 
+/**
+ * Get expenses sorted by updatedAt
+ */
+export const getExpensesSortedByUpdate = async (): Promise<
+  z.infer<typeof StorageExpenseSchema>[]
+> => {
+  try {
+    const db = await dbPromise;
+    const expenses = await db.getAll(EXPENSES_STORE);
+    return expenses.sort(
+      (a, b) =>
+        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+    );
+  } catch (error) {
+    console.error("Error retrieving sorted expenses:", error);
+    throw error;
+  }
+};
+
 // Removed localStorage functions: getUserData, saveUserData, updateUserSettings, getUserGlobalId
