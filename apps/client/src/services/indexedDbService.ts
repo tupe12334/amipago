@@ -3,6 +3,7 @@ import { StorageExpenseSchema } from "../models/StorageExpense";
 import { StorageUserSchema, CreateUserInput } from "../models/StorageUser";
 import { z } from "zod";
 import { openDB, DBSchema } from "idb";
+import { v4 as uuidv4 } from "uuid";
 
 // Define the database schema
 interface AmipagoDBSchema extends DBSchema {
@@ -23,7 +24,6 @@ const DB_NAME = "amipagoDb";
 const DB_VERSION = 3; // Increased version to handle schema migration
 const GROUPS_STORE = "groups";
 const EXPENSES_STORE = "expenses";
-const USER_STORE = "user";
 const USER_ID_KEY = "user"; // Changed from "current-user" to "user"
 
 // Initialize the database with idb
@@ -167,8 +167,16 @@ export const getUserData = async (): Promise<z.infer<
 > | null> => {
   try {
     const stored = localStorage.getItem(USER_ID_KEY);
+    console.log(stored);
+
     if (!stored) {
-      return null;
+      // Create a new user if not exists
+      // Using uuid for a unique global userId; createdAt generated automatically
+      await saveUserData({ id: uuidv4(), createdAt: new Date() });
+      const newStored = localStorage.getItem(USER_ID_KEY);
+      if (!newStored) return null;
+      const userData = JSON.parse(newStored);
+      return userData;
     }
     // Parse stored JSON and update lastActive timestamp
     const userData = JSON.parse(stored);
@@ -191,10 +199,10 @@ export const saveUserData = async (
   userData: CreateUserInput
 ): Promise<void> => {
   try {
-    // Validate with zod schema before saving
+    // Using userData.id as a valid UUID to meet the zod schema validation
     const validUserData = StorageUserSchema.parse({
-      id: USER_ID_KEY, // Use fixed key for storage
-      userId: userData.id, // Store the actual globally unique ID as userId
+      id: userData.id, // changed from USER_ID_KEY to a valid uuid from userData.id
+      userId: userData.id,
       createdAt: userData.createdAt,
       lastActive: new Date(),
     });
@@ -216,8 +224,8 @@ export const getUserGlobalId = async (): Promise<string | null> => {
       return userData.id;
     }
     // For the new format where userId contains the actual global ID
-    if (userData && userData.userId) {
-      return userData.userId;
+    if (userData && userData.id) {
+      return userData.id;
     }
     return null;
   } catch (error) {

@@ -53,8 +53,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       const data = await getUserData();
       if (data) {
         setUserData(data);
-        if (data.userId) {
-          setUserId(data.userId);
+        if (data.id) {
+          setUserId(data.id);
         }
       }
     } catch (err) {

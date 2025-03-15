@@ -5,10 +5,6 @@ import { z } from "zod";
  */
 export const StorageUserSchema = z.object({
   id: z.string().uuid({ message: "מזהה המשתמש חייב להיות מסוג UUID חוקי" }),
-  userId: z
-    .string()
-    .uuid({ message: "מזהה המשתמש הגלובלי חייב להיות מסוג UUID חוקי" })
-    .optional(),
   createdAt: z.date(),
   lastActive: z.date().optional(),
   settings: z
