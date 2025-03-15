@@ -1,4 +1,5 @@
 import { BackButton } from "../components/BackButton/BackButton";
+import { ExpensesList } from "../components/ExpensesList";
 import NavBar from "../components/NavBar/NavBar";
 import { TopBar } from "../components/TopBar/TopBar";
 import { GroupTypeHebrewLabel } from "../models/GroupType";
@@ -116,35 +117,7 @@ export const GroupPageView = ({
             <h2 id="expenses-title" className="text-lg font-medium mb-2">
               הוצאות
             </h2>
-            {expenses.length > 0 ? (
-              <ul id="expenses-list" className="divide-y divide-gray-200">
-                {expenses.map((expense: any) => (
-                  <li key={expense.id} className="py-3">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <p className="font-medium">
-                          {expense.description || "הוצאה ללא תיאור"}
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          <span>שולם על ידי: {expense.payer}</span>
-                          <span className="mx-2">•</span>
-                          <span>
-                            {new Date(expense.date).toLocaleDateString("he-IL")}
-                          </span>
-                        </p>
-                      </div>
-                      <span className="font-bold text-green-600">
-                        {formatCurrency(expense.amount, expense.currency)}
-                      </span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <div className="text-center py-6 bg-gray-50 rounded">
-                <p className="text-gray-500">אין הוצאות להצגה בקבוצה זו</p>
-              </div>
-            )}
+            <ExpensesList expenses={expenses} formatCurrency={formatCurrency} />
           </div>
           <div className="border-t border-gray-200 pt-4">
             <div className="flex items-center text-gray-500 text-sm">

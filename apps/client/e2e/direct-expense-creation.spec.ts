@@ -17,6 +17,8 @@ test("create an expense and assign it to a group", async ({ page }) => {
   // Click on create expense option
   await page.locator("#add-btn-expense-icon").click();
   await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
+  await page.waitForLoadState("load");
 
   // Take a screenshot of the expense form
   const expenseForm = await page.screenshot({ animations: "disabled" });
