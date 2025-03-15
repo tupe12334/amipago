@@ -167,7 +167,6 @@ export const getUserData = async (): Promise<z.infer<
 > | null> => {
   try {
     const stored = localStorage.getItem(USER_ID_KEY);
-    console.log(stored);
 
     if (!stored) {
       // Create a new user if not exists
@@ -200,12 +199,7 @@ export const saveUserData = async (
 ): Promise<void> => {
   try {
     // Using userData.id as a valid UUID to meet the zod schema validation
-    const validUserData = StorageUserSchema.parse({
-      id: userData.id, // changed from USER_ID_KEY to a valid uuid from userData.id
-      userId: userData.id,
-      createdAt: userData.createdAt,
-      lastActive: new Date(),
-    });
+    const validUserData = StorageUserSchema.parse(userData);
     localStorage.setItem(USER_ID_KEY, JSON.stringify(validUserData));
   } catch (error) {
     console.error("Error saving user data:", error);
