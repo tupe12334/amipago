@@ -48,12 +48,12 @@ const GroupSelectorModal: React.FC<{
             <button
               key={option.value}
               type="button"
-              id={`expense-group-modal-option-${option.value}`}
+              id={`expense-group-option-${option.value}`}
+              className="expense-group-modal-option w-full text-start px-4 py-2 hover:bg-gray-200"
               onClick={() => {
                 onSelect(option.value);
                 onClose();
               }}
-              className="w-full text-start px-4 py-2 hover:bg-gray-200"
               role="option"
               aria-selected={selectedValue === option.value}
             >

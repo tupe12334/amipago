@@ -46,8 +46,8 @@ test.describe("Create New Expense", () => {
     );
 
     // Open group selection modal
-    await page.click("#expense-group-select-button");
-    await expect(page.locator("#expense-group-select-modal")).toBeVisible();
+    await page.click("#expense-group-button");
+    await expect(page.locator(".expense-group-modal-option")).toBeVisible();
     await page.waitForTimeout(300); // Wait for modal animation
 
     // Take screenshot with group modal open
@@ -56,15 +56,13 @@ test.describe("Create New Expense", () => {
     );
 
     // Select the test group we created earlier
-    await page.click("#expense-group-option-0"); // Assuming first group in list
-    await expect(page.locator("#expense-group-select-modal")).not.toBeVisible();
+    await page.locator(".expense-group-modal-option").first().click();
+    await expect(page.locator(".expense-group-modal-option")).not.toBeVisible();
 
     // Fill in the expense form fields
-    await page.locator("#expense-payer-input").fill("משלם תקין");
-    await page.locator("#expense-amount-input").fill("100.50");
-    await page
-      .locator("#expense-description-input")
-      .fill("ארוחת צהריים צוותית");
+    await page.locator("#expense-payer").fill("משלם תקין"); // Changed from #expense-payer-input
+    await page.locator("#amount").fill("100.50"); // Changed from #expense-amount-input
+    await page.locator("#description").fill("ארוחת צהריים צוותית"); // Changed from #expense-description-input
 
     // Wait for form to settle after filling
     await page.waitForLoadState("networkidle");
