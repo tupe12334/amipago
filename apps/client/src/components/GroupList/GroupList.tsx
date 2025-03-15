@@ -122,6 +122,26 @@ export const GroupList = () => {
                 <p className="text-gray-600 mb-3">{group.description}</p>
               )}
 
+              {/* Display members if available */}
+              {group.members && group.members.length > 0 && (
+                <div className="mb-3">
+                  <p className="text-sm font-medium text-gray-700 mb-1">חברים:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {group.members.slice(0, 3).map((member) => (
+                      <span key={member.id} className="bg-gray-50 text-gray-700 text-xs px-2 py-1 rounded flex items-center">
+                        <i className="fa fa-user me-1" aria-hidden="true"></i>
+                        {member.name}
+                      </span>
+                    ))}
+                    {group.members.length > 3 && (
+                      <span className="text-gray-500 text-xs">
+                        +{group.members.length - 3} נוספים
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+
               <div className="flex flex-wrap gap-2 mb-3">
                 {group.tags?.map((tag, index) => (
                   <span

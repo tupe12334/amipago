@@ -4,6 +4,7 @@ import { StorageGroupSchema } from "../../../../models/StorageGroup";
 import {
   saveGroup,
   getUserGlobalId,
+  getUserData,
 } from "../../../../services/indexedDbService";
 
 export const useCreateGroupMutation = () => {
@@ -15,19 +16,30 @@ export const useCreateGroupMutation = () => {
     setError(null);
 
     try {
-      // Get current user ID
-      const userId = await getUserGlobalId();
+      // Get current user ID and data
+      const [userId, userData] = await Promise.all([
+        getUserGlobalId(),
+        getUserData(),
+      ]);
 
       // Validate that name is not empty
       if (!data.name || data.name.trim() === "") {
         throw new Error("שם הקבוצה הוא שדה חובה");
       }
 
-      // Add additional data to the group object
+      // Updated: add the current user as a member
       const groupData = {
         ...data,
         userId, // Add the user ID of the creator
-        members: userId ? [userId] : [], // Initialize members array with creator
+        members:
+          userId && userData
+            ? [
+                {
+                  id: userId,
+                  name: userData.name || "משתמש", // Fallback name if missing
+                },
+              ]
+            : [], // Initialize members array with creator data
       };
 
       // Parse and validate the group data
