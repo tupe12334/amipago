@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { CreateExpenseInput } from "../CreateExpenseInput";
+import { saveExpense } from "../../../../services/indexedDbService";
+import { StorageExpenseSchema } from "../../../../models/StorageExpense";
 
-// This is a mock implementation since we don't have the actual GraphQL setup
-// Replace this with your actual GraphQL mutation implementation
 export const useCreateExpenseMutation = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -12,30 +12,43 @@ export const useCreateExpenseMutation = () => {
     setError(null);
 
     try {
-      // Mock a server request with a timeout
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // Convert the form input to a valid expense object
+      const expenseData = {
+        ...input,
+        // Make sure amount is a number (in case it's a string from form input)
+        amount:
+          typeof input.amount === "string"
+            ? parseFloat(input.amount)
+            : input.amount,
+        // Add timestamps
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
 
-      // Log the expense data with group and payer information if present
-      if (input.groupId) {
-        console.log(
-          `Creating expense for group ${input.groupId} by ${input.payer}:`,
-          input
-        );
-      } else {
-        console.log(
-          `Creating expense without a preselected group. Payer: ${input.payer}`,
-          input
-        );
-      }
+      // Validate with zod schema
+      const validExpense = StorageExpenseSchema.parse(expenseData);
 
-      // Here you would save the expense to your database
-      // For now we'll just simulate a successful save
+      // Log the expense data
+      console.log(
+        `Creating expense ${
+          validExpense.groupId
+            ? `for group ${validExpense.groupId}`
+            : "without group"
+        }`
+      );
+
+      // Save to IndexedDB
+      const expenseId = await saveExpense(validExpense);
+      console.log(`Expense saved with ID: ${expenseId}`);
 
       return true;
     } catch (err) {
-      setError(
-        err instanceof Error ? err : new Error("Unknown error occurred")
-      );
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : "Unknown error occurred while saving expense";
+      console.error("Failed to create expense:", err);
+      setError(err instanceof Error ? err : new Error(errorMessage));
       return false;
     } finally {
       setLoading(false);

@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
-import { getGroupById } from "../services/indexedDbService";
+import {
+  getGroupById,
+  getExpensesByGroupId,
+} from "../services/indexedDbService";
 import { StorageGroup } from "../models/StorageGroup";
+import { StorageExpense } from "../models/StorageExpense";
 import { GroupTypeHebrewLabel } from "../models/GroupType";
 import NavBar from "../components/NavBar/NavBar";
 import { TopBar } from "../components/TopBar/TopBar";
@@ -11,12 +15,13 @@ import { getCreateExpenseForGroupPath } from "../paths";
 export const GroupPage = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const [group, setGroup] = useState<StorageGroup | null>(null);
+  const [expenses, setExpenses] = useState<StorageExpense[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchGroup = async () => {
+    const fetchData = async () => {
       if (!groupId) {
         setError("מזהה קבוצה לא נמצא");
         setLoading(false);
@@ -24,9 +29,15 @@ export const GroupPage = () => {
       }
 
       try {
+        // Fetch group data
         const groupData = await getGroupById(groupId);
+
         if (groupData) {
           setGroup(groupData);
+
+          // Fetch expenses for this group
+          const groupExpenses = await getExpensesByGroupId(groupId);
+          setExpenses(groupExpenses);
         } else {
           setError(`הקבוצה עם המזהה "${groupId}" לא נמצאה`);
         }
@@ -38,7 +49,7 @@ export const GroupPage = () => {
       }
     };
 
-    fetchGroup();
+    fetchData();
   }, [groupId]);
 
   const handleBackClick = () => {
@@ -49,6 +60,14 @@ export const GroupPage = () => {
     if (groupId) {
       navigate(getCreateExpenseForGroupPath(groupId));
     }
+  };
+
+  // Format currency for display
+  const formatCurrency = (amount: number, currency: string) => {
+    return new Intl.NumberFormat("he-IL", {
+      style: "currency",
+      currency: currency,
+    }).format(amount);
   };
 
   if (loading) {
@@ -144,6 +163,43 @@ export const GroupPage = () => {
               </p>
             </div>
           )}
+
+          {/* Expenses section */}
+          <div className="mb-6">
+            <h2 id="expenses-title" className="text-lg font-medium mb-2">
+              הוצאות
+            </h2>
+
+            {expenses.length > 0 ? (
+              <ul id="expenses-list" className="divide-y divide-gray-200">
+                {expenses.map((expense) => (
+                  <li key={expense.id} className="py-3">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="font-medium">
+                          {expense.description || "הוצאה ללא תיאור"}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          <span>שולם על ידי: {expense.payer}</span>
+                          <span className="mx-2">•</span>
+                          <span>
+                            {new Date(expense.date).toLocaleDateString("he-IL")}
+                          </span>
+                        </p>
+                      </div>
+                      <span className="font-bold text-green-600">
+                        {formatCurrency(expense.amount, expense.currency)}
+                      </span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="text-center py-6 bg-gray-50 rounded">
+                <p className="text-gray-500">אין הוצאות להצגה בקבוצה זו</p>
+              </div>
+            )}
+          </div>
 
           <div className="border-t border-gray-200 pt-4">
             <div className="flex items-center text-gray-500 text-sm">
