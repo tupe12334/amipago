@@ -8,61 +8,97 @@ test.describe("Create New Expense", () => {
   test("should create a new expense successfully", async ({ page }) => {
     // --- Sub flow: Create a test group ---
     await page.goto("/");
-    await page.getByRole("button", { name: "Add Item" }).click();
-    // Assume "Add Group" menu item has text "קבוצה חדשה"
-    await page.getByRole("menuitem", { name: /קבוצה חדשה/i }).click();
-    // Wait for group creation form to appear (assumed id "group-form")
-    await expect(page.locator("#group-form")).toBeVisible();
+    await page.click("#floating-action-button-button");
+    await page.click("#floating-action-button-option-0");
+    await expect(page.locator("h1")).toHaveText("צור קבוצה חדשה");
+
+    // Wait for form to be fully rendered
+    await page.waitForLoadState("networkidle");
+
     // Fill in group creation form fields
-    await page.locator("#name").fill("Test Group");
-    await page.locator("#description").fill("Test Group Description");
-    // Optionally select a group type if available, then submit the form
-    await page.locator("button[type='submit']").click();
-    // Wait for the group success screen and then navigate back to home
-    await expect(page.locator("#group-success")).toBeVisible();
-    // Optionally click continue to return home
-    await page.getByRole("button", { name: /continue/i }).click();
+    await page.locator('input[name="name"]').fill("קבוצת בדיקה להוצאה");
+    await page.locator('input[name="description"]').fill("תיאור קבוצת הוצאה");
+    await page.locator('button[role="radio"]:has-text("חברים")').click();
+
+    // Submit the group form
+    await page.click('button[type="submit"]');
+    await expect(page.locator('[aria-live="polite"]')).toHaveText(
+      "הקבוצה נוצרה בהצלחה!"
+    );
+
+    // Wait for redirect to happen (2 seconds)
+    await page.waitForTimeout(2100);
+    await page.waitForLoadState("networkidle");
     // --- End sub flow ---
 
     // Begin expense creation flow using the created test group
-    await page.getByRole("button", { name: "Add Item" }).click();
-    await page.getByRole("menuitem", { name: /הוצאה חדשה/i }).click();
+    await page.click("#floating-action-button-button");
+    await page.click("#floating-action-button-option-1"); // Assuming option 1 is for expense
 
-    // Wait for the expense form and take initial snapshot
+    // Wait for the expense form to load
     await expect(page.locator("#expense-form")).toBeVisible();
-    const initialScreenshot = await page.screenshot({ animations: "disabled" });
-    await expect(initialScreenshot).toMatchSnapshot("expense-form-initial.png");
+    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(300); // Extra stability wait
+
+    // Take initial form screenshot
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
+      "expense-form-initial.png"
+    );
 
     // Open group selection modal
-    await page.locator("#expense-group-button").click();
-    await expect(page.locator("#expense-group-modal-option-")).toBeVisible();
-    const modalOpenScreenshot = await page.screenshot({
-      animations: "disabled",
-    });
-    await expect(modalOpenScreenshot).toMatchSnapshot(
+    await page.click("#expense-group-select-button");
+    await expect(page.locator("#expense-group-select-modal")).toBeVisible();
+    await page.waitForTimeout(300); // Wait for modal animation
+
+    // Take screenshot with group modal open
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
       "expense-group-modal-open.png"
     );
 
-    // Select the test group (assuming it's among first options)
-    await page.locator('[id^="expense-group-modal-option-"]').first().click();
-    await expect(
-      page.locator("#expense-group-modal-option-")
-    ).not.toBeVisible();
+    // Select the test group we created earlier
+    await page.click("#expense-group-option-0"); // Assuming first group in list
+    await expect(page.locator("#expense-group-select-modal")).not.toBeVisible();
 
-    // Fill in the expense form fields: valid payer, amount, and description
-    await page.locator("#expense-payer").fill("משלם תקין");
-    await page.locator("#amount").fill("100.50");
-    await page.locator("#description").fill("ארוחת צהריים צוותית");
+    // Fill in the expense form fields
+    await page.locator("#expense-payer-input").fill("משלם תקין");
+    await page.locator("#expense-amount-input").fill("100.50");
+    await page
+      .locator("#expense-description-input")
+      .fill("ארוחת צהריים צוותית");
 
-    const filledScreenshot = await page.screenshot({ animations: "disabled" });
-    await expect(filledScreenshot).toMatchSnapshot("expense-form-filled.png");
+    // Wait for form to settle after filling
+    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(300);
 
-    await page.locator("button[type='submit']").click();
+    // Take filled form screenshot
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
+      "expense-form-filled.png"
+    );
 
-    const successScreenshot = await page.screenshot({ animations: "disabled" });
-    await expect(successScreenshot).toMatchSnapshot("expense-success.png");
+    // Submit the form
+    await page.click('button[type="submit"]');
 
-    await expect(page).toHaveURL("/");
+    // Check for success message
+    await expect(page.locator('[aria-live="polite"]')).toHaveText(
+      "ההוצאה נוצרה בהצלחה!"
+    );
+    await expect(page.locator("i.fa.fa-check-circle")).toBeVisible();
+
+    // Wait for success UI to be fully visible
+    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(300);
+
+    // Take success screenshot
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
+      "expense-success.png"
+    );
+
+    // Wait for redirect to happen (assuming same 2 second redirect)
+    await page.waitForTimeout(2100);
+
+    // Verify we're back at home
+    const url = new URL(page.url());
+    expect(url.pathname).toBe("/");
   });
 
   test("should validate form errors correctly", async ({ page }) => {
