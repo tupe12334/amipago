@@ -1,11 +1,14 @@
+import { QRCodeSVG } from "qrcode.react";
+import { useState } from "react";
 import { BackButton } from "../components/BackButton/BackButton";
 import { ExpensesList } from "../components/ExpensesList";
 import NavBar from "../components/NavBar/NavBar";
 import { TopBar } from "../components/TopBar/TopBar";
 import { GroupTypeHebrewLabel } from "../models/GroupType";
+import { StorageGroup } from "../models/StorageGroup";
 
 interface GroupPageProps {
-  group: any; // ...existing type StorageGroup...
+  group: StorageGroup;
   expenses: any[]; // ...existing type StorageExpense...
   loading: boolean;
   error: string | null;
@@ -23,6 +26,8 @@ export const GroupPageView = ({
   onAddExpenseClick,
   formatCurrency,
 }: GroupPageProps) => {
+  const [showQRCode, setShowQRCode] = useState(false);
+
   if (loading) {
     return (
       <div className="flex flex-col h-screen">
@@ -88,7 +93,7 @@ export const GroupPageView = ({
           className="flex items-center text-blue-600"
           aria-label="חזור לרשימת הקבוצות"
         >
-          <i className="fa fa-arrow-right ms-2" aria-hidden="true"></i>
+          <i className="fa fa-arrow-right me-2" aria-hidden="true"></i>
           חזור
         </button>
       </TopBar>
@@ -127,10 +132,17 @@ export const GroupPageView = ({
             </h2>
             <div className="bg-gray-50 rounded-lg p-4">
               {group.members && group.members.length > 0 ? (
-                <ul className="space-y-2" id="members-list" aria-label="רשימת חברי קבוצה">
+                <ul
+                  className="space-y-2"
+                  id="members-list"
+                  aria-label="רשימת חברי קבוצה"
+                >
                   {group.members.map((member) => (
                     <li key={member.id} className="flex items-center">
-                      <i className="fa fa-user-circle text-gray-500 me-2" aria-hidden="true"></i>
+                      <i
+                        className="fa fa-user-circle text-gray-500 me-2"
+                        aria-hidden="true"
+                      ></i>
                       <span className="text-sm">{member.name}</span>
                       {group.userId === member.id && (
                         <span className="bg-green-100 text-green-800 text-xs font-medium ms-2 px-2 py-0.5 rounded-full">
@@ -148,7 +160,7 @@ export const GroupPageView = ({
 
           <div className="border-t border-gray-200 pt-4">
             <div className="flex items-center text-gray-500 text-sm">
-              <i className="fa fa-clock-o ms-2" aria-hidden="true"></i>
+              <i className="fa fa-clock-o me-2" aria-hidden="true"></i>
               <span id="group-created-at">
                 נוצר בתאריך:{" "}
                 {new Date(group.createdAt).toLocaleDateString("he-IL")}
@@ -156,27 +168,64 @@ export const GroupPageView = ({
             </div>
             {group.lastActivity && (
               <div className="flex items-center text-gray-500 text-sm mt-2">
-                <i className="fa fa-refresh ms-2" aria-hidden="true"></i>
+                <i className="fa fa-refresh me-2" aria-hidden="true"></i>
                 <span id="group-last-activity">
                   פעילות אחרונה:{" "}
                   {new Date(group.lastActivity).toLocaleDateString("he-IL")}
                 </span>
               </div>
             )}
-            <div className="mt-6 flex justify-center">
+            <div className="mt-6 flex justify-center gap-4">
               <button
                 id="group-actions-button"
                 className="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors flex items-center"
                 onClick={onAddExpenseClick}
                 aria-label="הוסף הוצאה לקבוצה"
               >
-                <i className="fa fa-plus-circle ms-2" aria-hidden="true"></i>
+                <i className="fa fa-plus-circle me-2" aria-hidden="true"></i>
                 הוסף הוצאה לקבוצה
+              </button>
+              <button
+                id="share-group-button"
+                className="bg-green-500 text-white py-3 px-6 rounded-lg hover:bg-green-600 transition-colors flex items-center"
+                onClick={() => setShowQRCode(true)}
+                aria-label="שתף קבוצה באמצעות QR"
+              >
+                <i className="fa fa-qrcode me-2" aria-hidden="true"></i>
+                שתף קבוצה
               </button>
             </div>
           </div>
         </div>
       </div>
+      {showQRCode && group && (
+        <div
+          id="qr-modal"
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          role="dialog"
+          aria-modal="true"
+          aria-label="QR קוד לשיתוף קבוצה"
+        >
+          <div className="bg-white rounded-lg p-6 max-w-xs w-full">
+            <h2 className="text-xl font-bold mb-4 text-center">
+              QR לשיתוף קבוצה
+            </h2>
+            <QRCodeSVG
+              id="group-qr-code"
+              value={`groupId:${group.id}, password:${group.password}`}
+              size={180}
+            />
+            <button
+              id="close-qr-modal"
+              onClick={() => setShowQRCode(false)}
+              className="mt-4 bg-red-500 text-white py-2 px-4 rounded w-full hover:bg-red-600 transition-colors"
+              aria-label="סגור QR"
+            >
+              סגור
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

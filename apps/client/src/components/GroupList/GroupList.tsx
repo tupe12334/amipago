@@ -125,10 +125,15 @@ export const GroupList = () => {
               {/* Display members if available */}
               {group.members && group.members.length > 0 && (
                 <div className="mb-3">
-                  <p className="text-sm font-medium text-gray-700 mb-1">חברים:</p>
+                  <p className="text-sm font-medium text-gray-700 mb-1">
+                    חברים:
+                  </p>
                   <div className="flex flex-wrap gap-2">
                     {group.members.slice(0, 3).map((member) => (
-                      <span key={member.id} className="bg-gray-50 text-gray-700 text-xs px-2 py-1 rounded flex items-center">
+                      <span
+                        key={member.id}
+                        className="bg-gray-50 text-gray-700 text-xs px-2 py-1 rounded flex items-center"
+                      >
                         <i className="fa fa-user me-1" aria-hidden="true"></i>
                         {member.name}
                       </span>
@@ -177,7 +182,6 @@ export const GroupList = () => {
                   }}
                 >
                   <span>{t("צפה")}</span>
-                  <i className="fa fa-angle-start ms-1" aria-hidden="true"></i>
                 </button>
               </div>
             </li>
@@ -187,7 +191,7 @@ export const GroupList = () => {
           className="absolute bottom-0 start-1/2 transform -translate-x-1/2 mb-2 text-gray-500 text-sm flex items-center"
           aria-hidden="true"
         >
-          <i className="fa fa-arrow-down ms-1" aria-hidden="true"></i>
+          <i className="fa fa-arrow-down me-1" aria-hidden="true"></i>
           <span>גלול כדי לראות עוד</span>
         </div>
       </div>
