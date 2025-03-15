@@ -49,12 +49,14 @@ test.describe("Create New Group", () => {
 
   test("should redirect to root after 2 seconds", async ({ page }) => {
     await createGroup(page, "קבוצת בדיקה", "חברים");
-    
+
     await expect(page.locator("i.fa.fa-check-circle")).toBeVisible();
     await page.waitForTimeout(2100);
     const url = new URL(page.url());
     expect(url.pathname).toBe("/");
     await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("load");
     await page.waitForTimeout(300);
     expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
       "create-group-redirection.png"
