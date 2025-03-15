@@ -24,7 +24,7 @@ const DB_VERSION = 3; // Increased version to handle schema migration
 const GROUPS_STORE = "groups";
 const EXPENSES_STORE = "expenses";
 const USER_STORE = "user";
-const USER_ID_KEY = "current-user"; // This is the key used to identify the current user entry
+const USER_ID_KEY = "user"; // Changed from "current-user" to "user"
 
 // Initialize the database with idb
 const dbPromise = openDB<AmipagoDBSchema>(DB_NAME, DB_VERSION, {

@@ -7,6 +7,7 @@
 - Prefer to work with async/await and not callbacks
 - The client use `react-router`
 - When ever possible, use external libs
+- Don't put comments that describe what have you done, only why did you done it
 
 ## Docs
 
