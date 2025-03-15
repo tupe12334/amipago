@@ -5,6 +5,7 @@ export const GroupTypeEnum = z.enum([
   "HOUSEHOLD",
   "WORK",
   "FRIENDS",
+  "TRIP", // added trip option for travel groups
 ]);
 
 export const GroupTypeHebrewLabel = {
@@ -12,6 +13,7 @@ export const GroupTypeHebrewLabel = {
   HOUSEHOLD: "משק בית",
   WORK: "עבודה",
   FRIENDS: "חברים",
+  TRIP: "טיול", // added Hebrew label for trip option
 };
 
 export type GroupType = z.infer<typeof GroupTypeEnum>;

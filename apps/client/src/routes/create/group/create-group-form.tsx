@@ -127,6 +127,11 @@ export const CreateGroupForm = () => {
                     label: "עבודה",
                     icon: "briefcase",
                   },
+                  {
+                    value: "TRIP" as GroupType,
+                    label: "טיול",
+                    icon: "plane", // added trip option for travel groups
+                  },
                 ]}
                 selected={field.value}
                 onChange={field.onChange}
