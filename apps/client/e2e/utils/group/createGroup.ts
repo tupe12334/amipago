@@ -10,11 +10,15 @@ export const navigateToCreateGroupPage = async (page: Page) => {
   );
 };
 
-export const createGroup = async (page: Page, name: string, type: string) => {
+export const createGroup = async (
+  page: Page,
+  type: string
+): Promise<{ name: string }> => {
   await navigateToCreateGroupPage(page);
   await expect(page.locator("form")).toBeVisible();
   await expect(page.locator("h1")).toHaveText(new RegExp("צור קבוצה חדשה"));
-  await page.locator('input[name="name"]').fill(`קבוצת בדיקה - ${type}`);
+  const testGroupName = `קבוצת בדיקה - ${type}`;
+  await page.locator('input[name="name"]').fill(testGroupName);
   await page.locator('input[name="description"]').fill(`תיאור - ${type}`);
   await page.locator(`button[role="radio"]:has-text("${type}")`).click();
   await page.waitForLoadState("networkidle");
@@ -26,4 +30,5 @@ export const createGroup = async (page: Page, name: string, type: string) => {
   await expect(page.locator('[aria-live="polite"]')).toHaveText(
     "הקבוצה נוצרה בהצלחה!"
   );
+  return { name: testGroupName };
 };

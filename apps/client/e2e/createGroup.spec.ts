@@ -41,14 +41,14 @@ test.describe("Create New Group", () => {
     ];
 
     for (const type of groupTypes) {
-      await createGroup(page, "קבוצת בדיקה", type.label);
+      await createGroup(page, type.label);
       await expect(page.locator("i.fa.fa-check-circle")).toBeVisible();
       await page.waitForLoadState("networkidle");
     }
   });
 
   test("should redirect to root after 2 seconds", async ({ page }) => {
-    await createGroup(page, "קבוצת בדיקה", "חברים");
+    await createGroup(page, "חברים");
 
     await expect(page.locator("i.fa.fa-check-circle")).toBeVisible();
     await page.waitForTimeout(2100);
