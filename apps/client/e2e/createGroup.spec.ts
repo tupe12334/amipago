@@ -1,8 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { createGroup } from "./utils/group/createGroup";
 
 test.describe("Create New Group", () => {
   test("should create a new group successfully", async ({ page }) => {
-    await page.goto("/");
+    await createGroup(page, "קבוצת בדיקה");
     await page.click("#floating-action-button-button");
     await page.click("#floating-action-button-option-0");
     await expect(page.locator("h1")).toHaveText(new RegExp("צור קבוצה חדשה"));
@@ -30,7 +31,7 @@ test.describe("Create New Group", () => {
   });
 
   test("should validate form errors correctly", async ({ page }) => {
-    await page.goto("/");
+    await createGroup(page, "קבוצת בדיקה");
     await page.click("#floating-action-button-button");
     await page.click("#floating-action-button-option-0");
     await expect(page.locator("form")).toBeVisible();
@@ -72,7 +73,7 @@ test.describe("Create New Group", () => {
     ];
 
     for (const type of groupTypes) {
-      await page.goto("/");
+      await createGroup(page, "קבוצת בדיקה");
       await page.click("#floating-action-button-button");
       await page.click("#floating-action-button-option-0");
       await expect(page.locator("h1")).toHaveText(new RegExp("צור קבוצה חדשה"));
@@ -100,7 +101,7 @@ test.describe("Create New Group", () => {
   });
 
   test("should redirect to root after 2 seconds", async ({ page }) => {
-    await page.goto("/");
+    await createGroup(page, "קבוצת בדיקה");
     await page.click("#floating-action-button-button");
     await page.click("#floating-action-button-option-0");
     await expect(page.locator("h1")).toHaveText(new RegExp("צור קבוצה חדשה"));
