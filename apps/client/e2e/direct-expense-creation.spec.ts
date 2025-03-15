@@ -1,51 +1,9 @@
 import { test, expect } from "@playwright/test";
+import { createGroup } from "./utils/group/createGroup";
 
 // This test covers the flow of creating an expense directly from the home page
 test("create an expense and assign it to a group", async ({ page }) => {
-  // First, ensure we have at least one group
-  // Start by navigating to home page
-  await page.goto("/");
-  await page.waitForLoadState("networkidle");
-
-  // Take a screenshot of the initial state
-  const homePage = await page.screenshot({ animations: "disabled" });
-  expect(homePage).toMatchSnapshot("01-home-page-direct-expense.png");
-
-  // Create a group if none exists (we need to check if any groups are listed)
-  const hasGroups =
-    (await page.locator('[data-testid="group-list-container"] li').count()) > 0;
-
-  if (!hasGroups) {
-    // Click the add button
-    await page.locator("#add-btn-main-icon").click();
-    await page.waitForTimeout(500);
-
-    // Click on create group option
-    await page.locator("#add-btn-group-icon").click();
-    await page.waitForLoadState("networkidle");
-
-    // Fill in group creation form
-    const testGroupName = `Test Group`;
-    await page.locator("input#name").fill(testGroupName);
-    await page
-      .locator("input#description")
-      .fill("Test group for expense assignment");
-
-    // Select group type
-    await page.getByRole("radio", { name: "כללי" }).check();
-
-    // Take a snapshot of the completed form
-    const groupFormFilled = await page.screenshot({ animations: "disabled" });
-    expect(groupFormFilled).toMatchSnapshot("02-prerequisite-group-form.png");
-
-    // Submit the form
-    await page.getByRole("button", { name: "צור קבוצה" }).click();
-    await page.waitForLoadState("networkidle");
-
-    // Navigate back to home page
-    await page.waitForTimeout(2100); // Wait for animation
-    await page.waitForLoadState("networkidle");
-  }
+  await createGroup(page, "כללי");
 
   // Now create a new expense from the home page
   // Click the add button

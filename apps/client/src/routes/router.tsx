@@ -8,7 +8,7 @@ import {
 } from "../paths";
 import { CreateGroupPage } from "./create/group/create-group";
 import { CreateExpensePage } from "./create/expense/create-expense";
-import { GroupPage } from "./group";
+import { GroupContainer } from "./GroupContainer";
 
 export const Router = () => {
   return (
@@ -21,7 +21,7 @@ export const Router = () => {
           path={createExpenseForGroupPath}
           element={<CreateExpensePage />}
         />
-        <Route path={groupPath} element={<GroupPage />} />
+        <Route path={groupPath} element={<GroupContainer />} />
       </Routes>
     </BrowserRouter>
   );

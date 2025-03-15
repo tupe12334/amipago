@@ -1,75 +1,27 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router";
-import {
-  getGroupById,
-  getExpensesByGroupId,
-} from "../services/indexedDbService";
-import { StorageGroup } from "../models/StorageGroup";
-import { StorageExpense } from "../models/StorageExpense";
 import { GroupTypeHebrewLabel } from "../models/GroupType";
 import NavBar from "../components/NavBar/NavBar";
 import { TopBar } from "../components/TopBar/TopBar";
 import { BackButton } from "../components/BackButton/BackButton";
-import { getCreateExpenseForGroupPath } from "../paths";
 
-export const GroupPage = () => {
-  const { groupId } = useParams<{ groupId: string }>();
-  const [group, setGroup] = useState<StorageGroup | null>(null);
-  const [expenses, setExpenses] = useState<StorageExpense[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
+interface GroupPageProps {
+  group: any; // ...existing type StorageGroup...
+  expenses: any[]; // ...existing type StorageExpense...
+  loading: boolean;
+  error: string | null;
+  onBackClick: () => void;
+  onAddExpenseClick: () => void;
+  formatCurrency: (amount: number, currency: string) => string;
+}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!groupId) {
-        setError("מזהה קבוצה לא נמצא");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        // Fetch group data
-        const groupData = await getGroupById(groupId);
-
-        if (groupData) {
-          setGroup(groupData);
-
-          // Fetch expenses for this group
-          const groupExpenses = await getExpensesByGroupId(groupId);
-          setExpenses(groupExpenses);
-        } else {
-          setError(`הקבוצה עם המזהה "${groupId}" לא נמצאה`);
-        }
-      } catch (err) {
-        setError("אירעה שגיאה בטעינת הקבוצה");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [groupId]);
-
-  const handleBackClick = () => {
-    navigate("/");
-  };
-
-  const handleAddExpenseClick = () => {
-    if (groupId) {
-      navigate(getCreateExpenseForGroupPath(groupId));
-    }
-  };
-
-  // Format currency for display
-  const formatCurrency = (amount: number, currency: string) => {
-    return new Intl.NumberFormat("he-IL", {
-      style: "currency",
-      currency: currency,
-    }).format(amount);
-  };
-
+export const GroupPageView = ({
+  group,
+  expenses,
+  loading,
+  error,
+  onBackClick,
+  onAddExpenseClick,
+  formatCurrency,
+}: GroupPageProps) => {
   if (loading) {
     return (
       <div className="flex flex-col h-screen">
@@ -95,7 +47,6 @@ export const GroupPage = () => {
             חזרה לדף הבית
           </h1>
         </TopBar>
-
         <div className="flex flex-col items-center justify-center flex-1 p-4">
           <div
             className="bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-4 max-w-md w-full"
@@ -112,9 +63,8 @@ export const GroupPage = () => {
             </div>
             <p>{error || "הקבוצה המבוקשת לא נמצאה"}</p>
           </div>
-
           <button
-            onClick={handleBackClick}
+            onClick={onBackClick}
             className="mt-4 bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors flex items-center"
             id="back-to-groups-button"
             aria-label="חזור לרשימת הקבוצות"
@@ -133,7 +83,7 @@ export const GroupPage = () => {
       <TopBar>
         <button
           id="back-button"
-          onClick={handleBackClick}
+          onClick={onBackClick}
           className="flex items-center text-blue-600"
           aria-label="חזור לרשימת הקבוצות"
         >
@@ -141,9 +91,8 @@ export const GroupPage = () => {
           חזור
         </button>
       </TopBar>
-
       <div className="p-4 flex-1 overflow-y-auto">
-        {/* Removed card styling from the container */}
+        {/* ...existing code... */}
         <div className="p-6">
           <div className="flex justify-between items-start mb-6">
             <h1 id="group-title" className="text-2xl font-bold">
@@ -153,7 +102,6 @@ export const GroupPage = () => {
               {GroupTypeHebrewLabel[group.type]}
             </span>
           </div>
-
           {group.description && (
             <div className="mb-6">
               <h2 id="description-title" className="text-lg font-medium mb-2">
@@ -164,16 +112,13 @@ export const GroupPage = () => {
               </p>
             </div>
           )}
-
-          {/* Expenses section */}
           <div className="mb-6">
             <h2 id="expenses-title" className="text-lg font-medium mb-2">
               הוצאות
             </h2>
-
             {expenses.length > 0 ? (
               <ul id="expenses-list" className="divide-y divide-gray-200">
-                {expenses.map((expense) => (
+                {expenses.map((expense: any) => (
                   <li key={expense.id} className="py-3">
                     <div className="flex justify-between items-start">
                       <div>
@@ -201,7 +146,6 @@ export const GroupPage = () => {
               </div>
             )}
           </div>
-
           <div className="border-t border-gray-200 pt-4">
             <div className="flex items-center text-gray-500 text-sm">
               <i className="fa fa-clock-o ms-2" aria-hidden="true"></i>
@@ -210,7 +154,6 @@ export const GroupPage = () => {
                 {new Date(group.createdAt).toLocaleDateString("he-IL")}
               </span>
             </div>
-
             {group.lastActivity && (
               <div className="flex items-center text-gray-500 text-sm mt-2">
                 <i className="fa fa-refresh ms-2" aria-hidden="true"></i>
@@ -220,12 +163,11 @@ export const GroupPage = () => {
                 </span>
               </div>
             )}
-
             <div className="mt-6 flex justify-center">
               <button
                 id="group-actions-button"
                 className="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors flex items-center"
-                onClick={handleAddExpenseClick}
+                onClick={onAddExpenseClick}
                 aria-label="הוסף הוצאה לקבוצה"
               >
                 <i className="fa fa-plus-circle ms-2" aria-hidden="true"></i>
