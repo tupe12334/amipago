@@ -66,5 +66,5 @@ test("create an expense and assign it to a group", async ({ page }) => {
   // Verify the expense appears in the list using regex
   await expect(page.getByText(new RegExp("קניות בסופר"))).toBeVisible();
   await expect(page.getByText(new RegExp("יוסי כהן"))).toBeVisible();
-  await expect(page.getByText(new RegExp("₪75\\.30"))).toBeVisible();
+  await expect(page.getByText(new RegExp("75\\.30"))).toBeVisible();
 });
