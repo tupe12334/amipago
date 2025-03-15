@@ -105,7 +105,7 @@ export const GroupPage = () => {
           >
             <div className="flex items-center mb-2">
               <i
-                className="fa fa-exclamation-triangle ml-2"
+                className="fa fa-exclamation-triangle ms-2"
                 aria-hidden="true"
               ></i>
               <p className="font-bold">שגיאה בטעינת הקבוצה</p>
@@ -119,7 +119,7 @@ export const GroupPage = () => {
             id="back-to-groups-button"
             aria-label="חזור לרשימת הקבוצות"
           >
-            <i className="fa fa-home ml-2" aria-hidden="true"></i>
+            <i className="fa fa-home ms-2" aria-hidden="true"></i>
             חזור לרשימת הקבוצות
           </button>
         </div>
@@ -137,13 +137,14 @@ export const GroupPage = () => {
           className="flex items-center text-blue-600"
           aria-label="חזור לרשימת הקבוצות"
         >
-          <i className="fa fa-arrow-right ml-2" aria-hidden="true"></i>
+          <i className="fa fa-arrow-right ms-2" aria-hidden="true"></i>
           חזור
         </button>
       </TopBar>
 
       <div className="p-4 flex-1 overflow-y-auto">
-        <div className="bg-white rounded-lg shadow-lg p-6 max-w-3xl mx-auto">
+        {/* Removed card styling from the container */}
+        <div className="p-6">
           <div className="flex justify-between items-start mb-6">
             <h1 id="group-title" className="text-2xl font-bold">
               {group.name}
@@ -203,7 +204,7 @@ export const GroupPage = () => {
 
           <div className="border-t border-gray-200 pt-4">
             <div className="flex items-center text-gray-500 text-sm">
-              <i className="fa fa-clock-o ml-2" aria-hidden="true"></i>
+              <i className="fa fa-clock-o ms-2" aria-hidden="true"></i>
               <span id="group-created-at">
                 נוצר בתאריך:{" "}
                 {new Date(group.createdAt).toLocaleDateString("he-IL")}
@@ -212,7 +213,7 @@ export const GroupPage = () => {
 
             {group.lastActivity && (
               <div className="flex items-center text-gray-500 text-sm mt-2">
-                <i className="fa fa-refresh ml-2" aria-hidden="true"></i>
+                <i className="fa fa-refresh ms-2" aria-hidden="true"></i>
                 <span id="group-last-activity">
                   פעילות אחרונה:{" "}
                   {new Date(group.lastActivity).toLocaleDateString("he-IL")}
@@ -227,7 +228,7 @@ export const GroupPage = () => {
                 onClick={handleAddExpenseClick}
                 aria-label="הוסף הוצאה לקבוצה"
               >
-                <i className="fa fa-plus-circle ml-2" aria-hidden="true"></i>
+                <i className="fa fa-plus-circle ms-2" aria-hidden="true"></i>
                 הוסף הוצאה לקבוצה
               </button>
             </div>
