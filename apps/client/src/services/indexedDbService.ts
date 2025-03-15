@@ -169,13 +169,7 @@ export const getUserData = async (): Promise<z.infer<
     const stored = localStorage.getItem(USER_ID_KEY);
 
     if (!stored) {
-      // Create a new user if not exists
-      // Using uuid for a unique global userId; createdAt generated automatically
-      await saveUserData({ id: uuidv4(), createdAt: new Date() });
-      const newStored = localStorage.getItem(USER_ID_KEY);
-      if (!newStored) return null;
-      const userData = JSON.parse(newStored);
-      return userData;
+      return null;
     }
     // Parse stored JSON and update lastActive timestamp
     const userData = JSON.parse(stored);

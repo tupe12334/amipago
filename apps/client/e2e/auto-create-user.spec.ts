@@ -1,12 +1,10 @@
 import { test, expect } from "@playwright/test";
+import { onBoard } from "./utils/onBoard";
 
 test("1. Auto create user object in localStorage on first visit", async ({
   page,
 }) => {
-  // Start from the root path
-  await page.goto("/");
-  // Wait for the page to settle down
-  await page.waitForLoadState("networkidle");
+  await onBoard(page);
 
   // Retrieve the user id from localStorage
   const user = await page.evaluate(() => localStorage.getItem("user"));

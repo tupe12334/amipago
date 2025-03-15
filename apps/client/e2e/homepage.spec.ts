@@ -1,8 +1,9 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import { onBoard } from "./utils/onBoard";
 
 test.describe("Homepage", () => {
   test("should have the correct title", async ({ page }) => {
-    await page.goto("/");
+    await onBoard(page);
     await expect(page).toHaveTitle(/Amipago/);
 
     // Wait for the page to be fully loaded and network to be idle

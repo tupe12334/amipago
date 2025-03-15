@@ -18,8 +18,6 @@ const FloatingActionButton: FC<Props> = ({ children, options }) => {
 
   const handleClick = () => {
     setIsActive(!isActive);
-    // You can add your action logic here
-    console.log("FAB clicked");
   };
 
   return (

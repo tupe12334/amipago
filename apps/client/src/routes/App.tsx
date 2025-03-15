@@ -60,33 +60,6 @@ function App() {
           הקבוצות שלי
         </h1>
 
-        {userLoading ? (
-          <div
-            className="bg-blue-50 p-3 mb-4 rounded"
-            id="user-loading-message"
-            aria-live="polite"
-          >
-            <p className="text-blue-700 text-center">
-              <i className="fa fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
-              מאתחל את המערכת...
-            </p>
-          </div>
-        ) : userError ? (
-          <div
-            className="bg-red-50 p-3 mb-4 rounded"
-            id="user-error-message"
-            aria-live="assertive"
-          >
-            <p className="text-red-700 text-center">
-              <i
-                className="fa fa-exclamation-circle ml-2"
-                aria-hidden="true"
-              ></i>
-              שגיאה באתחול מזהה משתמש
-            </p>
-          </div>
-        ) : null}
-
         <ButtonGroup
           options={[
             { value: "groups", label: "הקבוצות שלי" },

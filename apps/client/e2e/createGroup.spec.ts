@@ -3,9 +3,11 @@ import {
   createGroup,
   navigateToCreateGroupPage,
 } from "./utils/group/createGroup";
+import { onBoard } from "./utils/onBoard";
 
 test.describe("Create New Group", () => {
   test("should validate form errors correctly", async ({ page }) => {
+    await onBoard(page);
     await navigateToCreateGroupPage(page);
     await page.click('button[type="submit"]');
     await expect(page.locator('[aria-describedby="name-error"]')).toBeVisible();
@@ -40,6 +42,7 @@ test.describe("Create New Group", () => {
       { value: "WORK", label: "עבודה" },
     ];
 
+    await onBoard(page);
     for (const type of groupTypes) {
       await createGroup(page, type.label);
       await expect(page.locator("i.fa.fa-check-circle")).toBeVisible();
@@ -48,6 +51,7 @@ test.describe("Create New Group", () => {
   });
 
   test("should redirect to root after 2 seconds", async ({ page }) => {
+    await onBoard(page);
     await createGroup(page, "חברים");
 
     await expect(page.locator("i.fa.fa-check-circle")).toBeVisible();

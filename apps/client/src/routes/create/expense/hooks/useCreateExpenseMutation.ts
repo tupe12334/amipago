@@ -28,18 +28,8 @@ export const useCreateExpenseMutation = () => {
       // Validate with zod schema
       const validExpense = StorageExpenseSchema.parse(expenseData);
 
-      // Log the expense data
-      console.log(
-        `Creating expense ${
-          validExpense.groupId
-            ? `for group ${validExpense.groupId}`
-            : "without group"
-        }`
-      );
-
       // Save to IndexedDB
       const expenseId = await saveExpense(validExpense);
-      console.log(`Expense saved with ID: ${expenseId}`);
 
       return true;
     } catch (err) {

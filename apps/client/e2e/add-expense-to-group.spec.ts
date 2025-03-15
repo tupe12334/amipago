@@ -1,8 +1,10 @@
 import { test, expect } from "@playwright/test";
 import { createGroup } from "./utils/group/createGroup";
+import { onBoard } from "./utils/onBoard";
 
 // This test covers the complete flow of creating a group and adding an expense to it
 test("create a group and add an expense to it", async ({ page }) => {
+  await onBoard(page);
   const { name } = await createGroup(page, "חברים");
   await page.waitForTimeout(2100); // Wait for animation
   await page.waitForLoadState("networkidle");

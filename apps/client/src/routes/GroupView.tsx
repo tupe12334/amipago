@@ -57,7 +57,7 @@ export const GroupPageView = ({
           >
             <div className="flex items-center mb-2">
               <i
-                className="fa fa-exclamation-triangle ms-2"
+                className="fa fa-exclamation-triangle me-2"
                 aria-hidden="true"
               ></i>
               <p className="font-bold">שגיאה בטעינת הקבוצה</p>
@@ -70,7 +70,7 @@ export const GroupPageView = ({
             id="back-to-groups-button"
             aria-label="חזור לרשימת הקבוצות"
           >
-            <i className="fa fa-home ms-2" aria-hidden="true"></i>
+            <i className="fa fa-home me-2" aria-hidden="true"></i>
             חזור לרשימת הקבוצות
           </button>
         </div>

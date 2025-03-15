@@ -1,9 +1,11 @@
 import { test, expect } from "@playwright/test";
+import { onBoard } from "./utils/onBoard";
 
 test.describe("Group Not Found", () => {
   test("should display error when navigating to a non-existent group", async ({
     page,
   }) => {
+    await onBoard(page);
     // Start from the root path
     await page.goto("/");
 
@@ -49,8 +51,7 @@ test.describe("Group Not Found", () => {
   });
 
   test("should have working TopBar BackButton", async ({ page }) => {
-    // Start from the root path
-    await page.goto("/");
+    await onBoard(page);
 
     // Navigate directly to a non-existent group ID
     await page.evaluate(() => {

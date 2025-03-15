@@ -35,8 +35,6 @@ export const useCreateGroupMutation = () => {
 
       // Save group to IndexedDB
       const groupId = await saveGroup(group);
-      console.log("Group saved with ID:", groupId);
-
       // Return success
       setLoading(false);
       return true;

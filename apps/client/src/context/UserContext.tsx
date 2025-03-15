@@ -1,17 +1,18 @@
 import React, {
   createContext,
-  useContext,
-  useState,
-  useEffect,
   ReactNode,
+  useContext,
+  useLayoutEffect,
+  useState,
 } from "react";
+import { StorageUser } from "../models/StorageUser";
+import { getUserData } from "../services/indexedDbService";
 import {
   ensureUserId,
-  updateUserTheme,
+  updateUserName as updateName,
   updateUserLanguage,
+  updateUserTheme,
 } from "../services/userService";
-import { getUserData } from "../services/indexedDbService";
-import { StorageUser } from "../models/StorageUser";
 
 // Define the context type
 interface UserContextType {
@@ -21,6 +22,7 @@ interface UserContextType {
   error: Error | null;
   updateTheme: (theme: "light" | "dark" | "system") => Promise<void>;
   updateLanguage: (language: "he" | "en") => Promise<void>;
+  updateUserName: (name: string) => Promise<void>;
   refreshUserData: () => Promise<void>;
 }
 
@@ -32,6 +34,7 @@ const UserContext = createContext<UserContextType>({
   error: null,
   updateTheme: async () => {},
   updateLanguage: async () => {},
+  updateUserName: async () => {},
   refreshUserData: async () => {},
 });
 
@@ -62,7 +65,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const initializeUser = async () => {
       try {
         // Ensure the user has a globally unique ID, creating one if needed
@@ -94,6 +97,11 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     await refreshUserData();
   };
 
+  const updateUserName = async (name: string) => {
+    await updateName(name);
+    await refreshUserData();
+  };
+
   const value = {
     userId,
     userData,
@@ -101,6 +109,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     error,
     updateTheme,
     updateLanguage,
+    updateUserName,
     refreshUserData,
   };
 

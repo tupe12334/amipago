@@ -1,4 +1,6 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import { createGroup } from "./utils/group/createGroup";
+import { onBoard } from "./utils/onBoard";
 
 test.describe("Create New Expense", () => {
   /**
@@ -6,30 +8,8 @@ test.describe("Create New Expense", () => {
    * It validates the expense form fields and ensures the expense is created successfully.
    */
   test("should create a new expense successfully", async ({ page }) => {
-    // --- Sub flow: Create a test group ---
-    await page.goto("/");
-    await page.click("#floating-action-button-button");
-    await page.click("#floating-action-button-option-0");
-    await expect(page.locator("h1")).toHaveText(new RegExp("צור קבוצה חדשה"));
-
-    // Wait for form to be fully rendered
-    await page.waitForLoadState("networkidle");
-
-    // Fill in group creation form fields
-    await page.locator('input[name="name"]').fill("קבוצת בדיקה להוצאה");
-    await page.locator('input[name="description"]').fill("תיאור קבוצת הוצאה");
-    await page.locator('button[role="radio"]:has-text("חברים")').click();
-
-    // Submit the group form
-    await page.click('button[type="submit"]');
-    await expect(page.locator('[aria-live="polite"]')).toHaveText(
-      "הקבוצה נוצרה בהצלחה!"
-    );
-
-    // Wait for redirect to happen (2 seconds)
-    await page.waitForTimeout(2100);
-    await page.waitForLoadState("networkidle");
-    // --- End sub flow ---
+    await onBoard(page);
+    await createGroup(page, "חברים");
 
     // Begin expense creation flow using the created test group
     await page.click("#floating-action-button-button");

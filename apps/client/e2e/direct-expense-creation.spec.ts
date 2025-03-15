@@ -1,8 +1,10 @@
 import { test, expect } from "@playwright/test";
 import { createGroup } from "./utils/group/createGroup";
+import { onBoard } from "./utils/onBoard";
 
 // This test covers the flow of creating an expense directly from the home page
 test("create an expense and assign it to a group", async ({ page }) => {
+  await onBoard(page);
   await createGroup(page, "כללי");
 
   // Now create a new expense from the home page
