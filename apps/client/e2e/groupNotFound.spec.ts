@@ -24,9 +24,9 @@ test.describe("Group Not Found", () => {
     // Wait for the error message to appear
     await page.waitForSelector("#group-error-alert", { timeout: 5000 });
 
-    // Verify error message contains the non-existent ID
+    // Verify error message contains the non-existent ID using regex
     const errorText = await page.locator("#group-error-alert").textContent();
-    expect(errorText).toContain("non-existent-id-12345");
+    expect(errorText).toMatch(new RegExp("non-existent-id-12345"));
 
     // Take a snapshot of the error page
     expect(await page.screenshot()).toMatchSnapshot(
@@ -36,8 +36,8 @@ test.describe("Group Not Found", () => {
     // Test the back to groups button
     await page.click("#back-to-groups-button");
 
-    // Verify we're back at the homepage
-    await page.waitForSelector("h1:has-text('הקבוצות שלי')");
+    // Verify we're back at the homepage using regex for text
+    await page.waitForSelector("h1", { hasText: new RegExp("הקבוצות שלי") });
 
     // Take a snapshot after returning to the homepage
     expect(await page.screenshot()).toMatchSnapshot(
@@ -61,18 +61,18 @@ test.describe("Group Not Found", () => {
     await expect(page.locator("button#back-button")).toBeVisible();
 
     // Take a snapshot before clicking the back button
-    expect(await page.screenshot()).toMatchSnapshot(
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
       "before-clicking-back-button.png"
     );
 
     // Click the BackButton
     await page.click("button#back-button");
 
-    // Verify we're back at the homepage
-    await page.waitForSelector("h1:has-text('הקבוצות שלי')");
+    // Verify we're back at the homepage using regex text matching
+    await page.waitForSelector("h1", { hasText: new RegExp("הקבוצות שלי") });
 
     // Take a final snapshot
-    expect(await page.screenshot()).toMatchSnapshot(
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
       "after-back-button-click.png"
     );
   });

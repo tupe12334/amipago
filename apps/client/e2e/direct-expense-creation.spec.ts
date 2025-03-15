@@ -105,8 +105,8 @@ test("create an expense and assign it to a group", async ({ page }) => {
   const groupWithExpense = await page.screenshot({ animations: "disabled" });
   expect(groupWithExpense).toMatchSnapshot("08-group-with-direct-expense.png");
 
-  // Verify the expense appears in the list
-  await expect(page.getByText("קניות בסופר")).toBeVisible();
-  await expect(page.getByText("יוסי כהן")).toBeVisible();
-  await expect(page.getByText("₪75.30")).toBeVisible();
+  // Verify the expense appears in the list using regex
+  await expect(page.getByText(new RegExp("קניות בסופר"))).toBeVisible();
+  await expect(page.getByText(new RegExp("יוסי כהן"))).toBeVisible();
+  await expect(page.getByText(new RegExp("₪75\\.30"))).toBeVisible();
 });

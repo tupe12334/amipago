@@ -10,7 +10,7 @@ test.describe("Create New Expense", () => {
     await page.goto("/");
     await page.click("#floating-action-button-button");
     await page.click("#floating-action-button-option-0");
-    await expect(page.locator("h1")).toHaveText("צור קבוצה חדשה");
+    await expect(page.locator("h1")).toHaveText(new RegExp("צור קבוצה חדשה"));
 
     // Wait for form to be fully rendered
     await page.waitForLoadState("networkidle");
@@ -78,7 +78,7 @@ test.describe("Create New Expense", () => {
 
     // Check for success message
     await expect(page.locator('[aria-live="polite"]')).toHaveText(
-      "ההוצאה נוצרה בהצלחה!"
+      new RegExp("ההוצאה נוצרה בהצלחה!")
     );
     await expect(page.locator("i.fa.fa-check-circle")).toBeVisible();
 

@@ -69,7 +69,9 @@ test("create a group and add an expense to it", async ({ page }) => {
   expect(groupDetails).toMatchSnapshot("05-group-details-page.png");
 
   // Verify that there are no expenses yet
-  await expect(page.getByText(new RegExp("אין הוצאות להצגה בקבוצה זו"))).toBeVisible();
+  await expect(
+    page.getByText(new RegExp("אין הוצאות להצגה בקבוצה זו"))
+  ).toBeVisible();
 
   // Click on add expense button
   await page.locator("#group-actions-button").click();
