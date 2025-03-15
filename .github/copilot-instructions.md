@@ -25,6 +25,7 @@
 - Save snapshot after any meaningful action, make sure the page has been settle down before taking the snapshot
 - Disable animation in E2E testing using await page.screenshot({ animations: "disabled" }) and don't use the path parameter
 - Add numbering by order to the snapshots
+- When searching for a text, always use the Regex option
 
 ### Unit testing
 

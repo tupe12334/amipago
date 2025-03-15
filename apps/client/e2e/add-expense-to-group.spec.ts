@@ -61,7 +61,7 @@ test("create a group and add an expense to it", async ({ page }) => {
   await page.waitForLoadState("networkidle");
 
   // Find and click on the newly created group
-  await page.getByText(testGroupName).click();
+  await page.getByText(new RegExp(testGroupName)).click();
   await page.waitForLoadState("networkidle");
 
   // Take a screenshot of the group details page
@@ -69,7 +69,7 @@ test("create a group and add an expense to it", async ({ page }) => {
   expect(groupDetails).toMatchSnapshot("05-group-details-page.png");
 
   // Verify that there are no expenses yet
-  await expect(page.getByText("אין הוצאות להצגה בקבוצה זו")).toBeVisible();
+  await expect(page.getByText(new RegExp("אין הוצאות להצגה בקבוצה זו"))).toBeVisible();
 
   // Click on add expense button
   await page.locator("#group-actions-button").click();
@@ -104,7 +104,7 @@ test("create a group and add an expense to it", async ({ page }) => {
   await page.waitForLoadState("networkidle");
 
   // Find and click on the previously created group
-  await page.getByText(testGroupName).click();
+  await page.getByText(new RegExp(testGroupName)).click();
   await page.waitForLoadState("networkidle");
 
   // Take a screenshot of the group page showing the expense
@@ -112,7 +112,7 @@ test("create a group and add an expense to it", async ({ page }) => {
   expect(groupWithExpense).toMatchSnapshot("09-group-with-expense.png");
 
   // Verify the expense appears in the list
-  await expect(page.getByText("ארוחת ערב במסעדה")).toBeVisible();
-  await expect(page.getByText("ישראל ישראלי")).toBeVisible();
-  await expect(page.getByText("120.50")).toBeVisible();
+  await expect(page.getByText(new RegExp("ארוחת ערב במסעדה"))).toBeVisible();
+  await expect(page.getByText(new RegExp("ישראל ישראלי"))).toBeVisible();
+  await expect(page.getByText(new RegExp("120\\.50"))).toBeVisible();
 });
