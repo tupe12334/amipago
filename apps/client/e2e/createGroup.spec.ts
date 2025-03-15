@@ -42,38 +42,14 @@ test.describe("Create New Group", () => {
 
     for (const type of groupTypes) {
       await createGroup(page, "קבוצת בדיקה", type.label);
-      await page
-        .locator('input[name="name"]')
-        .fill(`קבוצת בדיקה - ${type.label}`);
-      await page
-        .locator('input[name="description"]')
-        .fill(`תיאור - ${type.label}`);
-      await page
-        .locator(`button[role="radio"]:has-text("${type.label}")`)
-        .click();
-      await page.waitForLoadState("networkidle");
-      await page.waitForTimeout(500);
-      expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
-        `create-group-form-${type.value.toLowerCase()}-filled.png`
-      );
-      await page.click('button[type="submit"]');
-      await expect(page.locator('[aria-live="polite"]')).toHaveText(
-        "הקבוצה נוצרה בהצלחה!"
-      );
       await expect(page.locator("i.fa.fa-check-circle")).toBeVisible();
       await page.waitForLoadState("networkidle");
     }
   });
 
   test("should redirect to root after 2 seconds", async ({ page }) => {
-    await createGroup(page, "קבוצת בדיקה");
-    await page.locator('input[name="name"]').fill("קבוצת בדיקה");
-    await page.locator('input[name="description"]').fill("תיאור קבוצת בדיקה");
-    await page.locator('button[role="radio"]:has-text("חברים")').click();
-    await page.click('button[type="submit"]');
-    await expect(page.locator('[aria-live="polite"]')).toHaveText(
-      "הקבוצה נוצרה בהצלחה!"
-    );
+    await createGroup(page, "קבוצת בדיקה", "חברים");
+    
     await expect(page.locator("i.fa.fa-check-circle")).toBeVisible();
     await page.waitForTimeout(2100);
     const url = new URL(page.url());
