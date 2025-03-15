@@ -5,8 +5,11 @@ import { z } from "zod";
  */
 export const StorageUserSchema = z.object({
   id: z.string().uuid({ message: "מזהה המשתמש חייב להיות מסוג UUID חוקי" }),
-  createdAt: z.date(),
-  lastActive: z.date().optional(),
+  createdAt: z.union([z.string(), z.date()]),
+  lastActive: z
+    .union([z.string(), z.date()])
+    .default(() => new Date())
+    .optional(),
   settings: z
     .object({
       theme: z.enum(["light", "dark", "system"]).default("system"),
@@ -23,7 +26,7 @@ export type StorageUser = z.infer<typeof StorageUserSchema>;
  */
 export const CreateUserSchema = z.object({
   id: z.string().uuid(),
-  createdAt: z.date(),
+  createdAt: z.union([z.string(), z.date()]),
 });
 
 export type CreateUserInput = z.infer<typeof CreateUserSchema>;
