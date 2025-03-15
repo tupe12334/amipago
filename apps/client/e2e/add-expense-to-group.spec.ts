@@ -6,6 +6,18 @@ test("create a group and add an expense to it", async ({ page }) => {
   await page.goto("/");
   await page.waitForLoadState("networkidle");
 
+  // Set up mock user in localStorage (mock user data)
+  await page.evaluate(() => {
+    const mockUser = {
+      id: "current-user", // fixed key as used in service
+      userId: "mock-user-id",
+      createdAt: new Date().toISOString(),
+      lastActive: new Date().toISOString(),
+      settings: {},
+    };
+    localStorage.setItem("current-user", JSON.stringify(mockUser));
+  });
+
   // Take a named screenshot of the initial state
   const homePage = await page.screenshot({ animations: "disabled" });
   expect(homePage).toMatchSnapshot("01-home-page.png");

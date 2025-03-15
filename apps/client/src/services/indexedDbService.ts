@@ -170,37 +170,22 @@ export const getAllExpenses = async (): Promise<
 };
 
 /**
- * Get user data from IndexedDB
+ * Get user data from localStorage
  * Returns the current user data
  */
 export const getUserData = async (): Promise<z.infer<
   typeof StorageUserSchema
 > | null> => {
   try {
-    const db = await dbPromise;
-    const userData = await db.get(USER_STORE, USER_ID_KEY);
-
-    if (!userData) {
+    const stored = localStorage.getItem(USER_ID_KEY);
+    if (!stored) {
       return null;
     }
-
-    // Update the last active timestamp whenever we get the user data
-    if (userData) {
-      try {
-        const updatedUserData = {
-          ...userData,
-          lastActive: new Date(),
-        };
-        await db.put(USER_STORE, updatedUserData);
-      } catch (updateError) {
-        console.warn(
-          "Could not update user last active timestamp",
-          updateError
-        );
-      }
-    }
-
-    return userData;
+    // Parse stored JSON and update lastActive timestamp
+    const userData = JSON.parse(stored);
+    const updatedUserData = { ...userData, lastActive: new Date() };
+    localStorage.setItem(USER_ID_KEY, JSON.stringify(updatedUserData));
+    return updatedUserData;
   } catch (error) {
     console.error("Error retrieving user data:", error);
     throw error;
@@ -208,7 +193,7 @@ export const getUserData = async (): Promise<z.infer<
 };
 
 /**
- * Save user data to IndexedDB
+ * Save user data to localStorage
  * The userData.id is the actual unique user ID
  * We use a fixed storage key (USER_ID_KEY) to ensure we're always
  * accessing and updating the same record
@@ -217,8 +202,6 @@ export const saveUserData = async (
   userData: CreateUserInput
 ): Promise<void> => {
   try {
-    const db = await dbPromise;
-
     // Validate with zod schema before saving
     const validUserData = StorageUserSchema.parse({
       id: USER_ID_KEY, // Use fixed key for storage
@@ -226,8 +209,7 @@ export const saveUserData = async (
       createdAt: userData.createdAt,
       lastActive: new Date(),
     });
-
-    await db.put(USER_STORE, validUserData);
+    localStorage.setItem(USER_ID_KEY, JSON.stringify(validUserData));
   } catch (error) {
     console.error("Error saving user data:", error);
     throw error;
@@ -256,16 +238,15 @@ export const getUserGlobalId = async (): Promise<string | null> => {
 };
 
 /**
- * Update user settings
+ * Update user settings in localStorage
  */
 export const updateUserSettings = async (
   settings: Partial<z.infer<typeof StorageUserSchema>["settings"]>
 ): Promise<void> => {
   try {
-    const db = await dbPromise;
-    const userData = await db.get(USER_STORE, USER_ID_KEY);
-
-    if (userData) {
+    const stored = localStorage.getItem(USER_ID_KEY);
+    if (stored) {
+      const userData = JSON.parse(stored);
       const updatedUserData = {
         ...userData,
         settings: {
@@ -274,8 +255,7 @@ export const updateUserSettings = async (
         },
         lastActive: new Date(),
       };
-
-      await db.put(USER_STORE, updatedUserData);
+      localStorage.setItem(USER_ID_KEY, JSON.stringify(updatedUserData));
     }
   } catch (error) {
     console.error("Error updating user settings:", error);
