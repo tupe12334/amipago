@@ -23,7 +23,7 @@ test("create a group and add an expense to it", async ({ page }) => {
   await page.waitForLoadState("networkidle");
 
   // Fill in group creation form
-  const testGroupName = `Test Group ${Date.now()}`;
+  const testGroupName = `Test Group`;
   await page.locator("input#name").fill(testGroupName);
   await page
     .locator("input#description")
