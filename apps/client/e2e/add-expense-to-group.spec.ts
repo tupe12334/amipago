@@ -46,10 +46,12 @@ test("create a group and add an expense to it", async ({ page }) => {
   // Submit the expense form
   await page.getByText("שמור").click();
   await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
+  await page.waitForLoadState("load");
 
   // Take a screenshot of expense creation success state
   const expenseSuccess = await page.screenshot({ animations: "disabled" });
-  expect(expenseSuccess).toMatchSnapshot("08-expense-created-success.png");
+  expect(expenseSuccess).toMatchSnapshot();
 
   await page.waitForTimeout(2100); // Wait for animation
   await page.waitForLoadState("networkidle");
