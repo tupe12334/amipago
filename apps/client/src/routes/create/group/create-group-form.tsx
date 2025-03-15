@@ -9,8 +9,10 @@ import { FormSelect } from "../../../components/Form/FormSelect";
 import { FormSubmitButton } from "../../../components/Form/FormSubmitButton";
 import { FormSuccessScreen } from "../../../components/Form/FormSuccessScreen";
 import { useCreateGroupMutation } from "./hooks/useCreateGroupMutation";
+import { useUser } from "../../../context/UserContext"; // import useUser
 
 export const CreateGroupForm = () => {
+  const { userId } = useUser(); // retrieve current userId
   const [formSubmitted, setFormSubmitted] = useState(false);
   const { createGroup, loading, error } = useCreateGroupMutation();
 
@@ -25,7 +27,13 @@ export const CreateGroupForm = () => {
   });
 
   const onSubmit: SubmitHandler<CreateGroupInput> = async (data) => {
-    const success = await createGroup(data);
+    // Throw error if no userId is present
+    if (!userId) {
+      throw new Error("User ID not found.");
+    }
+    // Merge required userId into group data
+    const groupData = { ...data, userId };
+    const success = await createGroup(groupData);
     if (success) {
       setFormSubmitted(true);
     }
