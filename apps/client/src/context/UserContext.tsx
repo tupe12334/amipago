@@ -1,5 +1,15 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { ensureUserId, updateUserTheme, updateUserLanguage } from "../services/userService";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import {
+  ensureUserId,
+  updateUserTheme,
+  updateUserLanguage,
+} from "../services/userService";
 import { getUserData } from "../services/indexedDbService";
 import { StorageUser } from "../models/StorageUser";
 
@@ -58,31 +68,14 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         // Ensure the user has a globally unique ID, creating one if needed
         const id = await ensureUserId();
         setUserId(id);
-        
+
         // Get full user data
         await refreshUserData();
-
-        // Store the ID in localStorage as a backup
-        try {
-          localStorage.setItem("amipago-user-id", id);
-        } catch (storageErr) {
-          console.warn("Could not store user ID in localStorage:", storageErr);
-        }
       } catch (err) {
         console.error("Failed to initialize user ID:", err);
-        
-        // Try to recover ID from localStorage if available
-        try {
-          const localId = localStorage.getItem("amipago-user-id");
-          if (localId) {
-            console.log("Recovered user ID from localStorage:", localId);
-            setUserId(localId);
-          } else {
-            setError(err instanceof Error ? err : new Error("Failed to initialize user ID"));
-          }
-        } catch (localErr) {
-          setError(err instanceof Error ? err : new Error("Failed to initialize user ID"));
-        }
+        setError(
+          err instanceof Error ? err : new Error("Failed to initialize user ID")
+        );
       } finally {
         setIsLoading(false);
       }
@@ -111,9 +104,5 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     refreshUserData,
   };
 
-  return (
-    <UserContext.Provider value={value}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

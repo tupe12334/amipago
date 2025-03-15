@@ -11,7 +11,6 @@ function App() {
   const { i18n } = useTranslation();
   const { userId, isLoading: userLoading, error: userError } = useUser();
   const [activeView, setActiveView] = useState<"groups" | "activity">("groups");
-  const [showUserMessage, setShowUserMessage] = useState(true);
 
   useEffect(() => {
     // Set the document direction based on the current language
@@ -50,17 +49,6 @@ function App() {
     };
   }, []);
 
-  // Hide the user message after 3 seconds
-  useEffect(() => {
-    if (userId && !userLoading) {
-      const timer = setTimeout(() => {
-        setShowUserMessage(false);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [userId, userLoading]);
-
   return (
     <main className="flex flex-col h-screen">
       <NavBar />
@@ -76,6 +64,7 @@ function App() {
           <div
             className="bg-blue-50 p-3 mb-4 rounded"
             id="user-loading-message"
+            aria-live="polite"
           >
             <p className="text-blue-700 text-center">
               <i className="fa fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
@@ -83,23 +72,17 @@ function App() {
             </p>
           </div>
         ) : userError ? (
-          <div className="bg-red-50 p-3 mb-4 rounded" id="user-error-message">
+          <div
+            className="bg-red-50 p-3 mb-4 rounded"
+            id="user-error-message"
+            aria-live="assertive"
+          >
             <p className="text-red-700 text-center">
               <i
                 className="fa fa-exclamation-circle ml-2"
                 aria-hidden="true"
               ></i>
               שגיאה באתחול מזהה משתמש
-            </p>
-          </div>
-        ) : userId && showUserMessage ? (
-          <div
-            className="bg-green-50 p-3 mb-4 rounded"
-            id="user-success-message"
-          >
-            <p className="text-green-700 text-center">
-              <i className="fa fa-check-circle ml-2" aria-hidden="true"></i>
-              המשתמש אותחל בהצלחה עם מזהה ייחודי
             </p>
           </div>
         ) : null}
