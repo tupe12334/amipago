@@ -12,7 +12,7 @@
     "tauri:dev": "tauri dev",
     "tauri:ios:init": "tauri ios init",
     "tauri:ios:dev": "tauri ios dev --host",
-    "test":"vitest",
+    "test": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
@@ -38,6 +38,7 @@
     "react-hook-form": "^7.54.2",
     "react-i18next": "^15.4.1",
     "react-router": "^7.3.0",
+    "react-router-dom": "^7.3.0",
     "uuid": "^11.1.0",
     "y-webrtc": "^10.3.0",
     "zod": "^3.24.2"
