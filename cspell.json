@@ -10,6 +10,7 @@
     "languagedetector",
     "Lngs",
     "networkidle",
+    "qrcode",
     "tauri",
     "viewports",
     "webrtc",
