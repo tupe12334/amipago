@@ -3,10 +3,6 @@
 @import "tailwindcss";
 @import "font-awesome";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 body {
   font-family: "Open Sans", sans-serif;
 }
