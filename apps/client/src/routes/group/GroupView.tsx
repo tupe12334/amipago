@@ -6,6 +6,7 @@ import { TopBar } from "../../components/TopBar/TopBar";
 import { GroupTypeHebrewLabel } from "../../models/GroupType";
 import { StorageGroup } from "../../models/StorageGroup";
 import { GroupMembers } from "../../components/GroupMembers/GroupMembers";
+import { GroupMetaData } from "../../components/GroupMetaData/GroupMetaData"; // new import
 
 interface GroupPageProps {
   group: StorageGroup;
@@ -133,43 +134,26 @@ export const GroupPageView = ({
             <ExpensesList expenses={expenses} formatCurrency={formatCurrency} />
           </div>
           <GroupMembers members={group.members} groupUserId={group.userId} />
-          <div className="border-t border-gray-200 pt-4">
-            <div className="flex items-center text-gray-500 text-sm">
-              <i className="fa fa-clock-o me-2" aria-hidden="true"></i>
-              <span id="group-created-at">
-                נוצר בתאריך:{" "}
-                {new Date(group.createdAt).toLocaleDateString("he-IL")}
-              </span>
-            </div>
-            {group.lastActivity && (
-              <div className="flex items-center text-gray-500 text-sm mt-2">
-                <i className="fa fa-refresh me-2" aria-hidden="true"></i>
-                <span id="group-last-activity">
-                  פעילות אחרונה:{" "}
-                  {new Date(group.lastActivity).toLocaleDateString("he-IL")}
-                </span>
-              </div>
-            )}
-            <div className="mt-6 flex justify-center gap-4">
-              <button
-                id="group-actions-button"
-                className="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors flex items-center"
-                onClick={onAddExpenseClick}
-                aria-label="Add expense to group"
-              >
-                <i className="fa fa-plus-circle me-2" aria-hidden="true"></i>
-                הוסף הוצאה לקבוצה
-              </button>
-              <button
-                id="share-group-button"
-                className="bg-green-500 text-white py-3 px-6 rounded-lg hover:bg-green-600 transition-colors flex items-center"
-                onClick={() => setShowQRCode(true)}
-                aria-label="Share group via QR"
-              >
-                <i className="fa fa-qrcode me-2" aria-hidden="true"></i>
-                שתף קבוצה
-              </button>
-            </div>
+          <GroupMetaData group={group} /> {/* replaced meta data segment */}
+          <div className="mt-6 flex justify-center gap-4">
+            <button
+              id="group-actions-button"
+              className="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors flex items-center"
+              onClick={onAddExpenseClick}
+              aria-label="Add expense to group"
+            >
+              <i className="fa fa-plus-circle me-2" aria-hidden="true"></i>
+              הוסף הוצאה לקבוצה
+            </button>
+            <button
+              id="share-group-button"
+              className="bg-green-500 text-white py-3 px-6 rounded-lg hover:bg-green-600 transition-colors flex items-center"
+              onClick={() => setShowQRCode(true)}
+              aria-label="Share group via QR"
+            >
+              <i className="fa fa-qrcode me-2" aria-hidden="true"></i>
+              שתף קבוצה
+            </button>
           </div>
         </div>
       </div>
