@@ -1,8 +1,8 @@
 import React from "react";
-import { StorageExpense } from "../../models/StorageExpense";
+import { ExpenseDto } from "./types";
 
 interface ExpensesListProps {
-  expenses: StorageExpense[];
+  expenses: ExpenseDto[];
   formatCurrency: (amount: number, currency: string) => string;
 }
 
