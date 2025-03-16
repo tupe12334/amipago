@@ -26,6 +26,8 @@ test("create a group and add an expense to it", async ({ page }) => {
   await page.locator("#group-actions-button").click();
   await page.waitForLoadState("networkidle");
 
+  // The date picker selection (using the default current date)
+  await page.locator("#expense-date").fill("2023-12-31");
   // Take a screenshot of the expense creation form
   const expenseForm = await page.screenshot({ animations: "disabled" });
   expect(expenseForm).toMatchSnapshot("06-expense-form.png");
@@ -34,9 +36,8 @@ test("create a group and add an expense to it", async ({ page }) => {
   await page.locator("#expense-payer").fill("ישראל ישראלי");
   await page.locator("#amount").fill("120.50");
   await page.locator("#description").fill("ארוחת ערב במסעדה");
-
-  // The date picker selection (using the default current date)
-
+  
+  
   // Select currency (the default is ILS so we'll keep it)
 
   // Take a screenshot before submitting the expense form

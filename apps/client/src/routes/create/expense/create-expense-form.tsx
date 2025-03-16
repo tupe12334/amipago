@@ -274,6 +274,7 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
           />
 
           <FormDatePicker
+            id="expense-date"
             label={t("expense.date")}
             name="date"
             control={control}
