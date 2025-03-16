@@ -1,11 +1,11 @@
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
-import { BackButton } from "../components/BackButton/BackButton";
-import { ExpensesList } from "../components/ExpensesList";
-import NavBar from "../components/NavBar/NavBar";
-import { TopBar } from "../components/TopBar/TopBar";
-import { GroupTypeHebrewLabel } from "../models/GroupType";
-import { StorageGroup } from "../models/StorageGroup";
+import { BackButton } from "../../components/BackButton/BackButton";
+import { ExpensesList } from "../../components/ExpensesList";
+import NavBar from "../../components/NavBar/NavBar";
+import { TopBar } from "../../components/TopBar/TopBar";
+import { GroupTypeHebrewLabel } from "../../models/GroupType";
+import { StorageGroup } from "../../models/StorageGroup";
 
 interface GroupPageProps {
   group: StorageGroup;

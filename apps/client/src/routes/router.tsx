@@ -8,7 +8,7 @@ import {
 } from "../paths";
 import { CreateGroupPage } from "./create/group/create-group";
 import { CreateExpensePage } from "./create/expense/create-expense";
-import { GroupContainer } from "./GroupContainer";
+import { GroupContainer } from "./group";
 
 export const Router = () => {
   return (

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { StorageExpense } from "../models/StorageExpense";
-import { StorageGroup } from "../models/StorageGroup";
-import { getCreateExpenseForGroupPath } from "../paths";
+import { StorageExpense } from "../../models/StorageExpense";
+import { StorageGroup } from "../../models/StorageGroup";
+import { getCreateExpenseForGroupPath } from "../../paths";
 import {
   getExpensesByGroupId,
   getGroupById,
-} from "../services/indexedDbService";
-import { GroupPageView } from "./GroupView";
+} from "../../services/indexedDbService";
+import { GroupPageView } from "./";
 
 export const GroupContainer = () => {
   const { groupId } = useParams<{ groupId: string }>();
