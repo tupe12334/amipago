@@ -2,7 +2,6 @@ import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
 import { BackButton } from "../../components/BackButton/BackButton";
 import { ExpensesList } from "../../components/ExpensesList";
-import NavBar from "../../components/NavBar/NavBar";
 import { TopBar } from "../../components/TopBar/TopBar";
 import { GroupTypeHebrewLabel } from "../../models/GroupType";
 import { StorageGroup } from "../../models/StorageGroup";
@@ -31,7 +30,17 @@ export const GroupPageView = ({
   if (loading) {
     return (
       <div className="flex flex-col h-screen">
-        <NavBar />
+        <header className="p-4 flex items-center border-b border-gray-200">
+          <button
+            id="loading-back-button"
+            onClick={onBackClick}
+            className="flex items-center text-blue-600"
+            aria-label="Go back to groups"
+          >
+            <i className="fa fa-arrow-right me-2" aria-hidden="true"></i>
+            חזור
+          </button>
+        </header>
         <div
           className="flex justify-center items-center flex-1"
           aria-live="polite"
@@ -46,13 +55,17 @@ export const GroupPageView = ({
   if (error || !group) {
     return (
       <div className="flex flex-col h-screen">
-        <NavBar />
-        <TopBar className="items-center">
-          <BackButton />
-          <h1 id="error-heading" className="text-xl font-medium">
+        <header className="p-4 flex items-center border-b border-gray-200">
+          <button
+            id="error-back-button"
+            onClick={onBackClick}
+            className="flex items-center text-blue-600"
+            aria-label="Go back to home"
+          >
+            <i className="fa fa-arrow-left me-2" aria-hidden="true"></i>
             חזרה לדף הבית
-          </h1>
-        </TopBar>
+          </button>
+        </header>
         <div className="flex flex-col items-center justify-center flex-1 p-4">
           <div
             className="bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-4 max-w-md w-full"
@@ -73,10 +86,10 @@ export const GroupPageView = ({
             onClick={onBackClick}
             className="mt-4 bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors flex items-center"
             id="back-to-groups-button"
-            aria-label="חזור לרשימת הקבוצות"
+            aria-label="Go back to groups"
           >
             <i className="fa fa-home me-2" aria-hidden="true"></i>
-            חזור לרשימת הקבוצות
+            חזרה לדף הבית
           </button>
         </div>
       </div>
@@ -85,29 +98,23 @@ export const GroupPageView = ({
 
   return (
     <div className="flex flex-col h-screen">
-      <NavBar />
-      <TopBar>
+      <header className="p-4 flex justify-between items-center border-b border-gray-200">
+        <h1 id="group-title" className="text-2xl font-bold">
+          {group.name}
+        </h1>
         <button
-          id="back-button"
+          id="group-back-button"
           onClick={onBackClick}
           className="flex items-center text-blue-600"
-          aria-label="חזור לרשימת הקבוצות"
+          aria-label="Go back to groups"
         >
-          <i className="fa fa-arrow-right me-2" aria-hidden="true"></i>
+          <i className="fa fa-arrow-left me-2" aria-hidden="true"></i>
           חזור
         </button>
-      </TopBar>
+      </header>
       <div className="p-4 flex-1 overflow-y-auto">
-        {/* ...existing code... */}
         <div className="p-6">
-          <div className="flex justify-between items-start mb-6">
-            <h1 id="group-title" className="text-2xl font-bold">
-              {group.name}
-            </h1>
-            <span className="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
-              {GroupTypeHebrewLabel[group.type]}
-            </span>
-          </div>
+          {/* Removed duplicate group title */}
           {group.description && (
             <div className="mb-6">
               <h2 id="description-title" className="text-lg font-medium mb-2">
@@ -124,8 +131,6 @@ export const GroupPageView = ({
             </h2>
             <ExpensesList expenses={expenses} formatCurrency={formatCurrency} />
           </div>
-
-          {/* Display members section */}
           <div className="mb-6">
             <h2 id="members-title" className="text-lg font-medium mb-2">
               חברי קבוצה
@@ -135,7 +140,7 @@ export const GroupPageView = ({
                 <ul
                   className="space-y-2"
                   id="members-list"
-                  aria-label="רשימת חברי קבוצה"
+                  aria-label="קבוצת חברים"
                 >
                   {group.members.map((member) => (
                     <li key={member.id} className="flex items-center">
@@ -157,7 +162,6 @@ export const GroupPageView = ({
               )}
             </div>
           </div>
-
           <div className="border-t border-gray-200 pt-4">
             <div className="flex items-center text-gray-500 text-sm">
               <i className="fa fa-clock-o me-2" aria-hidden="true"></i>
@@ -180,7 +184,7 @@ export const GroupPageView = ({
                 id="group-actions-button"
                 className="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors flex items-center"
                 onClick={onAddExpenseClick}
-                aria-label="הוסף הוצאה לקבוצה"
+                aria-label="Add expense to group"
               >
                 <i className="fa fa-plus-circle me-2" aria-hidden="true"></i>
                 הוסף הוצאה לקבוצה
@@ -189,7 +193,7 @@ export const GroupPageView = ({
                 id="share-group-button"
                 className="bg-green-500 text-white py-3 px-6 rounded-lg hover:bg-green-600 transition-colors flex items-center"
                 onClick={() => setShowQRCode(true)}
-                aria-label="שתף קבוצה באמצעות QR"
+                aria-label="Share group via QR"
               >
                 <i className="fa fa-qrcode me-2" aria-hidden="true"></i>
                 שתף קבוצה
@@ -204,7 +208,7 @@ export const GroupPageView = ({
           className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
           role="dialog"
           aria-modal="true"
-          aria-label="QR קוד לשיתוף קבוצה"
+          aria-label="QR code for group sharing"
         >
           <div className="bg-white rounded-lg p-6 max-w-xs w-full">
             <h2 className="text-xl font-bold mb-4 text-center">
@@ -219,7 +223,7 @@ export const GroupPageView = ({
               id="close-qr-modal"
               onClick={() => setShowQRCode(false)}
               className="mt-4 bg-red-500 text-white py-2 px-4 rounded w-full hover:bg-red-600 transition-colors"
-              aria-label="סגור QR"
+              aria-label="Close QR"
             >
               סגור
             </button>
