@@ -1,11 +1,12 @@
+import { Fragment } from "react/jsx-runtime";
 import { CreateHeader } from "../Header";
 import { CreateGroupForm } from "./create-group-form";
 
 export function CreateGroupPage() {
   return (
-    <div>
+    <Fragment>
       <CreateHeader title="צור קבוצה חדשה" />
       <CreateGroupForm />
-    </div>
+    </Fragment>
   );
 }
