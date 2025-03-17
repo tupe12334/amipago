@@ -1,16 +1,21 @@
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Typography from "@mui/material/Typography";
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
-import { BackButton } from "../../components/BackButton/BackButton";
 import { ExpensesList } from "../../components/ExpensesList";
-import { TopBar } from "../../components/TopBar/TopBar";
-import { GroupTypeHebrewLabel } from "../../models/GroupType";
-import { StorageGroup } from "../../models/StorageGroup";
 import { GroupMembers } from "../../components/GroupMembers/GroupMembers";
-import { GroupMetaData } from "../../components/GroupMetaData/GroupMetaData"; // new import
+import { GroupMetaData } from "../../components/GroupMetaData/GroupMetaData";
+import { StorageGroup } from "../../models/StorageGroup";
 
 interface GroupPageProps {
   group: StorageGroup;
-  expenses: any[]; // ...existing type StorageExpense...
+  expenses: any[];
   loading: boolean;
   error: string | null;
   onBackClick: () => void;
@@ -31,160 +36,246 @@ export const GroupPageView = ({
 
   if (loading) {
     return (
-      <div className="flex flex-col h-screen">
-        <header className="p-4 flex items-center border-b border-gray-200">
-          <button
+      <Box
+        id="loading-container"
+        display="flex"
+        flexDirection="column"
+        minHeight="100vh"
+      >
+        <Box
+          id="loading-header"
+          component="header"
+          p={2}
+          display="flex"
+          alignItems="center"
+          borderBottom={1}
+          borderColor="grey.300"
+        >
+          <Button
             id="loading-back-button"
             onClick={onBackClick}
-            className="flex items-center text-blue-600"
-            aria-label="Go back to groups"
+            startIcon={<i className="fa fa-arrow-right" aria-hidden="true"></i>}
+            color="primary"
           >
-            <i className="fa fa-arrow-right me-2" aria-hidden="true"></i>
             חזור
-          </button>
-        </header>
-        <div
-          className="flex justify-center items-center flex-1"
+          </Button>
+        </Box>
+        <Box
+          id="loading-spinner"
+          flexGrow={1}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
           aria-live="polite"
         >
-          <i className="fa fa-spinner fa-pulse text-3xl" aria-hidden="true"></i>
+          <CircularProgress />
           <span className="sr-only">טוען פרטי קבוצה...</span>
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
   }
 
   if (error || !group) {
     return (
-      <div className="flex flex-col h-screen">
-        <header className="p-4 flex items-center border-b border-gray-200">
-          <button
+      <Box
+        id="error-container"
+        display="flex"
+        flexDirection="column"
+        minHeight="100vh"
+      >
+        <Box
+          id="error-header"
+          component="header"
+          p={2}
+          display="flex"
+          alignItems="center"
+          borderBottom={1}
+          borderColor="grey.300"
+        >
+          <Button
             id="error-back-button"
             onClick={onBackClick}
-            className="flex items-center text-blue-600"
-            aria-label="Go back to home"
+            // TODO: add merging to the icon from texts
+            startIcon={<i className="fa fa-arrow-left" aria-hidden="true"></i>}
+            color="primary"
           >
-            <i className="fa fa-arrow-left me-2" aria-hidden="true"></i>
             חזרה לדף הבית
-          </button>
-        </header>
-        <div className="flex flex-col items-center justify-center flex-1 p-4">
-          <div
-            className="bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-4 max-w-md w-full"
-            role="alert"
-            aria-live="assertive"
+          </Button>
+        </Box>
+        <Box
+          id="error-content"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          flexGrow={1}
+          p={2}
+        >
+          <Box
             id="group-error-alert"
+            bgcolor="error.light"
+            border={1}
+            borderColor="error.main"
+            color="error.contrastText"
+            p={2}
+            borderRadius={1}
+            mb={2}
+            maxWidth={400}
+            width="100%"
           >
-            <div className="flex items-center mb-2">
+            <Box display="flex" alignItems="center" mb={1}>
               <i
                 className="fa fa-exclamation-triangle me-2"
                 aria-hidden="true"
               ></i>
-              <p className="font-bold">שגיאה בטעינת הקבוצה</p>
-            </div>
-            <p>{error || "הקבוצה המבוקשת לא נמצאה"}</p>
-          </div>
-          <button
+              <Typography variant="subtitle1" fontWeight="bold">
+                שגיאה בטעינת הקבוצה
+              </Typography>
+            </Box>
+            <Typography variant="body2">
+              {error || "הקבוצה המבוקשת לא נמצאה"}
+            </Typography>
+          </Box>
+          <Button
             onClick={onBackClick}
-            className="mt-4 bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors flex items-center"
             id="back-to-groups-button"
-            aria-label="Go back to groups"
+            variant="contained"
+            color="primary"
+            sx={{ mt: 2 }}
+            startIcon={<i className="fa fa-home" aria-hidden="true"></i>}
           >
-            <i className="fa fa-home me-2" aria-hidden="true"></i>
             חזרה לדף הבית
-          </button>
-        </div>
-      </div>
+          </Button>
+        </Box>
+      </Box>
     );
   }
 
   return (
-    <div className="flex flex-col h-screen">
-      <header className="p-4 flex justify-start gap-2 items-center border-b border-gray-200">
-        <button
+    <Box
+      id="group-page"
+      display="flex"
+      flexDirection="column"
+      minHeight="100vh"
+    >
+      <Box
+        id="group-header"
+        component="header"
+        p={2}
+        display="flex"
+        justifyContent="start"
+        gap={2}
+        alignItems="center"
+        borderBottom={1}
+        borderColor="grey.300"
+      >
+        <Button
           id="group-back-button"
           onClick={onBackClick}
-          className="flex items-center text-blue-600"
-          aria-label="Go back to groups"
+          startIcon={<i className="fa fa-arrow-right" aria-hidden="true"></i>}
+          color="primary"
         >
-          <i className="fa fa-arrow-right mx-2" aria-hidden="true"></i>
           חזור
-        </button>
-        <h1 id="group-title" className="text-2xl font-bold">
+        </Button>
+        <Typography id="group-title" variant="h4" fontWeight="bold">
           {group.name}
-        </h1>
-      </header>
-      <div className="p-4 flex-1 overflow-y-auto">
-        <div className="p-6">
-          {/* Removed duplicate group title */}
+        </Typography>
+      </Box>
+      <Box id="group-content" p={2} flexGrow={1} overflow="auto">
+        <Box p={3}>
           {group.description && (
-            <div className="mb-6">
-              <h2 id="description-title" className="text-lg font-medium mb-2">
+            <Box id="group-description-section" mb={3}>
+              <Typography
+                id="description-title"
+                variant="h6"
+                fontWeight="medium"
+                mb={1}
+              >
                 תיאור
-              </h2>
-              <p id="group-description" className="text-gray-600">
+              </Typography>
+              <Typography id="group-description" color="text.secondary">
                 {group.description}
-              </p>
-            </div>
+              </Typography>
+            </Box>
           )}
-          <div className="mb-6">
-            <h2 id="expenses-title" className="text-lg font-medium mb-2">
+          <Box id="expenses-section" mb={3}>
+            <Typography
+              id="expenses-title"
+              variant="h6"
+              fontWeight="medium"
+              mb={1}
+            >
               הוצאות
-            </h2>
+            </Typography>
             <ExpensesList expenses={expenses} formatCurrency={formatCurrency} />
-          </div>
+          </Box>
           <GroupMembers members={group.members} groupUserId={group.userId} />
-          <GroupMetaData group={group} /> {/* replaced meta data segment */}
-          <div className="mt-6 flex justify-center gap-4">
-            <button
+          <GroupMetaData group={group} />
+          <Box
+            id="group-actions"
+            mt={3}
+            display="flex"
+            justifyContent="center"
+            gap={2}
+          >
+            <Button
               id="group-actions-button"
-              className="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors flex items-center"
+              variant="contained"
+              color="primary"
               onClick={onAddExpenseClick}
-              aria-label="Add expense to group"
+              startIcon={
+                <i className="fa fa-plus-circle me-2" aria-hidden="true"></i>
+              }
             >
-              <i className="fa fa-plus-circle me-2" aria-hidden="true"></i>
               הוסף הוצאה לקבוצה
-            </button>
-            <button
+            </Button>
+            <Button
               id="share-group-button"
-              className="bg-green-500 text-white py-3 px-6 rounded-lg hover:bg-green-600 transition-colors flex items-center"
+              variant="contained"
+              color="success"
               onClick={() => setShowQRCode(true)}
-              aria-label="Share group via QR"
+              startIcon={
+                <i className="fa fa-qrcode me-2" aria-hidden="true"></i>
+              }
             >
-              <i className="fa fa-qrcode me-2" aria-hidden="true"></i>
               שתף קבוצה
-            </button>
-          </div>
-        </div>
-      </div>
-      {showQRCode && group && (
-        <div
-          id="qr-modal"
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-          role="dialog"
-          aria-modal="true"
-          aria-label="QR code for group sharing"
-        >
-          <div className="bg-white rounded-lg p-6 max-w-xs w-full">
-            <h2 className="text-xl font-bold mb-4 text-center">
-              QR לשיתוף קבוצה
-            </h2>
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+      <Dialog
+        id="qr-modal"
+        open={showQRCode}
+        onClose={() => setShowQRCode(false)}
+        aria-labelledby="qr-dialog-title"
+        aria-modal="true"
+      >
+        <DialogTitle id="qr-dialog-title">
+          <Typography variant="h6" fontWeight="bold" align="center">
+            QR לשיתוף קבוצה
+          </Typography>
+        </DialogTitle>
+        <DialogContent>
+          <Box display="flex" justifyContent="center">
             <QRCodeSVG
               id="group-qr-code"
               value={`groupId:${group.id}, password:${group.password}`}
               size={180}
             />
-            <button
-              id="close-qr-modal"
-              onClick={() => setShowQRCode(false)}
-              className="mt-4 bg-red-500 text-white py-2 px-4 rounded w-full hover:bg-red-600 transition-colors"
-              aria-label="Close QR"
-            >
-              סגור
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            id="close-qr-modal"
+            onClick={() => setShowQRCode(false)}
+            variant="contained"
+            color="error"
+            fullWidth
+          >
+            סגור
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };
