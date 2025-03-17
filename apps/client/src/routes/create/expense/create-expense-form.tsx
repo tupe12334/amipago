@@ -142,10 +142,8 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
               control={control}
               name="groupId"
               render={({ field, fieldState: { error } }) => {
-                // Store field in ref so modal (outside the form) can update it.
-                if (groupFieldRef.current) {
-                  groupFieldRef.current = field;
-                }
+                // Always store field in ref, removing conditional that was causing issues
+                groupFieldRef.current = field;
                 const selectedOption = groupOptions.find(
                   (option) => option.value === field.value
                 );
@@ -282,12 +280,16 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
           </Button>
         </form>
       )}
-      {/* Render modal outside the form */}
-      {openGroupList && groupFieldRef.current && (
+      {/* Render modal outside the form - remove conditional check on groupFieldRef.current */}
+      {openGroupList && (
         <GroupSelectorModal
           options={groupOptions}
-          selectedValue={groupFieldRef.current.value}
-          onSelect={(value: string) => groupFieldRef.current.onChange(value)}
+          selectedValue={groupFieldRef.current?.value || ""}
+          onSelect={(value: string) => {
+            if (groupFieldRef.current) {
+              groupFieldRef.current.onChange(value);
+            }
+          }}
           onClose={() => setOpenGroupList(false)}
         />
       )}
