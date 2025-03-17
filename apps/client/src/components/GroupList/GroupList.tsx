@@ -201,5 +201,3 @@ export const GroupList = () => {
 
   return null;
 };
-
-export default GroupList;

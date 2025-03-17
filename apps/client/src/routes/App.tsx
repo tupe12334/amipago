@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { getLanguageDir } from "../i18n/main";
 import { AddButton } from "../components/AddButton/AddButton";
 import NavBar from "../components/NavBar/NavBar";
-import GroupList from "../components/GroupList/GroupList";
+import { GroupList } from "../components/GroupList/GroupList";
 import { ButtonGroup } from "../components/ButtonGroup/ButtonGroup";
 import { useUser } from "../context/UserContext";
 import { RecentActivityView } from "./RecentActivityView";
