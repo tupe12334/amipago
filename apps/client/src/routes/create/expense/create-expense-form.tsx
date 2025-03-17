@@ -24,7 +24,7 @@ const GroupSelectorModal: React.FC<{
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white rounded-lg w-full max-w-md p-4">
         <h2 className="text-lg font-semibold mb-4">בחר קבוצה</h2>
-        <div className="max-h-48 overflow-y-auto">
+        <div className="max-h-48 overflow-y-auto" role="listbox" aria-label="קבוצות זמינות">
           {options.map((option) => (
             <button
               key={option.value}
