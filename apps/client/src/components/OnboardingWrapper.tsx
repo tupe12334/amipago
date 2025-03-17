@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
 import { OnboardingPage } from "../pages/OnboardingPage";
 import { useUser } from "../context/UserContext";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 
 interface OnboardingWrapperProps {
   children: ReactNode;
@@ -12,16 +14,19 @@ export const OnboardingWrapper = ({ children }: OnboardingWrapperProps) => {
   // Show loading state until we know if the user needs onboarding
   if (isLoading) {
     return (
-      <div
+      <Box
         id="onboarding-loading"
-        className="flex items-center justify-center min-h-screen"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        minHeight="100vh"
+        aria-busy="true"
       >
-        <i
-          className="fa fa-spinner fa-spin text-4xl text-blue-500"
-          aria-hidden="true"
-        ></i>
-        <span className="sr-only">טוען...</span>
-      </div>
+        <CircularProgress
+          id="onboarding-progress-spinner"
+          aria-label="טוען..."
+        />
+      </Box>
     );
   }
 
