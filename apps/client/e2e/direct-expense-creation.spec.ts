@@ -14,7 +14,7 @@ test("create an expense and assign it to a group", async ({ page }) => {
 
   // Take a screenshot showing the add options
   const addOptions = await page.screenshot({ animations: "disabled" });
-  expect(addOptions).toMatchSnapshot("03-add-button-options-direct.png");
+  expect(addOptions).toMatchSnapshot();
 
   // Click on create expense option
   await page.locator("#add-btn-expense-icon").click();
@@ -24,7 +24,7 @@ test("create an expense and assign it to a group", async ({ page }) => {
 
   // Take a screenshot of the expense form
   const expenseForm = await page.screenshot({ animations: "disabled" });
-  expect(expenseForm).toMatchSnapshot("04-direct-expense-form.png");
+  expect(expenseForm).toMatchSnapshot();
 
   // Fill in expense details
   await page.locator("#expense-payer").fill("יוסי כהן");
@@ -37,7 +37,7 @@ test("create an expense and assign it to a group", async ({ page }) => {
 
   // Take a screenshot of the group selection modal
   const groupSelectionModal = await page.screenshot({ animations: "disabled" });
-  expect(groupSelectionModal).toMatchSnapshot("05-group-selection-modal.png");
+  expect(groupSelectionModal).toMatchSnapshot();
 
   // Select the first group in the list
   await page.locator(".expense-group-modal-option").first().click();
@@ -45,7 +45,7 @@ test("create an expense and assign it to a group", async ({ page }) => {
 
   // Take a screenshot after group selection
   const afterGroupSelection = await page.screenshot({ animations: "disabled" });
-  expect(afterGroupSelection).toMatchSnapshot("06-after-group-selection.png");
+  expect(afterGroupSelection).toMatchSnapshot();
 
   // Submit the expense form
   await page.getByText("שמור").click();
@@ -53,7 +53,7 @@ test("create an expense and assign it to a group", async ({ page }) => {
 
   // Take a screenshot of success state
   const successState = await page.screenshot({ animations: "disabled" });
-  expect(successState).toMatchSnapshot("07-direct-expense-success.png");
+  expect(successState).toMatchSnapshot();
 
   // Navigate to home page
   await page.waitForTimeout(2100); // Wait for animation
@@ -65,7 +65,7 @@ test("create an expense and assign it to a group", async ({ page }) => {
 
   // Take a screenshot of the group details showing the expense
   const groupWithExpense = await page.screenshot({ animations: "disabled" });
-  expect(groupWithExpense).toMatchSnapshot("08-group-with-direct-expense.png");
+  expect(groupWithExpense).toMatchSnapshot();
 
   // Verify the expense appears in the list using regex
   await expect(page.getByText(new RegExp("קניות בסופר"))).toBeVisible();
