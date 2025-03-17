@@ -34,6 +34,9 @@ test("create an expense and assign it to a group", async ({ page }) => {
   // Select a group for the expense
   await page.locator("#expense-group-button").click();
   await page.waitForTimeout(500);
+  await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
+  await page.waitForLoadState("load");
 
   // Take a screenshot of the group selection modal
   const groupSelectionModal = await page.screenshot({ animations: "disabled" });
