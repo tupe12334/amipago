@@ -224,7 +224,7 @@ export const GroupPageView = ({
               color="primary"
               onClick={onAddExpenseClick}
               startIcon={
-                <i className="fa fa-plus-circle me-2" aria-hidden="true"></i>
+                <i className="fa fa-plus-circle" aria-hidden="true"></i>
               }
             >
               הוסף הוצאה לקבוצה
@@ -234,9 +234,7 @@ export const GroupPageView = ({
               variant="contained"
               color="success"
               onClick={() => setShowQRCode(true)}
-              startIcon={
-                <i className="fa fa-qrcode me-2" aria-hidden="true"></i>
-              }
+              startIcon={<i className="fa fa-qrcode" aria-hidden="true"></i>}
             >
               שתף קבוצה
             </Button>
