@@ -1,4 +1,5 @@
-import { ReactNode, RefObject } from "react";
+import { Button, CircularProgress } from "@mui/material";
+import ReactDOM from "react-dom";
 import {
   Control,
   Controller,
@@ -6,13 +7,11 @@ import {
   UseFormHandleSubmit,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import ReactDOM from "react-dom";
-import { Button, CircularProgress } from "@mui/material";
-import { CreateExpenseInput } from "./CreateExpenseInput";
-import { FormField } from "../../../components/Form/FormField";
 import { FormDatePicker } from "../../../components/Form/FormDatePicker";
+import { FormField } from "../../../components/Form/FormField";
 import { FormSelect } from "../../../components/Form/FormSelect";
 import { FormSuccessScreen } from "../../../components/Form/FormSuccessScreen";
+import { CreateExpenseInput } from "./CreateExpenseInput";
 
 // New modal component for group selection
 const GroupSelectorModal: React.FC<{
