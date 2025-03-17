@@ -1,7 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
-import { fileURLToPath } from "url";
 import path from "path";
-import fs from "fs";
+import { fileURLToPath } from "url";
 
 // ES Module replacement for __dirname
 const __filename = fileURLToPath(import.meta.url);
