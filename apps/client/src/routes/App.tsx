@@ -7,6 +7,9 @@ import GroupList from "../components/GroupList/GroupList";
 import { ButtonGroup } from "../components/ButtonGroup/ButtonGroup";
 import { useUser } from "../context/UserContext";
 import { RecentActivityView } from "./RecentActivityView";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 
 function App() {
   const { i18n } = useTranslation();
@@ -51,16 +54,34 @@ function App() {
   }, []);
 
   return (
-    <main className="flex flex-col h-screen">
+    <Box
+      component="main"
+      id="app-main"
+      display={"flex"}
+      flexDirection={"column"}
+      height={"100vh"}
+    >
       <NavBar />
-      <div
-        className="flex flex-col flex-1 p-4 overflow-y-auto"
+      <Container
+        id="content-container"
+        component="section"
         aria-label="תוכן ראשי"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+          p: 2,
+          overflowY: "auto",
+        }}
       >
-        <h1 id="main-heading" className="text-2xl font-bold mb-4">
+        <Typography
+          id="main-heading"
+          variant="h3"
+          component="h3"
+          sx={{ fontWeight: "bold", mb: 2 }}
+        >
           הקבוצות שלי
-        </h1>
-
+        </Typography>
         <ButtonGroup
           options={[
             { value: "groups", label: "הקבוצות שלי" },
@@ -70,12 +91,10 @@ function App() {
           onChange={setActiveView}
         />
         {activeView === "groups" && <GroupList />}
-        {activeView === "activity" && (
-          <RecentActivityView />
-        )}
+        {activeView === "activity" && <RecentActivityView />}
         <AddButton />
-      </div>
-    </main>
+      </Container>
+    </Box>
   );
 }
 
