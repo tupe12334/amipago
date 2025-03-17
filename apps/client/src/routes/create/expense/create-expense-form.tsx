@@ -66,7 +66,7 @@ interface CreateExpenseFormProps {
   groupOptions: Array<{ value: string; label: string; icon?: string }>;
   openGroupList: boolean;
   setOpenGroupList: (open: boolean) => void;
-  groupFieldRef: RefObject<any>;
+  groupFieldRef: React.MutableRefObject<any>;
   handleSubmit: UseFormHandleSubmit<CreateExpenseInput>;
   onSubmit: (data: CreateExpenseInput) => Promise<void>;
   handleSuccessContinue: () => void;
