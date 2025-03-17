@@ -70,6 +70,7 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^9.22.0",
     "eslint-plugin-unused-imports": "^4.1.4",
+    "mockdate": "^3.0.5",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "react-router-devtools": "^1.1.6",
