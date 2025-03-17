@@ -12,10 +12,12 @@ test("create a group and add an expense to it", async ({ page }) => {
   // Find and click on the newly created group
   await page.getByText(new RegExp(name)).click();
   await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
+  await page.waitForLoadState("load");
 
   // Take a screenshot of the group details page
   const groupDetails = await page.screenshot({ animations: "disabled" });
-  expect(groupDetails).toMatchSnapshot("05-group-details-page.png");
+  expect(groupDetails).toMatchSnapshot();
 
   // Verify that there are no expenses yet
   await expect(
@@ -28,21 +30,25 @@ test("create a group and add an expense to it", async ({ page }) => {
 
   // The date picker selection (using the default current date)
   await page.locator("#expense-date").fill("2023-12-31");
+
+  await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
+  await page.waitForLoadState("load");
   // Take a screenshot of the expense creation form
   const expenseForm = await page.screenshot({ animations: "disabled" });
-  expect(expenseForm).toMatchSnapshot("06-expense-form.png");
+  expect(expenseForm).toMatchSnapshot();
 
   // Fill in expense details
   await page.locator("#expense-payer").fill("ישראל ישראלי");
   await page.locator("#amount").fill("120.50");
   await page.locator("#description").fill("ארוחת ערב במסעדה");
-  
-  
-  // Select currency (the default is ILS so we'll keep it)
 
+  await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
+  await page.waitForLoadState("load");
   // Take a screenshot before submitting the expense form
   const filledExpenseForm = await page.screenshot({ animations: "disabled" });
-  expect(filledExpenseForm).toMatchSnapshot("07-expense-form-filled.png");
+  expect(filledExpenseForm).toMatchSnapshot();
 
   // Submit the expense form
   await page.getByText("שמור").click();
@@ -60,10 +66,11 @@ test("create a group and add an expense to it", async ({ page }) => {
   // Find and click on the previously created group
   await page.getByText(new RegExp(name)).click();
   await page.waitForLoadState("networkidle");
-
+  await page.waitForLoadState("domcontentloaded");
+  await page.waitForLoadState("load");
   // Take a screenshot of the group page showing the expense
   const groupWithExpense = await page.screenshot({ animations: "disabled" });
-  expect(groupWithExpense).toMatchSnapshot("09-group-with-expense.png");
+  expect(groupWithExpense).toMatchSnapshot();
 
   // Verify the expense appears in the list
   await expect(page.getByText(new RegExp("ארוחת ערב במסעדה"))).toBeVisible();
