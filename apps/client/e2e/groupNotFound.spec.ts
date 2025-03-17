@@ -38,7 +38,7 @@ test.describe("Group Not Found", () => {
     await page.click("#back-to-groups-button");
 
     // Verify we're back at the homepage using regex for text
-    await page.waitForSelector("h1", { hasText: new RegExp("הקבוצות שלי") });
+    await page.locator("h1", { hasText: new RegExp("הקבוצות שלי") }).waitFor();
 
     // Take a snapshot after returning to the homepage
     expect(await page.screenshot()).toMatchSnapshot();
@@ -56,16 +56,16 @@ test.describe("Group Not Found", () => {
     await page.waitForSelector("#error-heading");
 
     // Verify the TopBar BackButton exists
-    await expect(page.locator("button#back-button")).toBeVisible();
+    await expect(page.locator("button#error-back-button")).toBeVisible();
 
     // Take a snapshot before clicking the back button
     expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
 
     // Click the BackButton
-    await page.click("button#back-button");
+    await page.click("button#error-back-button");
 
     // Verify we're back at the homepage using regex text matching
-    await page.waitForSelector("h1", { hasText: new RegExp("הקבוצות שלי") });
+    await page.locator("h1", { hasText: new RegExp("הקבוצות שלי") }).waitFor();
 
     // Take a final snapshot
     expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();

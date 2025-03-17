@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { TopBar } from "../TopBar/TopBar";
 
 interface ErrorViewProps {
   onBackClick: () => void;
@@ -20,15 +21,7 @@ export const ErrorView = ({
       flexDirection="column"
       minHeight="100vh"
     >
-      <Box
-        id="error-header"
-        component="header"
-        p={2}
-        display="flex"
-        alignItems="center"
-        borderBottom={1}
-        borderColor="grey.300"
-      >
+      <TopBar>
         <Button
           id="error-back-button"
           onClick={onBackClick}
@@ -38,7 +31,7 @@ export const ErrorView = ({
         >
           חזרה לדף הבית
         </Button>
-      </Box>
+      </TopBar>
       <Box
         id="error-content"
         display="flex"
