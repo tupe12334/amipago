@@ -5,9 +5,7 @@ export const navigateToCreateGroupPage = async (page: Page) => {
   await page.click("#floating-action-button-button");
   await page.click("#floating-action-button-option-0");
   await page.waitForLoadState("networkidle");
-  expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
-    "create-group-form-empty.png"
-  );
+  expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
 };
 
 export const createGroup = async (
@@ -23,9 +21,7 @@ export const createGroup = async (
   await page.locator(`button[role="radio"]:has-text("${type}")`).click();
   await page.waitForLoadState("networkidle");
   await page.waitForTimeout(500);
-  expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
-    `create-group-form-${type.toLowerCase()}-filled.png`
-  );
+  expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
   await page.click('button[type="submit"]');
   await expect(page.locator('[aria-live="polite"]')).toHaveText(
     "הקבוצה נוצרה בהצלחה!"
