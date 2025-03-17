@@ -50,7 +50,7 @@ Make sure that we support acceptability guidelines
 ## Style
 
 - Use flex
-- Use tailwind css class names and not style object
+- Use MUI components
 - Don't use pixels as a unit
 
 ### Direction
