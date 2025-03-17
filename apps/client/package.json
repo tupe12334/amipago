@@ -10,7 +10,6 @@
     "tauri": "tauri",
     "tauri:build": "tauri build",
     "tauri:dev": "tauri dev",
-    "tauri:ios:init": "tauri ios init",
     "tauri:ios:dev": "tauri ios dev --host",
     "test": "vitest",
     "test:e2e": "playwright test",
