@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { z } from "zod";
-import { Container, Paper, Typography, Box } from "@mui/material";
+import {
+  Container,
+  Paper,
+  Typography,
+  Box,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import { FormField } from "../components/Form/FormField";
-import { FormSubmitButton } from "../components/Form/FormSubmitButton";
 import { useUser } from "../context/UserContext";
 
 const nameSchema = z.object({
@@ -49,11 +55,7 @@ export const OnboardingPage = () => {
         p: 3,
       }}
     >
-      <Paper
-        id="onboarding-card"
-        elevation={3}
-        sx={{ p: 4, width: "100%" }}
-      >
+      <Paper id="onboarding-card" elevation={3} sx={{ p: 4, width: "100%" }}>
         <Typography
           id="onboarding-title"
           variant="h4"
@@ -91,11 +93,29 @@ export const OnboardingPage = () => {
             aria-required="true"
           />
 
-          <FormSubmitButton
+          <Button
             id="onboarding-submit"
-            label="בואו נתחיל"
-            isLoading={loading}
-          />
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={loading}
+            startIcon={
+              loading ? (
+                <CircularProgress size={20} color="inherit" />
+              ) : (
+                <i className="fa fa-save" aria-hidden="true"></i>
+              )
+            }
+            sx={{
+              mt: 2,
+              py: 1.5,
+              display: "flex",
+              gap: 1,
+              justifyContent: "center",
+            }}
+          >
+            בואו נתחיל
+          </Button>
         </Box>
       </Paper>
     </Container>

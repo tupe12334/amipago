@@ -4,6 +4,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import ReactDOM from "react-dom";
+import { Button, CircularProgress } from "@mui/material";
 import {
   CreateExpenseInput,
   CreateExpenseInputSchema,
@@ -12,7 +13,6 @@ import { useCreateExpenseMutation } from "./hooks/useCreateExpenseMutation";
 import { FormField } from "../../../components/Form/FormField";
 import { FormDatePicker } from "../../../components/Form/FormDatePicker";
 import { FormSelect } from "../../../components/Form/FormSelect";
-import { FormSubmitButton } from "../../../components/Form/FormSubmitButton";
 import { FormSuccessScreen } from "../../../components/Form/FormSuccessScreen";
 import { getGroupPath } from "../../../paths";
 import { getAllGroups } from "../../../services/indexedDbService";
@@ -299,7 +299,29 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
             )}
           />
 
-          <FormSubmitButton label={t("expense.save")} isLoading={loading} />
+          <Button
+            id="expense-submit-button"
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={loading}
+            startIcon={
+              loading ? (
+                <CircularProgress size={20} color="inherit" />
+              ) : (
+                <i className="fa fa-save" aria-hidden="true"></i>
+              )
+            }
+            fullWidth
+            sx={{
+              py: 1.5,
+              display: "flex",
+              gap: 1,
+              justifyContent: "center",
+            }}
+          >
+            {t("expense.save")}
+          </Button>
         </form>
       )}
       {/* Render modal outside the form */}

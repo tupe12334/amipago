@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, CircularProgress } from "@mui/material";
 import { CreateGroupDefaultInput } from "./CreateGroupDefaultInput";
 import { CreateGroupInput, CreateGroupInputSchema } from "./CreateGroupInput";
 import { GroupType } from "../../../models/GroupType";
 import { FormField } from "../../../components/Form/FormField";
 import { FormSelect } from "../../../components/Form/FormSelect";
-import { FormSubmitButton } from "../../../components/Form/FormSubmitButton";
 import { FormSuccessScreen } from "../../../components/Form/FormSuccessScreen";
 import { useCreateGroupMutation } from "./hooks/useCreateGroupMutation";
 import { useUser } from "../../../context/UserContext"; // import useUser
@@ -141,10 +141,29 @@ export const CreateGroupForm = () => {
             )}
           />
 
-          <FormSubmitButton
-            label="צור קבוצה"
-            isLoading={loading || isSubmitting}
-          />
+          <Button
+            id="create-group-submit"
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={loading || isSubmitting}
+            startIcon={
+              loading || isSubmitting ? (
+                <CircularProgress size={20} color="inherit" />
+              ) : (
+                <i className="fa fa-save" aria-hidden="true"></i>
+              )
+            }
+            fullWidth
+            sx={{
+              py: 1.5,
+              display: "flex",
+              gap: 1,
+              justifyContent: "center",
+            }}
+          >
+            צור קבוצה
+          </Button>
         </form>
       )}
     </div>
