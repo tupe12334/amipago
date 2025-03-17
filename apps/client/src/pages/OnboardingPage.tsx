@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { z } from "zod";
+import { Container, Paper, Typography, Box } from "@mui/material";
 import { FormField } from "../components/Form/FormField";
 import { FormSubmitButton } from "../components/Form/FormSubmitButton";
 import { useUser } from "../context/UserContext";
@@ -36,29 +37,47 @@ export const OnboardingPage = () => {
   };
 
   return (
-    <div
+    <Container
       id="onboarding-container"
-      className="flex flex-col items-center justify-center min-h-screen p-6"
+      maxWidth="sm"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        p: 3,
+      }}
     >
-      <div
+      <Paper
         id="onboarding-card"
-        className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md"
+        elevation={3}
+        sx={{ p: 4, width: "100%" }}
       >
-        <h1
+        <Typography
           id="onboarding-title"
-          className="text-2xl font-bold mb-6 text-center"
+          variant="h4"
+          component="h1"
+          align="center"
+          sx={{ mb: 3, fontWeight: "bold" }}
         >
           ברוכים הבאים ל-AmiPago
-        </h1>
+        </Typography>
 
-        <p id="onboarding-description" className="mb-8 text-center">
+        <Typography
+          id="onboarding-description"
+          variant="body1"
+          align="center"
+          sx={{ mb: 4 }}
+        >
           לפני שנתחיל, אנחנו צריכים לדעת מה שמך
-        </p>
+        </Typography>
 
-        <form
+        <Box
+          component="form"
           id="onboarding-form"
           onSubmit={handleSubmit}
-          className="flex flex-col gap-6"
+          sx={{ display: "flex", flexDirection: "column", gap: 3 }}
         >
           <FormField
             id="user-name-input"
@@ -77,8 +96,8 @@ export const OnboardingPage = () => {
             label="בואו נתחיל"
             isLoading={loading}
           />
-        </form>
-      </div>
-    </div>
+        </Box>
+      </Paper>
+    </Container>
   );
 };
