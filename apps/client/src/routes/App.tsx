@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { getLanguageDir } from "../i18n/main";
-import { AddButton } from "../components/AddButton/AddButton";
-import NavBar from "../components/NavBar/NavBar";
-import { GroupList } from "../components/GroupList/GroupList";
-import { ButtonGroup } from "../components/ButtonGroup/ButtonGroup";
-import { useUser } from "../context/UserContext";
-import { RecentActivityView } from "./RecentActivityView";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { AddButton } from "../components/AddButton/AddButton";
+import { ButtonGroup } from "../components/ButtonGroup/ButtonGroup";
+import { GroupListContainer } from "../components/GroupList/GroupListContainer";
+import NavBar from "../components/NavBar/NavBar";
+import { useUser } from "../context/UserContext";
+import { getLanguageDir } from "../i18n/main";
+import { RecentActivityView } from "./RecentActivityView";
 
 function App() {
   const { i18n } = useTranslation();
@@ -90,7 +90,7 @@ function App() {
           selected={activeView}
           onChange={setActiveView}
         />
-        {activeView === "groups" && <GroupList />}
+        {activeView === "groups" && <GroupListContainer />}
         {activeView === "activity" && <RecentActivityView />}
         <AddButton />
       </Container>

@@ -1,59 +1,22 @@
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
-import { getAllGroups } from "../../services/indexedDbService";
-import { StorageGroup, StorageGroupSchema } from "../../models/StorageGroup";
-import { getGroupPath } from "../../paths";
-import { getUserGlobalId } from "../../services/localStorageService";
+import { StorageGroup } from "../../models/StorageGroup";
 
-export const GroupList = () => {
+interface GroupListProps {
+  groups: StorageGroup[];
+  isLoading: boolean;
+  error: string | null;
+  currentUserId: string | null;
+  onGroupClick: (groupId: string) => void;
+}
+
+export const GroupList = ({
+  groups,
+  isLoading,
+  error,
+  currentUserId,
+  onGroupClick,
+}: GroupListProps) => {
   const { t } = useTranslation();
-  const [groups, setGroups] = useState<StorageGroup[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // Fetch groups from IndexedDB and the current user ID
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const [dbGroups, userId] = await Promise.all([
-          getAllGroups(),
-          getUserGlobalId(),
-        ]);
-
-        setCurrentUserId(userId);
-
-        // Validate data with zod
-        const validatedGroups = dbGroups
-          .map((group) => {
-            try {
-              return StorageGroupSchema.parse(group);
-            } catch (err) {
-              console.error("Invalid group data:", group, err);
-              return null;
-            }
-          })
-          .filter((group): group is StorageGroup => group !== null);
-
-        setGroups(validatedGroups);
-        setError(null);
-      } catch (err) {
-        setError("שגיאה בטעינת הקבוצות");
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const handleGroupClick = (groupId: string) => {
-    navigate(getGroupPath(groupId));
-  };
 
   if (isLoading) {
     return (
@@ -98,7 +61,7 @@ export const GroupList = () => {
             <li
               key={group.id}
               className="bg-white rounded-lg shadow-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
-              onClick={() => handleGroupClick(group.id)}
+              onClick={() => onGroupClick(group.id)}
               aria-label={`קבוצה: ${group.name}`}
             >
               <div className="flex justify-between items-start">
@@ -179,7 +142,7 @@ export const GroupList = () => {
                   aria-label={`${t("צפה בקבוצה")} ${group.name}`}
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent triggering parent onClick
-                    handleGroupClick(group.id);
+                    onGroupClick(group.id);
                   }}
                 >
                   <span>{t("צפה")}</span>
