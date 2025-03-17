@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { ErrorView } from "../../components/ErrorView";
+import { LoadingView } from "../../components/LoadingView";
 import { StorageExpense } from "../../models/StorageExpense";
 import { StorageGroup } from "../../models/StorageGroup";
 import { getCreateExpenseForGroupPath } from "../../paths";
@@ -61,12 +63,18 @@ export const GroupContainer = () => {
     }).format(amount);
   };
 
+  if (loading) {
+    return <LoadingView onBackClick={handleBackClick} />;
+  }
+
+  if (error || !group) {
+    return <ErrorView onBackClick={handleBackClick} error={error} />;
+  }
+
   return (
     <GroupPageView
       group={group}
       expenses={expenses}
-      loading={loading}
-      error={error}
       onBackClick={handleBackClick}
       onAddExpenseClick={handleAddExpenseClick}
       formatCurrency={formatCurrency}
