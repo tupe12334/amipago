@@ -1,10 +1,10 @@
 import { CreateHeader } from "../Header";
-import { CreateExpenseForm } from "./create-expense-form";
 import { useTranslation } from "react-i18next";
 import { useParams, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { getGroupById } from "../../../services/indexedDbService";
 import { StorageGroup } from "../../../models/StorageGroup";
+import { CreateExpenseFormContainer } from "./CreateExpenseFormContainer";
 
 export const CreateExpensePage: React.FC = () => {
   const { t } = useTranslation();
@@ -69,7 +69,7 @@ export const CreateExpensePage: React.FC = () => {
             </p>
           </div>
         )}
-        <CreateExpenseForm groupId={groupId} />
+        <CreateExpenseFormContainer />
       </div>
     </div>
   );

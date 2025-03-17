@@ -1,36 +1,18 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useEffect, useRef } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { ReactNode, RefObject } from "react";
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormHandleSubmit,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import ReactDOM from "react-dom";
 import { Button, CircularProgress } from "@mui/material";
-import {
-  CreateExpenseInput,
-  CreateExpenseInputSchema,
-} from "./CreateExpenseInput";
-import { useCreateExpenseMutation } from "./hooks/useCreateExpenseMutation";
+import { CreateExpenseInput } from "./CreateExpenseInput";
 import { FormField } from "../../../components/Form/FormField";
 import { FormDatePicker } from "../../../components/Form/FormDatePicker";
 import { FormSelect } from "../../../components/Form/FormSelect";
 import { FormSuccessScreen } from "../../../components/Form/FormSuccessScreen";
-import { getGroupPath } from "../../../paths";
-import { getAllGroups } from "../../../services/indexedDbService";
-
-interface CreateExpenseFormProps {
-  groupId?: string;
-}
-
-// Update default values to include 'payer'
-const getExpenseDefaultInput = (
-  groupId?: string
-): Partial<CreateExpenseInput> => ({
-  description: "",
-  date: new Date(), // Today's date as default
-  currency: "ILS",
-  groupId: groupId || "",
-  payer: "",
-});
 
 // New modal component for group selection
 const GroupSelectorModal: React.FC<{
@@ -75,62 +57,36 @@ const GroupSelectorModal: React.FC<{
   );
 };
 
+interface CreateExpenseFormProps {
+  groupId?: string;
+  control: Control<CreateExpenseInput>;
+  errors: FieldErrors<CreateExpenseInput>;
+  loading: boolean;
+  formSubmitted: boolean;
+  groupOptions: Array<{ value: string; label: string; icon?: string }>;
+  openGroupList: boolean;
+  setOpenGroupList: (open: boolean) => void;
+  groupFieldRef: RefObject<any>;
+  handleSubmit: UseFormHandleSubmit<CreateExpenseInput>;
+  onSubmit: (data: CreateExpenseInput) => Promise<void>;
+  handleSuccessContinue: () => void;
+}
+
 export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
   groupId,
+  control,
+  errors,
+  loading,
+  formSubmitted,
+  groupOptions,
+  openGroupList,
+  setOpenGroupList,
+  groupFieldRef,
+  handleSubmit,
+  onSubmit,
+  handleSuccessContinue,
 }) => {
-  const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const { createExpense, loading, error } = useCreateExpenseMutation();
-  const [groupOptions, setGroupOptions] = useState<
-    Array<{ value: string; label: string; icon?: string }>
-  >([]);
-  const [openGroupList, setOpenGroupList] = useState(false);
-  const groupFieldRef = useRef<any>(null);
-
-  // Fetch groups from indexed DB and map to select options
-  useEffect(() => {
-    const fetchGroups = async () => {
-      try {
-        const groups = await getAllGroups();
-        const options = groups.map((group) => ({
-          value: group.id.toString(), // converting id to string
-          label: group.name, // assuming each group has a 'name' property
-          icon: "group",
-        }));
-        setGroupOptions(options);
-      } catch (err) {
-        console.error("Failed to fetch groups", err);
-      }
-    };
-    fetchGroups();
-  }, []);
-
-  const onSubmit: SubmitHandler<CreateExpenseInput> = async (data) => {
-    const success = await createExpense(data);
-    if (success) {
-      setFormSubmitted(true);
-    }
-  };
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CreateExpenseInput>({
-    resolver: zodResolver(CreateExpenseInputSchema),
-    defaultValues: getExpenseDefaultInput(groupId),
-  });
-
-  const handleSuccessContinue = () => {
-    if (groupId) {
-      // If expense was created for a specific group, navigate back to that group
-      navigate(getGroupPath(groupId));
-    } else {
-      // Otherwise, navigate to home
-      navigate("/");
-    }
-  };
+  const { t } = useTranslation();
 
   return (
     <div className="inset-0 flex items-center justify-center">
@@ -187,7 +143,9 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
               name="groupId"
               render={({ field, fieldState: { error } }) => {
                 // Store field in ref so modal (outside the form) can update it.
-                groupFieldRef.current = field;
+                if (groupFieldRef.current) {
+                  groupFieldRef.current = field;
+                }
                 const selectedOption = groupOptions.find(
                   (option) => option.value === field.value
                 );
