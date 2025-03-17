@@ -100,19 +100,19 @@ export const GroupPageView = ({
 
   return (
     <div className="flex flex-col h-screen">
-      <header className="p-4 flex justify-between items-center border-b border-gray-200">
-        <h1 id="group-title" className="text-2xl font-bold">
-          {group.name}
-        </h1>
+      <header className="p-4 flex justify-start gap-2 items-center border-b border-gray-200">
         <button
           id="group-back-button"
           onClick={onBackClick}
           className="flex items-center text-blue-600"
           aria-label="Go back to groups"
         >
-          <i className="fa fa-arrow-left me-2" aria-hidden="true"></i>
+          <i className="fa fa-arrow-right mx-2" aria-hidden="true"></i>
           חזור
         </button>
+        <h1 id="group-title" className="text-2xl font-bold">
+          {group.name}
+        </h1>
       </header>
       <div className="p-4 flex-1 overflow-y-auto">
         <div className="p-6">
