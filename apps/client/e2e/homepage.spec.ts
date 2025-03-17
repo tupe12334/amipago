@@ -12,8 +12,6 @@ test.describe("Homepage", () => {
     await page.waitForLoadState("load");
 
     // Take screenshot with animations disabled
-    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
-      "homepage-title-verification.png"
-    );
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
   });
 });

@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import { IconButton } from "@mui/material";
 
-type Props = React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
+type Props = Omit<
+  React.ComponentProps<typeof IconButton>,
+  "aria-label" | "children"
 >;
 
 export function BackButton(props: Props) {
@@ -10,21 +11,33 @@ export function BackButton(props: Props) {
   const buttonId = "back-button";
 
   return (
-    <button
+    <IconButton
       id={buttonId}
       {...props}
-      className="h-full flex items-center justify-center active:scale-95 focus:outline-none focus:ring-2 transition-all duration-300 transform hover:scale-105"
       aria-label="Back"
       onClick={(e) => {
-        props.onClick && props.onClick(e);
+        props.onClick?.(e);
         navigate(-1);
+      }}
+      sx={{
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        transition: "transform 0.3s",
+        "&:hover": {
+          transform: "scale(1.05)",
+        },
+        "&:active": {
+          transform: "scale(0.95)",
+        },
       }}
     >
       <i
-        className="fa fa-arrow-right text-4xl"
+        className="fa fa-arrow-right"
         aria-hidden="true"
         id={`${buttonId}-icon`}
       ></i>
-    </button>
+    </IconButton>
   );
 }

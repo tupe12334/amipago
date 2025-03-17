@@ -15,23 +15,17 @@ test.describe("Create New Group", () => {
       new RegExp("שדה זה הוא חובה")
     );
     await page.waitForLoadState("networkidle");
-    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
-      "validation-errors-shown.png"
-    );
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
     await page.locator("#name").fill("קבוצת בדיקה");
     await page.waitForTimeout(300);
-    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
-      "validation-name-only-filled.png"
-    );
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
     await page.click('button[type="submit"]');
     await expect(page.locator('[aria-live="polite"]')).toHaveText(
       "הקבוצה נוצרה בהצלחה!",
       { timeout: 5000 }
     );
     await page.waitForLoadState("networkidle");
-    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
-      "validation-success.png"
-    );
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
   });
 
   test("should create a group for each group type", async ({ page }) => {
@@ -62,8 +56,6 @@ test.describe("Create New Group", () => {
     await page.waitForLoadState("domcontentloaded");
     await page.waitForLoadState("load");
     await page.waitForTimeout(300);
-    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
-      "create-group-redirection.png"
-    );
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
   });
 });

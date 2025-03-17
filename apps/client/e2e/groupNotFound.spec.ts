@@ -16,9 +16,7 @@ test.describe("Group Not Found", () => {
     await page.waitForLoadState("load");
 
     // Take a snapshot of the homepage
-    expect(await page.screenshot()).toMatchSnapshot(
-      "before-navigation-to-invalid-group.png"
-    );
+    expect(await page.screenshot()).toMatchSnapshot();
 
     // Navigate to a non-existent group ID
     // We use direct navigation here instead of UI interaction because we're testing the error state directly
@@ -34,9 +32,7 @@ test.describe("Group Not Found", () => {
     expect(errorText).toMatch(new RegExp("non-existent-id-12345"));
 
     // Take a snapshot of the error page
-    expect(await page.screenshot()).toMatchSnapshot(
-      "non-existent-group-error.png"
-    );
+    expect(await page.screenshot()).toMatchSnapshot();
 
     // Test the back to groups button
     await page.click("#back-to-groups-button");
@@ -45,9 +41,7 @@ test.describe("Group Not Found", () => {
     await page.waitForSelector("h1", { hasText: new RegExp("הקבוצות שלי") });
 
     // Take a snapshot after returning to the homepage
-    expect(await page.screenshot()).toMatchSnapshot(
-      "after-returning-from-error-page.png"
-    );
+    expect(await page.screenshot()).toMatchSnapshot();
   });
 
   test("should have working TopBar BackButton", async ({ page }) => {
@@ -65,9 +59,7 @@ test.describe("Group Not Found", () => {
     await expect(page.locator("button#back-button")).toBeVisible();
 
     // Take a snapshot before clicking the back button
-    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
-      "before-clicking-back-button.png"
-    );
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
 
     // Click the BackButton
     await page.click("button#back-button");
@@ -76,8 +68,6 @@ test.describe("Group Not Found", () => {
     await page.waitForSelector("h1", { hasText: new RegExp("הקבוצות שלי") });
 
     // Take a final snapshot
-    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot(
-      "after-back-button-click.png"
-    );
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
   });
 });

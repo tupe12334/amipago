@@ -39,6 +39,7 @@
 ## Icons
 
 - Use font-awesome html <i> component with class "fa"
+- Don't use MUI icons
 
 ## Acceptability
 
