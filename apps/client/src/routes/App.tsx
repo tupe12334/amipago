@@ -8,13 +8,11 @@ import { useTranslation } from "react-i18next";
 import { AddButton } from "../components/AddButton/AddButton";
 import { GroupListContainer } from "../components/GroupList/GroupListContainer";
 import NavBar from "../components/NavBar/NavBar";
-import { useUser } from "../context/UserContext";
 import { getLanguageDir } from "../i18n/main";
 import { RecentActivityView } from "./RecentActivityView";
 
 function App() {
   const { i18n } = useTranslation();
-  const { userId, isLoading: userLoading, error: userError } = useUser();
   const [activeView, setActiveView] = useState<"groups" | "activity">("groups");
 
   useEffect(() => {
