@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,13 +16,14 @@
 		8B6334359AF8058D1EF8DEDE /* libapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D4D8695B93A1DA86DB7A01D /* libapp.a */; };
 		A13D6B43FDC7763AB77D3C43 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2215FCDBC02E821D35159CF1 /* main.mm */; };
 		B4CBD93990CD90E032E0D87E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EFDCF7DBF30145F7C6FDA82 /* LaunchScreen.storyboard */; };
+		B62D256353F6D5FD2892E7FE /* libapp.a in Resources */ = {isa = PBXBuildFile; fileRef = FD49467BEA0194C8FB2441F5 /* libapp.a */; };
 		B71D5192B2B72C92D713CF67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98716F0D165B39442C1DC204 /* CoreGraphics.framework */; };
 		F273AE266286E9E6E4B69F31 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 42011A2B6D5F9D6255F2692E /* assets */; };
 		FFF8040B1C315168C366E7E3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B1688C94DB269D0129C3B2E /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A0AB438D941452823A0E167 /* main.rs */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.rs; sourceTree = "<group>"; };
+		1A0AB438D941452823A0E167 /* main.rs */ = {isa = PBXFileReference; path = main.rs; sourceTree = "<group>"; };
 		1EFDCF7DBF30145F7C6FDA82 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2215FCDBC02E821D35159CF1 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		26C06D74DBD0041DC4E09ACE /* bindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bindings.h; sourceTree = "<group>"; };
@@ -36,10 +37,11 @@
 		98716F0D165B39442C1DC204 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		ABF5FD036D6C22A5451A22CC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AC48DE7A3F99FBD0A7133F7F /* amipago_iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = amipago_iOS.entitlements; sourceTree = "<group>"; };
-		AF176D5AAB97C7BB752C1505 /* amipago_iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; name = amipago_iOS.app; path = amipago.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF176D5AAB97C7BB752C1505 /* amipago_iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = amipago_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DD0FF57D7E2D12FBB2A768 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		C86C91344A6F7AC3E9D91469 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
-		F475D9B0D0A8A2BE911A6771 /* lib.rs */ = {isa = PBXFileReference; lastKnownFileType = text; path = lib.rs; sourceTree = "<group>"; };
+		F475D9B0D0A8A2BE911A6771 /* lib.rs */ = {isa = PBXFileReference; path = lib.rs; sourceTree = "<group>"; };
+		FD49467BEA0194C8FB2441F5 /* libapp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libapp.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,12 +110,28 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3D049E8C186344BDAED36ECE /* debug */ = {
+			isa = PBXGroup;
+			children = (
+				FD49467BEA0194C8FB2441F5 /* libapp.a */,
+			);
+			path = debug;
+			sourceTree = "<group>";
+		};
 		9151BCFE1E2D38E9AF8DABE9 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				07BDC6D1F48B681A8C90B2D7 /* amipago */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		A608AD4CD081C3643BAFEFA1 /* arm64 */ = {
+			isa = PBXGroup;
+			children = (
+				3D049E8C186344BDAED36ECE /* debug */,
+			);
+			path = arm64;
 			sourceTree = "<group>";
 		};
 		AAB437D689AC50B34B33C725 /* Products */ = {
@@ -146,8 +164,23 @@
 		EE425A89EECA6795D9E70C54 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				A608AD4CD081C3643BAFEFA1 /* arm64 */,
 			);
 			path = Externals;
+			sourceTree = "<group>";
+		};
+		"TEMP_2AC36355-DB31-4AEA-B2B9-F860737EC0DB" /* x86_64 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = x86_64;
+			sourceTree = "<group>";
+		};
+		"TEMP_A7D758F8-0D8F-47F1-9C4F-4901F53AB0EC" /* arm64-sim */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "arm64-sim";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,6 +212,8 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = EC8FCD21019E3A529634BEB4 /* Build configuration list for PBXProject "amipago" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -205,6 +240,7 @@
 				34E06CF1A1800BE9D0B76138 /* Assets.xcassets in Resources */,
 				B4CBD93990CD90E032E0D87E /* LaunchScreen.storyboard in Resources */,
 				F273AE266286E9E6E4B69F31 /* assets in Resources */,
+				B62D256353F6D5FD2892E7FE /* libapp.a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,7 +249,8 @@
 /* Begin PBXShellScriptBuildPhase section */
 		D12B4F1CBA5C5E715277215E /* Build Rust Code */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
@@ -228,9 +265,9 @@
 				"$(SRCROOT)/Externals/arm64/${CONFIGURATION}/libapp.a",
 				"$(SRCROOT)/Externals/arm64-sim/${CONFIGURATION}/libapp.a",
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "npm run -- tauri ios xcode-script -v --platform ${PLATFORM_DISPLAY_NAME:?} --sdk-root ${SDKROOT:?} --framework-search-paths \"${FRAMEWORK_SEARCH_PATHS:?}\" --header-search-paths \"${HEADER_SEARCH_PATHS:?}\" --gcc-preprocessor-definitions \"${GCC_PREPROCESSOR_DEFINITIONS:-}\" --configuration ${CONFIGURATION:?} ${FORCE_COLOR} ${ARCHS:?}\n";
+			shellScript = "npm run -- tauri ios xcode-script -v --platform ${PLATFORM_DISPLAY_NAME:?} --sdk-root ${SDKROOT:?} --framework-search-paths \"${FRAMEWORK_SEARCH_PATHS:?}\" --header-search-paths \"${HEADER_SEARCH_PATHS:?}\" --gcc-preprocessor-definitions \"${GCC_PREPROCESSOR_DEFINITIONS:-}\" --configuration ${CONFIGURATION:?} ${FORCE_COLOR} ${ARCHS:?}";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -257,7 +294,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = amipago_iOS/amipago_iOS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = V72CW46B5V;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "arm64-sim x86_64";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -270,27 +306,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				"LIBRARY_SEARCH_PATHS[arch=arm64-sim]" = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Externals/arm64-sim/$(CONFIGURATION)",
-					"$(SDKROOT)/usr/lib/swift",
-					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
-					"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)",
-				);
-				"LIBRARY_SEARCH_PATHS[arch=arm64]" = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Externals/arm64/$(CONFIGURATION)",
-					"$(SDKROOT)/usr/lib/swift",
-					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
-					"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)",
-				);
-				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Externals/x86_64/$(CONFIGURATION)",
-					"$(SDKROOT)/usr/lib/swift",
-					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
-					"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)",
-				);
+				"LIBRARY_SEARCH_PATHS[arch=arm64-sim]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64-sim/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=arm64]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(inherited) $(PROJECT_DIR)/Externals/x86_64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.amipago.app;
 				PRODUCT_NAME = amipago;
 				SDKROOT = iphoneos;
@@ -366,7 +384,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = amipago_iOS/amipago_iOS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = V72CW46B5V;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "arm64-sim x86_64";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -379,27 +396,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				"LIBRARY_SEARCH_PATHS[arch=arm64-sim]" = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Externals/arm64-sim/$(CONFIGURATION)",
-					"$(SDKROOT)/usr/lib/swift",
-					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
-					"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)",
-				);
-				"LIBRARY_SEARCH_PATHS[arch=arm64]" = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Externals/arm64/$(CONFIGURATION)",
-					"$(SDKROOT)/usr/lib/swift",
-					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
-					"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)",
-				);
-				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Externals/x86_64/$(CONFIGURATION)",
-					"$(SDKROOT)/usr/lib/swift",
-					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
-					"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)",
-				);
+				"LIBRARY_SEARCH_PATHS[arch=arm64-sim]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64-sim/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=arm64]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(inherited) $(PROJECT_DIR)/Externals/x86_64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.amipago.app;
 				PRODUCT_NAME = amipago;
 				SDKROOT = iphoneos;

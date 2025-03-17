@@ -1,10 +1,11 @@
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AddButton } from "../components/AddButton/AddButton";
-import { ButtonGroup } from "../components/ButtonGroup/ButtonGroup";
 import { GroupListContainer } from "../components/GroupList/GroupListContainer";
 import NavBar from "../components/NavBar/NavBar";
 import { useUser } from "../context/UserContext";
@@ -83,13 +84,27 @@ function App() {
           הקבוצות שלי
         </Typography>
         <ButtonGroup
-          options={[
-            { value: "groups", label: "הקבוצות שלי" },
-            { value: "activity", label: "פעילות אחרונה" },
-          ]}
-          selected={activeView}
-          onChange={setActiveView}
-        />
+          id="view-toggle-button-group"
+          variant="contained"
+          aria-label="בחירת תצוגה"
+          fullWidth
+          sx={{ mb: 2 }}
+        >
+          <Button
+            id="groups-view-button"
+            onClick={() => setActiveView("groups")}
+            variant={activeView === "groups" ? "contained" : "outlined"}
+          >
+            הקבוצות שלי
+          </Button>
+          <Button
+            id="activity-view-button"
+            onClick={() => setActiveView("activity")}
+            variant={activeView === "activity" ? "contained" : "outlined"}
+          >
+            פעילות אחרונה
+          </Button>
+        </ButtonGroup>
         {activeView === "groups" && <GroupListContainer />}
         {activeView === "activity" && <RecentActivityView />}
         <AddButton />
