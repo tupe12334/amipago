@@ -8,6 +8,8 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import {
   Control,
@@ -17,7 +19,6 @@ import {
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormDatePicker } from "../../../components/Form/FormDatePicker";
-import { FormField } from "../../../components/Form/FormField";
 import { FormSelect } from "../../../components/Form/FormSelect";
 import { FormSuccessScreen } from "../../../components/Form/FormSuccessScreen";
 import { CreateExpenseInput } from "./CreateExpenseInput";
@@ -69,25 +70,24 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
             name="payer"
             render={({ field, fieldState: { error } }) => (
               <>
-                <FormField
+                <TextField
                   id="expense-payer"
                   label={t("expense.payer")}
                   placeholder={t("expense.placeholder.payer")}
-                  icon="user"
-                  error={error?.message}
-                  value={field.value}
-                  onChange={field.onChange}
-                  onBlur={field.onBlur}
+                  error={!!error}
+                  helperText={error?.message}
+                  fullWidth
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <i className="fa fa-user" aria-hidden="true" />
+                      </InputAdornment>
+                    ),
+                  }}
+                  aria-describedby={error ? "expense-payer-error" : undefined}
+                  aria-invalid={error ? "true" : "false"}
+                  {...field}
                 />
-                {error && (
-                  <div
-                    className="error-message"
-                    id="expense-payer-error"
-                    aria-live="polite"
-                  >
-                    {error.message}
-                  </div>
-                )}
               </>
             )}
           />
@@ -181,29 +181,28 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
             name="amount"
             render={({ field, fieldState: { error } }) => (
               <>
-                <FormField
+                <TextField
                   id="amount"
                   label={t("expense.amount")}
                   type="number"
-                  min="0.01"
                   placeholder={t("expense.placeholder.amount")}
-                  icon="money"
-                  error={error?.message}
-                  inputMode="decimal"
-                  pattern="[0-9]*\\.?[0-9]+"
-                  value={field.value}
-                  onChange={field.onChange}
-                  onBlur={field.onBlur}
+                  error={!!error}
+                  helperText={error?.message}
+                  fullWidth
+                  inputProps={{
+                    inputMode: "decimal",
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <i className="fa fa-money" aria-hidden="true" />
+                      </InputAdornment>
+                    ),
+                  }}
+                  aria-describedby={error ? "amount-error" : undefined}
+                  aria-invalid={error ? "true" : "false"}
+                  {...field}
                 />
-                {error && (
-                  <div
-                    className="error-message"
-                    id="amount-error"
-                    aria-live="polite"
-                  >
-                    {error.message}
-                  </div>
-                )}
               </>
             )}
           />
@@ -211,16 +210,24 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
           <Controller
             control={control}
             name="description"
-            render={({ field }) => (
-              <FormField
+            render={({ field, fieldState: { error } }) => (
+              <TextField
                 id="description"
                 label={t("expense.description")}
                 placeholder={t("expense.placeholder.description")}
-                icon="file-text"
-                error={errors.description?.message}
-                value={field.value}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
+                error={!!error}
+                helperText={error?.message}
+                fullWidth
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <i className="fa fa-file-text" aria-hidden="true" />
+                    </InputAdornment>
+                  ),
+                }}
+                aria-describedby={error ? "description-error" : undefined}
+                aria-invalid={error ? "true" : "false"}
+                {...field}
               />
             )}
           />
