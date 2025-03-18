@@ -16,7 +16,7 @@ test.describe("Group Not Found", () => {
     await page.waitForLoadState("load");
 
     // Take a snapshot of the homepage
-    expect(await page.screenshot()).toMatchSnapshot();
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
 
     // Navigate to a non-existent group ID
     // We use direct navigation here instead of UI interaction because we're testing the error state directly
@@ -32,7 +32,7 @@ test.describe("Group Not Found", () => {
     expect(errorText).toMatch(new RegExp("non-existent-id-12345"));
 
     // Take a snapshot of the error page
-    expect(await page.screenshot()).toMatchSnapshot();
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
 
     // Test the back to groups button
     await page.click("#back-to-groups-button");
@@ -41,7 +41,7 @@ test.describe("Group Not Found", () => {
     await page.locator("h1", { hasText: new RegExp("הקבוצות שלי") }).waitFor();
 
     // Take a snapshot after returning to the homepage
-    expect(await page.screenshot()).toMatchSnapshot();
+    expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
   });
 
   test("should have working TopBar BackButton", async ({ page }) => {

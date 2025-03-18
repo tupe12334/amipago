@@ -26,6 +26,7 @@
 - The e2e test should be in an apps/client/e2e folder and not inside src
 - Every test start from the root goto("/") path and navigate the app only using the UI
 - Save snapshot after any meaningful action, make sure the page has been settle down before taking the snapshot
+- Don't custom name snapshots
 - Disable animation in E2E testing using await page.screenshot({ animations: "disabled" }) and don't use the path parameter
 - Add numbering by order to the snapshots
 - When searching for a text, always use the Regex option
