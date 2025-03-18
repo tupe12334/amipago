@@ -9,7 +9,7 @@ import {
   getExpensesByGroupId,
   getGroupById,
 } from "../../services/indexedDbService";
-import { GroupPageView } from "./";
+import { GroupPageView } from ".";
 
 export const GroupContainer = () => {
   const { groupId } = useParams<{ groupId: string }>();
