@@ -25,6 +25,8 @@ test.describe("Create New Group", () => {
       { timeout: 5000 }
     );
     await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("load");
     expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
   });
 
@@ -52,10 +54,10 @@ test.describe("Create New Group", () => {
     await page.waitForTimeout(2100);
     const url = new URL(page.url());
     expect(url.pathname).toBe("/");
+    await page.waitForTimeout(300);
     await page.waitForLoadState("networkidle");
     await page.waitForLoadState("domcontentloaded");
     await page.waitForLoadState("load");
-    await page.waitForTimeout(300);
     expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
   });
 });
