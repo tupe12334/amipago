@@ -1,5 +1,14 @@
-import { Button, CircularProgress } from "@mui/material";
-import ReactDOM from "react-dom";
+import {
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
 import {
   Control,
   Controller,
@@ -13,49 +22,6 @@ import { FormSelect } from "../../../components/Form/FormSelect";
 import { FormSuccessScreen } from "../../../components/Form/FormSuccessScreen";
 import { CreateExpenseInput } from "./CreateExpenseInput";
 
-// New modal component for group selection
-const GroupSelectorModal: React.FC<{
-  options: Array<{ value: string; label: string; icon?: string }>;
-  selectedValue: string;
-  onSelect: (value: string) => void;
-  onClose: () => void;
-}> = ({ options, selectedValue, onSelect, onClose }) => {
-  return ReactDOM.createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg w-full max-w-md p-4">
-        <h2 className="text-lg font-semibold mb-4">בחר קבוצה</h2>
-        <div className="max-h-48 overflow-y-auto" role="listbox" aria-label="קבוצות זמינות">
-          {options.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              id={`expense-group-option-${option.value}`}
-              className="expense-group-modal-option w-full text-start px-4 py-2 hover:bg-gray-200"
-              onClick={() => {
-                onSelect(option.value);
-                onClose();
-              }}
-              role="option"
-              aria-selected={selectedValue === option.value}
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-        <button
-          id="expense-group-modal-close"
-          type="button"
-          onClick={onClose}
-          className="mt-4 w-full bg-blue-600 text-white py-2 rounded"
-        >
-          סגור
-        </button>
-      </div>
-    </div>,
-    document.body
-  );
-};
-
 interface CreateExpenseFormProps {
   groupId?: string;
   control: Control<CreateExpenseInput>;
@@ -68,7 +34,6 @@ interface CreateExpenseFormProps {
   groupFieldRef: React.MutableRefObject<any>;
   handleSubmit: UseFormHandleSubmit<CreateExpenseInput>;
   onSubmit: (data: CreateExpenseInput) => Promise<void>;
-  handleSuccessContinue: () => void;
 }
 
 export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
@@ -83,7 +48,6 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
   groupFieldRef,
   handleSubmit,
   onSubmit,
-  handleSuccessContinue,
 }) => {
   const { t } = useTranslation();
 
@@ -136,33 +100,35 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
               render={({ field }) => <input type="hidden" {...field} />}
             />
           ) : (
-            // Updated group selector rendering only a button
             <Controller
               control={control}
               name="groupId"
               render={({ field, fieldState: { error } }) => {
-                // Always store field in ref, removing conditional that was causing issues
                 groupFieldRef.current = field;
                 const selectedOption = groupOptions.find(
                   (option) => option.value === field.value
                 );
                 return (
                   <>
-                    <button
+                    <Button
                       id="expense-group-button"
-                      type="button"
                       onClick={() => setOpenGroupList(true)}
-                      className="flex items-center justify-between w-full px-4 py-3 border rounded-lg hover:bg-gray-100"
+                      variant="outlined"
+                      fullWidth
+                      sx={{ justifyContent: "space-between", py: 1.5 }}
+                      endIcon={
+                        <i
+                          className="fa fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
+                      }
                       aria-haspopup="listbox"
                       aria-expanded={openGroupList}
                     >
-                      <span>
-                        {selectedOption
-                          ? selectedOption.label
-                          : t("expense.groupSelector")}
-                      </span>
-                      <i className="fa fa-chevron-down" aria-hidden="true"></i>
-                    </button>
+                      {selectedOption
+                        ? selectedOption.label
+                        : t("expense.groupSelector")}
+                    </Button>
                     {error && (
                       <div
                         className="error-message"
@@ -172,6 +138,38 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
                         {error.message}
                       </div>
                     )}
+                    <Dialog
+                      open={openGroupList}
+                      onClose={() => setOpenGroupList(false)}
+                      aria-labelledby="group-dialog-title"
+                    >
+                      <DialogTitle id="group-dialog-title">
+                        {t("expense.groupSelector")}
+                      </DialogTitle>
+                      <DialogContent>
+                        <List
+                          role="listbox"
+                          aria-label={t("expense.groupSelector")}
+                        >
+                          {groupOptions.map((option) => (
+                            <ListItem key={option.value} disablePadding>
+                              <ListItemButton
+                                id={`expense-group-option-${option.value}`}
+                                onClick={() => {
+                                  field.onChange(option.value);
+                                  setOpenGroupList(false);
+                                }}
+                                selected={field.value === option.value}
+                                role="option"
+                                aria-selected={field.value === option.value}
+                              >
+                                <ListItemText primary={option.label} />
+                              </ListItemButton>
+                            </ListItem>
+                          ))}
+                        </List>
+                      </DialogContent>
+                    </Dialog>
                   </>
                 );
               }}
@@ -187,7 +185,6 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
                   id="amount"
                   label={t("expense.amount")}
                   type="number"
-                  step="0.01"
                   min="0.01"
                   placeholder={t("expense.placeholder.amount")}
                   icon="money"
@@ -278,19 +275,6 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
             {t("expense.save")}
           </Button>
         </form>
-      )}
-      {/* Render modal outside the form - remove conditional check on groupFieldRef.current */}
-      {openGroupList && (
-        <GroupSelectorModal
-          options={groupOptions}
-          selectedValue={groupFieldRef.current?.value || ""}
-          onSelect={(value: string) => {
-            if (groupFieldRef.current) {
-              groupFieldRef.current.onChange(value);
-            }
-          }}
-          onClose={() => setOpenGroupList(false)}
-        />
       )}
     </div>
   );
