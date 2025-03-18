@@ -77,12 +77,14 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
                   error={!!error}
                   helperText={error?.message}
                   fullWidth
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <i className="fa fa-user" aria-hidden="true" />
-                      </InputAdornment>
-                    ),
+                  slotProps={{
+                    input: {
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <i className="fa fa-user" aria-hidden="true" />
+                        </InputAdornment>
+                      ),
+                    },
                   }}
                   aria-describedby={error ? "expense-payer-error" : undefined}
                   aria-invalid={error ? "true" : "false"}
@@ -192,12 +194,14 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
                   inputProps={{
                     inputMode: "decimal",
                   }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <i className="fa fa-money" aria-hidden="true" />
-                      </InputAdornment>
-                    ),
+                  slotProps={{
+                    input: {
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <i className="fa fa-money" aria-hidden="true" />
+                        </InputAdornment>
+                      ),
+                    },
                   }}
                   aria-describedby={error ? "amount-error" : undefined}
                   aria-invalid={error ? "true" : "false"}
@@ -218,12 +222,14 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
                 error={!!error}
                 helperText={error?.message}
                 fullWidth
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <i className="fa fa-file-text" aria-hidden="true" />
-                    </InputAdornment>
-                  ),
+                slotProps={{
+                  input: {
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <i className="fa fa-file-text" aria-hidden="true" />
+                      </InputAdornment>
+                    ),
+                  },
                 }}
                 aria-describedby={error ? "description-error" : undefined}
                 aria-invalid={error ? "true" : "false"}
