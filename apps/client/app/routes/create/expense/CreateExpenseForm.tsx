@@ -11,6 +11,7 @@ import {
   TextField,
   InputAdornment,
 } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {
   Control,
   Controller,
@@ -18,7 +19,6 @@ import {
   UseFormHandleSubmit,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { FormDatePicker } from "../../../components/Form/FormDatePicker";
 import { FormSelect } from "../../../components/Form/FormSelect";
 import { FormSuccessScreen } from "../../../components/Form/FormSuccessScreen";
 import { CreateExpenseInput } from "./CreateExpenseInput";
@@ -238,12 +238,31 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
             )}
           />
 
-          <FormDatePicker
-            id="expense-date"
-            label={t("expense.date")}
-            name="date"
+          <Controller
             control={control}
-            error={errors.date?.message}
+            name="date"
+            render={({ field, fieldState: { error } }) => (
+              <DatePicker
+                label={t("expense.date")}
+                value={field.value}
+                onChange={field.onChange}
+                slotProps={{
+                  textField: {
+                    id: "expense-date",
+                    error: !!error,
+                    helperText: error?.message,
+                    fullWidth: true,
+                    InputProps: {
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <i className="fa fa-calendar" aria-hidden="true" />
+                        </InputAdornment>
+                      ),
+                    },
+                  },
+                }}
+              />
+            )}
           />
 
           <Controller

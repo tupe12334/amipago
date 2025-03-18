@@ -8,7 +8,7 @@ import {
   CreateExpenseInputSchema,
 } from "./CreateExpenseInput";
 import { useCreateExpenseMutation } from "./hooks/useCreateExpenseMutation";
-import { CreateExpenseForm } from "./create-expense-form";
+import { CreateExpenseForm } from "./CreateExpenseForm";
 import { getAllGroups } from "../../../services/indexedDbService";
 import { getGroupPath } from "../../../paths";
 
