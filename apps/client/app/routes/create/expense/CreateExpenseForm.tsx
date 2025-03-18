@@ -10,23 +10,22 @@ import {
   ListItemText,
   TextField,
   InputAdornment,
+  Select,
+  MenuItem,
+  FormControl,
+  FormHelperText,
+  InputLabel,
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import {
-  Control,
-  Controller,
-  FieldErrors,
-  UseFormHandleSubmit,
-} from "react-hook-form";
+import { Control, Controller, UseFormHandleSubmit } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { FormSelect } from "../../../components/Form/FormSelect";
 import { FormSuccessScreen } from "../../../components/Form/FormSuccessScreen";
 import { CreateExpenseInput } from "./CreateExpenseInput";
+import { CurrenciesSchema } from "../../../models/Currencies";
 
 interface CreateExpenseFormProps {
   groupId?: string;
   control: Control<CreateExpenseInput>;
-  errors: FieldErrors<CreateExpenseInput>;
   loading: boolean;
   formSubmitted: boolean;
   groupOptions: Array<{ value: string; label: string; icon?: string }>;
@@ -40,7 +39,6 @@ interface CreateExpenseFormProps {
 export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
   groupId,
   control,
-  errors,
   loading,
   formSubmitted,
   groupOptions,
@@ -268,18 +266,39 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
           <Controller
             control={control}
             name="currency"
-            render={({ field }) => (
-              <FormSelect
-                id="expense-currency"
-                label={t("expense.currency")}
-                options={[
-                  { value: "ILS", label: t("currencies.ILS"), icon: "shekel" },
-                  { value: "USD", label: t("currencies.USD"), icon: "dollar" },
-                ]}
-                selected={field.value}
-                onChange={field.onChange}
-                error={errors.currency?.message}
-              />
+            render={({ field, fieldState: { error } }) => (
+              <FormControl fullWidth error={!!error}>
+                <InputLabel id="currency-select-label">
+                  {t("expense.currency")}
+                </InputLabel>
+                <Select
+                  id="expense-currency"
+                  labelId="currency-select-label"
+                  label={t("expense.currency")}
+                  {...field}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <i
+                        className={`fa fa-${field.value === "ILS" ? "shekel" : "dollar"}`}
+                        aria-hidden="true"
+                      />
+                    </InputAdornment>
+                  }
+                >
+                  {CurrenciesSchema.options.map((currency) => (
+                    <MenuItem key={currency} value={currency}>
+                      <span className="flex items-center gap-2">
+                        <i
+                          className={`fa fa-${currency === "ILS" ? "shekel" : "dollar"}`}
+                          aria-hidden="true"
+                        />
+                        {t(`currencies.${currency}`)}
+                      </span>
+                    </MenuItem>
+                  ))}
+                </Select>
+                {error && <FormHelperText>{error.message}</FormHelperText>}
+              </FormControl>
             )}
           />
 
