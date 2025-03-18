@@ -1,8 +1,8 @@
 export type ExpenseDto = {
-    id: string;
-    description: string;
-    payer: string;
-    date: string;
-    amount: number;
-    currency: string;
-  };
+  id: string;
+  description?: string;
+  payer: string;
+  date: Date;
+  amount: number;
+  currency: string;
+};
