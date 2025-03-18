@@ -54,6 +54,7 @@ Make sure that we support acceptability guidelines
 - Use flex
 - Use MUI components
 - Don't use pixels as a unit
+- Try to minimize your use of custom styling
 
 ### Direction
 
