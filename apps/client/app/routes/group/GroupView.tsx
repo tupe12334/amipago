@@ -11,10 +11,11 @@ import { ExpensesList } from "../../components/ExpensesList";
 import { GroupMembers } from "../../components/GroupMembers/GroupMembers";
 import { GroupMetaData } from "../../components/GroupMetaData/GroupMetaData";
 import { StorageGroup } from "../../models/StorageGroup";
+import { StorageExpense } from "../../models/StorageExpense";
 
 interface GroupPageProps {
   group: StorageGroup;
-  expenses: any[];
+  expenses: StorageExpense[];
   onBackClick: () => void;
   onAddExpenseClick: () => void;
   formatCurrency: (amount: number, currency: string) => string;
@@ -35,6 +36,8 @@ export const GroupPageView = ({
       display="flex"
       flexDirection="column"
       minHeight="100vh"
+      role="main"
+      aria-label="דף קבוצה"
     >
       <Box
         id="group-header"
@@ -52,6 +55,7 @@ export const GroupPageView = ({
           onClick={onBackClick}
           startIcon={<i className="fa fa-arrow-right" aria-hidden="true"></i>}
           color="primary"
+          aria-label="חזור לדף הבית"
         >
           חזור
         </Button>
@@ -104,6 +108,7 @@ export const GroupPageView = ({
               startIcon={
                 <i className="fa fa-plus-circle" aria-hidden="true"></i>
               }
+              aria-label="הוסף הוצאה חדשה לקבוצה"
             >
               הוסף הוצאה לקבוצה
             </Button>
@@ -113,6 +118,7 @@ export const GroupPageView = ({
               color="success"
               onClick={() => setShowQRCode(true)}
               startIcon={<i className="fa fa-qrcode" aria-hidden="true"></i>}
+              aria-label="שתף קבוצה באמצעות קוד QR"
             >
               שתף קבוצה
             </Button>
@@ -124,7 +130,7 @@ export const GroupPageView = ({
         open={showQRCode}
         onClose={() => setShowQRCode(false)}
         aria-labelledby="qr-dialog-title"
-        aria-modal="true"
+        dir="rtl"
       >
         <DialogTitle id="qr-dialog-title">
           <Typography variant="h6" fontWeight="bold" align="center">
@@ -137,6 +143,7 @@ export const GroupPageView = ({
               id="group-qr-code"
               value={`groupId:${group.id}, password:${group.password}`}
               size={180}
+              aria-label="קוד QR לשיתוף הקבוצה"
             />
           </Box>
         </DialogContent>
@@ -147,6 +154,7 @@ export const GroupPageView = ({
             variant="contained"
             color="error"
             fullWidth
+            aria-label="סגור חלון QR"
           >
             סגור
           </Button>
