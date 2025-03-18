@@ -1,26 +1,46 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { StorageGroup } from "../../models/StorageGroup";
+import { Box, Typography } from "@mui/material";
 
 export const GroupMetaData = ({ group }: { group: StorageGroup }) => {
   const { t } = useTranslation();
   return (
-    <div className="border-t border-gray-200 pt-4">
-      <div className="flex items-center text-gray-500 text-sm">
-        <i className="fa fa-clock-o me-2" aria-hidden="true"></i>
-        <span id="group-created-at">
+    <Box borderTop={1} borderColor="grey.200" pt={2}>
+      <Box
+        display="flex"
+        alignItems="center"
+        color="text.secondary"
+        fontSize="small"
+      >
+        <i
+          className="fa fa-clock-o"
+          aria-hidden="true"
+          style={{ marginInlineEnd: "0.5rem" }}
+        ></i>
+        <Typography id="group-created-at" variant="body2">
           {t("נוצר")}: {new Date(group.createdAt).toLocaleDateString("he-IL")}
-        </span>
-      </div>
+        </Typography>
+      </Box>
       {group.lastActivity && (
-        <div className="flex items-center text-gray-500 text-sm mt-2">
-          <i className="fa fa-refresh me-2" aria-hidden="true"></i>
-          <span id="group-last-activity">
+        <Box
+          display="flex"
+          alignItems="center"
+          color="text.secondary"
+          fontSize="small"
+          mt={1}
+        >
+          <i
+            className="fa fa-refresh"
+            aria-hidden="true"
+            style={{ marginInlineEnd: "0.5rem" }}
+          ></i>
+          <Typography id="group-last-activity" variant="body2">
             {t("פעילות אחרונה")}:{" "}
             {new Date(group.lastActivity).toLocaleDateString("he-IL")}
-          </span>
-        </div>
+          </Typography>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };

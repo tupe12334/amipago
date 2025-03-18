@@ -33,11 +33,46 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   // Use appropriate cache based on direction
   const cache = direction === "rtl" ? cacheRtl : cacheLtr;
 
-  // Create theme with direction
+  // Create theme with direction and enhanced configuration
   const theme = useMemo(
     () =>
       createTheme({
         direction,
+        typography: {
+          fontFamily: [
+            '"Assistant"',
+            "sans-serif",
+            '"Roboto"',
+            '"Helvetica"',
+            '"Arial"',
+          ].join(","),
+        },
+        components: {
+          MuiTextField: {
+            defaultProps: {
+              variant: "outlined",
+              fullWidth: true,
+            },
+          },
+          MuiButton: {
+            defaultProps: {
+              variant: "contained",
+            },
+          },
+          MuiFormControl: {
+            defaultProps: {
+              fullWidth: true,
+            },
+          },
+        },
+        palette: {
+          primary: {
+            main: "#1976d2",
+          },
+          secondary: {
+            main: "#dc004e",
+          },
+        },
       }),
     [direction]
   );

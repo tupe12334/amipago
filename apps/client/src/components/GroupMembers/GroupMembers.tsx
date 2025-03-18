@@ -1,4 +1,5 @@
 import React from "react";
+import { Box, Typography, Paper, List, ListItem, Chip } from "@mui/material";
 
 interface GroupMember {
   id: string;
@@ -12,32 +13,36 @@ interface GroupMembersProps {
 
 export const GroupMembers = ({ members, groupUserId }: GroupMembersProps) => {
   return (
-    <div className="mb-6">
-      <h2 id="members-title" className="text-lg font-medium mb-2">
+    <Box mb={6}>
+      <Typography id="members-title" variant="h6" component="h2" fontWeight="medium" mb={2}>
         חברי קבוצה
-      </h2>
-      <div className="bg-gray-50 rounded-lg p-4">
+      </Typography>
+      <Paper elevation={0} sx={{ bgcolor: 'grey.50', borderRadius: 2, p: 2 }}>
         {members && members.length > 0 ? (
-          <ul className="space-y-2" id="members-list" aria-label="קבוצת חברים">
+          <List id="members-list" aria-label="קבוצת חברים" sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             {members.map((member) => (
-              <li key={member.id} className="flex items-center">
-                <i
-                  className="fa fa-user-circle text-gray-500 me-2"
-                  aria-hidden="true"
-                ></i>
-                <span className="text-sm">{member.name}</span>
+              <ListItem key={member.id} sx={{ display: 'flex', alignItems: 'center' }}>
+                <i className="fa fa-user-circle" aria-hidden="true" style={{ color: 'grey.500', marginInlineEnd: '0.5rem' }}></i>
+                <Typography variant="body2" component="span">
+                  {member.name}
+                </Typography>
                 {groupUserId === member.id && (
-                  <span className="bg-green-100 text-green-800 text-xs font-medium ms-2 px-2 py-0.5 rounded-full">
-                    מנהל
-                  </span>
+                  <Chip
+                    label="מנהל"
+                    size="small"
+                    color="success"
+                    sx={{ marginInlineStart: '0.5rem' }}
+                  />
                 )}
-              </li>
+              </ListItem>
             ))}
-          </ul>
+          </List>
         ) : (
-          <p className="text-gray-500 text-sm">אין חברים בקבוצה זו</p>
+          <Typography variant="body2" color="text.secondary">
+            אין חברים בקבוצה זו
+          </Typography>
         )}
-      </div>
-    </div>
+      </Paper>
+    </Box>
   );
 };

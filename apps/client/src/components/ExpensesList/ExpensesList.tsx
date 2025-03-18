@@ -1,5 +1,6 @@
 import React from "react";
 import { ExpenseDto } from "./types";
+import { Box, Typography, List, ListItem, Divider } from "@mui/material";
 
 interface ExpensesListProps {
   expenses: ExpenseDto[];
@@ -12,42 +13,65 @@ export const ExpensesList: React.FC<ExpensesListProps> = ({
 }) => {
   if (expenses.length === 0) {
     return (
-      <div
-        className="text-center py-6 bg-gray-50 rounded"
+      <Box
         id="expenses-empty-state"
+        textAlign="center"
+        py={3}
+        bgcolor="grey.50"
+        borderRadius={2}
       >
-        <p className="text-gray-500">אין הוצאות להצגה בקבוצה זו</p>
-      </div>
+        <Typography variant="body2" color="text.secondary">
+          אין הוצאות להצגה בקבוצה זו
+        </Typography>
+      </Box>
     );
   }
 
   return (
-    <ul
+    <List
       id="expenses-list"
-      className="divide-y divide-gray-200"
       aria-label="רשימת הוצאות"
+      sx={{
+        width: "100%",
+        bgcolor: "background.paper",
+        borderRadius: 2,
+        overflow: "hidden",
+        "& > li:not(:last-child)": {
+          borderBottom: 1,
+          borderColor: "divider",
+        },
+      }}
     >
       {expenses.map((expense) => (
-        <li key={expense.id} className="py-3" id={`expense-item-${expense.id}`}>
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="font-medium">
+        <ListItem
+          key={expense.id}
+          id={`expense-item-${expense.id}`}
+          sx={{ py: 1.5 }}
+        >
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="start"
+            width="100%"
+          >
+            <Box>
+              <Typography variant="body1" fontWeight="medium">
                 {expense.description || "הוצאה ללא תיאור"}
-              </p>
-              <p className="text-sm text-gray-500">
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
                 <span>שולם על ידי: {expense.payer}</span>
-                <span className="mx-2">•</span>
+                <span style={{ marginInline: "0.5rem" }}>•</span>
                 <span>
                   {new Date(expense.date).toLocaleDateString("he-IL")}
                 </span>
-              </p>
-            </div>
-            <span className="font-bold text-green-600">
+              </Typography>
+            </Box>
+            <Typography variant="body1" fontWeight="bold" color="success.main">
               {formatCurrency(expense.amount, expense.currency)}
-            </span>
-          </div>
-        </li>
+            </Typography>
+          </Box>
+        </ListItem>
       ))}
-    </ul>
+    </List>
   );
 };

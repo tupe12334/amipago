@@ -81,5 +81,8 @@
     "vite": "^6.2.1",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.8"
+  },
+  "resolutions": {
+    "date-fns": "^2.29.3"
   }
 }

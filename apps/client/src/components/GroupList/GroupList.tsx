@@ -1,5 +1,17 @@
 import { useTranslation } from "react-i18next";
 import { StorageGroup } from "../../models/StorageGroup";
+import { 
+  Box, 
+  List, 
+  ListItem, 
+  Typography, 
+  Paper, 
+  Chip, 
+  Divider, 
+  Alert, 
+  Button, 
+  CircularProgress 
+} from "@mui/material";
 
 interface GroupListProps {
   groups: StorageGroup[];
@@ -20,147 +32,202 @@ export const GroupList = ({
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center p-8" aria-live="polite">
-        <i className="fa fa-spinner fa-pulse text-2xl" aria-hidden="true"></i>
-        <span className="sr-only">טוען קבוצות...</span>
-      </div>
+      <Box 
+        display="flex" 
+        justifyContent="center" 
+        alignItems="center" 
+        p={4} 
+        aria-live="polite"
+      >
+        <CircularProgress size={32} aria-hidden="true" />
+        <Box component="span" className="sr-only">טוען קבוצות...</Box>
+      </Box>
     );
   }
 
   if (error) {
     return (
-      <div
-        className="bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-4"
+      <Alert 
+        id="group-list-error" 
+        severity="error" 
         role="alert"
+        sx={{ mb: 2 }}
       >
-        <p>{error}</p>
-      </div>
+        {error}
+      </Alert>
     );
   }
 
   if (groups.length === 0) {
     return (
-      <div className="text-center p-8 bg-gray-100 rounded-md">
-        <p>{t("אין קבוצות להצגה")}</p>
-        <p className="text-gray-500 text-sm mt-2">
+      <Paper 
+        id="empty-groups-message"
+        elevation={0} 
+        sx={{ 
+          textAlign: 'center', 
+          p: 4, 
+          bgcolor: 'grey.100',
+          borderRadius: 2
+        }}
+      >
+        <Typography variant="body1">{t("אין קבוצות להצגה")}</Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
           {t('לחץ על כפתור "הוסף" כדי ליצור קבוצה חדשה')}
-        </p>
-      </div>
+        </Typography>
+      </Paper>
     );
   }
 
-  if (groups.length !== 0) {
-    return (
-      <div className="relative">
-        <ul
-          className="space-y-4 flex-1 overflow-y-auto"
-          aria-label="רשימת קבוצות"
-          data-testid="group-list-container"
-        >
-          {groups.map((group) => (
-            <li
-              key={group.id}
-              className="bg-white rounded-lg shadow-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
-              onClick={() => onGroupClick(group.id)}
-              aria-label={`קבוצה: ${group.name}`}
-            >
-              <div className="flex justify-between items-start">
-                <h3 className="font-bold text-lg mb-2">{group.name}</h3>
-                <div className="flex flex-col items-end gap-1">
-                  {currentUserId && group.userId === currentUserId && (
-                    <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                      <i
-                        className="fa fa-user-circle ml-1"
-                        aria-hidden="true"
-                      ></i>
-                      {t("המנהל שלי")}
-                    </span>
+  return (
+    <Box id="group-list-wrapper" position="relative">
+      <List 
+        id="group-list-container"
+        sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+        aria-label="רשימת קבוצות"
+        data-testid="group-list-container"
+      >
+        {groups.map((group) => (
+          <ListItem 
+            key={group.id} 
+            component={Paper} 
+            elevation={2}
+            onClick={() => onGroupClick(group.id)}
+            aria-label={`קבוצה: ${group.name}`}
+            sx={{ 
+              p: 2, 
+              display: 'flex', 
+              flexDirection: 'column', 
+              cursor: 'pointer',
+              '&:hover': { 
+                boxShadow: 3
+              },
+              transition: 'box-shadow 0.3s'
+            }}
+          >
+            <Box display="flex" justifyContent="space-between" alignItems="start" width="100%">
+              <Typography variant="h6" component="h3" fontWeight="bold" gutterBottom>
+                {group.name}
+              </Typography>
+              <Box display="flex" flexDirection="column" alignItems="flex-end" gap={0.5}>
+                {currentUserId && group.userId === currentUserId && (
+                  <Chip
+                    id={`admin-badge-${group.id}`}
+                    size="small"
+                    label={
+                      <Box display="flex" alignItems="center">
+                        <i className="fa fa-user-circle" aria-hidden="true" style={{ marginInlineEnd: '0.25rem' }}></i>
+                        {t("המנהל שלי")}
+                      </Box>
+                    }
+                    color="success"
+                  />
+                )}
+                <Chip
+                  id={`members-count-${group.id}`}
+                  size="small"
+                  label={`${group.members?.length || 0} ${t("חברים")}`}
+                  color="primary"
+                />
+              </Box>
+            </Box>
+
+            {group.description && (
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                {group.description}
+              </Typography>
+            )}
+
+            {group.members && group.members.length > 0 && (
+              <Box mb={1.5}>
+                <Typography variant="subtitle2" color="text.primary" sx={{ mb: 0.5 }}>
+                  חברים:
+                </Typography>
+                <Box display="flex" flexWrap="wrap" gap={1}>
+                  {group.members.slice(0, 3).map((member) => (
+                    <Chip
+                      key={member.id}
+                      size="small"
+                      variant="outlined"
+                      label={
+                        <Box display="flex" alignItems="center">
+                          <i className="fa fa-user" aria-hidden="true" style={{ marginInlineEnd: '0.25rem' }}></i>
+                          {member.name}
+                        </Box>
+                      }
+                    />
+                  ))}
+                  {group.members.length > 3 && (
+                    <Typography variant="caption" color="text.secondary">
+                      +{group.members.length - 3} נוספים
+                    </Typography>
                   )}
-                  <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                    {group.members?.length || 0} {t("חברים")}
-                  </span>
-                </div>
-              </div>
+                </Box>
+              </Box>
+            )}
 
-              {group.description && (
-                <p className="text-gray-600 mb-3">{group.description}</p>
-              )}
-
-              {/* Display members if available */}
-              {group.members && group.members.length > 0 && (
-                <div className="mb-3">
-                  <p className="text-sm font-medium text-gray-700 mb-1">
-                    חברים:
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {group.members.slice(0, 3).map((member) => (
-                      <span
-                        key={member.id}
-                        className="bg-gray-50 text-gray-700 text-xs px-2 py-1 rounded flex items-center"
-                      >
-                        <i className="fa fa-user me-1" aria-hidden="true"></i>
-                        {member.name}
-                      </span>
-                    ))}
-                    {group.members.length > 3 && (
-                      <span className="text-gray-500 text-xs">
-                        +{group.members.length - 3} נוספים
-                      </span>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              <div className="flex flex-wrap gap-2 mb-3">
-                {group.tags?.map((tag, index) => (
-                  <span
+            {group.tags && group.tags.length > 0 && (
+              <Box display="flex" flexWrap="wrap" gap={1} mb={1.5}>
+                {group.tags.map((tag, index) => (
+                  <Chip
                     key={index}
-                    className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded"
-                  >
-                    {tag}
-                  </span>
+                    size="small"
+                    label={tag}
+                    variant="outlined"
+                    sx={{ bgcolor: 'grey.100' }}
+                  />
                 ))}
-              </div>
+              </Box>
+            )}
 
-              <div className="text-gray-500 text-sm mt-2 flex items-center">
-                <i className="fa fa-clock-o me-2" aria-hidden="true"></i>
-                <span>
-                  {t("פעילות אחרונה")}:{" "}
-                  {new Date(
-                    group.lastActivity || group.createdAt
-                  ).toLocaleDateString("he-IL")}
-                </span>
-              </div>
+            <Box color="text.secondary" display="flex" alignItems="center" mt={1}>
+              <i className="fa fa-clock-o" aria-hidden="true" style={{ marginInlineEnd: '0.5rem' }}></i>
+              <Typography variant="body2">
+                {t("פעילות אחרונה")}: {new Date(group.lastActivity || group.createdAt).toLocaleDateString("he-IL")}
+              </Typography>
+            </Box>
 
-              <div className="flex justify-between items-center mt-4 pt-2 border-t border-gray-100">
-                <div className="text-gray-400 text-xs">
-                  {t("נוצר")}:{" "}
-                  {new Date(group.createdAt).toLocaleDateString("he-IL")}
-                </div>
-                <button
-                  className="text-blue-600 flex items-center"
-                  aria-label={`${t("צפה בקבוצה")} ${group.name}`}
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent triggering parent onClick
-                    onGroupClick(group.id);
-                  }}
-                >
-                  <span>{t("צפה")}</span>
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <div
-          className="absolute bottom-0 start-1/2 transform -translate-x-1/2 mb-2 text-gray-500 text-sm flex items-center"
+            <Divider sx={{ my: 1.5, width: '100%' }} />
+            
+            <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
+              <Typography variant="caption" color="text.secondary">
+                {t("נוצר")}: {new Date(group.createdAt).toLocaleDateString("he-IL")}
+              </Typography>
+              <Button
+                id={`view-group-${group.id}`}
+                variant="text" 
+                size="small" 
+                color="primary"
+                aria-label={`${t("צפה בקבוצה")} ${group.name}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onGroupClick(group.id);
+                }}
+              >
+                {t("צפה")}
+              </Button>
+            </Box>
+          </ListItem>
+        ))}
+      </List>
+      
+      {groups.length > 3 && (
+        <Box
           aria-hidden="true"
+          sx={{
+            position: 'absolute',
+            bottom: 0,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            mb: 1,
+            color: 'text.secondary',
+            display: 'flex',
+            alignItems: 'center'
+          }}
         >
-          <i className="fa fa-arrow-down me-1" aria-hidden="true"></i>
-          <span>גלול כדי לראות עוד</span>
-        </div>
-      </div>
-    );
-  }
-
-  return null;
+          <i className="fa fa-arrow-down" aria-hidden="true" style={{ marginInlineEnd: '0.25rem' }}></i>
+          <Typography variant="caption">גלול כדי לראות עוד</Typography>
+        </Box>
+      )}
+    </Box>
+  );
 };

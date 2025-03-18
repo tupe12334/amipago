@@ -1,9 +1,10 @@
-import React, { useId } from "react";
+import React from "react";
+import { TextField, TextFieldProps } from "@mui/material";
 
 type InputFieldProps = {
   label: string;
   error?: string;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+} & Omit<TextFieldProps, "error">;
 
 export const InputField: React.FC<InputFieldProps> = ({
   label,
@@ -11,32 +12,18 @@ export const InputField: React.FC<InputFieldProps> = ({
   id,
   ...rest
 }) => {
-  const generatedId = useId();
-  const componentId = id || `input-field-${generatedId}`;
-  const errorId = `${componentId}-error`;
+  const componentId = id || "input-field";
 
   return (
-    <div id={`${componentId}-container`} className="flex flex-col">
-      <label id={`${componentId}-label`} htmlFor={componentId}>
-        {label}
-      </label>
-      <input
-        id={componentId}
-        {...rest}
-        className="px-2"
-        aria-describedby={error ? errorId : undefined}
-        aria-invalid={error ? "true" : "false"}
-        aria-errormessage={error ? errorId : undefined}
-      />
-      {error && (
-        <span
-          id={errorId}
-          className="text-red-500 mt-1 text-start"
-          role="alert"
-        >
-          {error}
-        </span>
-      )}
-    </div>
+    <TextField
+      id={componentId}
+      label={label}
+      error={!!error}
+      helperText={error}
+      variant="outlined"
+      aria-describedby={error ? `${componentId}-error` : undefined}
+      aria-invalid={error ? "true" : "false"}
+      {...rest}
+    />
   );
 };

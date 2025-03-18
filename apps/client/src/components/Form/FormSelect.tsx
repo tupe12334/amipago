@@ -1,4 +1,12 @@
 import React from "react";
+import {
+  FormControl,
+  FormLabel,
+  FormHelperText,
+  ToggleButtonGroup,
+  ToggleButton,
+  Grid,
+} from "@mui/material";
 
 type Option<T extends string> = {
   value: T;
@@ -28,46 +36,61 @@ export const FormSelect = <T extends string>({
   const selectId = id || `select-${label.replace(/\s+/g, "-").toLowerCase()}`;
   const errorId = `${selectId}-error`;
 
+  const handleChange = (_event: React.MouseEvent<HTMLElement>, value: T) => {
+    if (value !== null) {
+      onChange(value);
+    }
+  };
+
   return (
-    <div className="flex flex-col">
-      <label className="text-sm font-medium text-gray-700 mb-1">{label}</label>
-      <div
-        className={`grid grid-cols-${columns} gap-3`}
-        role="radiogroup"
-        aria-labelledby={selectId}
-        aria-describedby={error ? errorId : undefined}
-        aria-invalid={error ? "true" : "false"}
-        aria-errormessage={error ? errorId : undefined}
-      >
-        {options.map((option) => (
-          <button
-            key={option.value}
-            type="button"
-            onClick={() => onChange(option.value)}
-            role="radio"
-            aria-checked={selected === option.value}
-            className={`flex items-center justify-center gap-2 py-3 rounded-lg border transition-all ${
-              selected === option.value
-                ? "bg-blue-50 border-blue-500 text-blue-700 font-medium"
-                : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
-            }`}
-          >
-            {option.icon && (
-              <i className={`fa fa-${option.icon}`} aria-hidden="true"></i>
-            )}
-            <span>{option.label}</span>
-          </button>
-        ))}
-      </div>
-      {error && (
-        <span
-          id={errorId}
-          className="text-red-500 text-sm mt-1 text-start"
-          role="alert"
+    <FormControl
+      error={!!error}
+      fullWidth
+      aria-describedby={error ? errorId : undefined}
+      aria-invalid={error ? "true" : "false"}
+      aria-errormessage={error ? errorId : undefined}
+    >
+      <FormLabel id={selectId}>{label}</FormLabel>
+      <Grid container spacing={2} columns={12}>
+        <ToggleButtonGroup
+          value={selected}
+          exclusive
+          onChange={handleChange}
+          aria-labelledby={selectId}
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            width: "100%",
+            mt: 1,
+          }}
         >
+          {options.map((option) => (
+            <Grid item xs={12 / columns} key={option.value}>
+              <ToggleButton
+                value={option.value}
+                aria-checked={selected === option.value}
+                fullWidth
+                sx={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 1,
+                  py: 1.5,
+                }}
+              >
+                {option.icon && (
+                  <i className={`fa fa-${option.icon}`} aria-hidden="true"></i>
+                )}
+                <span>{option.label}</span>
+              </ToggleButton>
+            </Grid>
+          ))}
+        </ToggleButtonGroup>
+      </Grid>
+      {error && (
+        <FormHelperText id={errorId} error role="alert">
           {error}
-        </span>
+        </FormHelperText>
       )}
-    </div>
+    </FormControl>
   );
 };

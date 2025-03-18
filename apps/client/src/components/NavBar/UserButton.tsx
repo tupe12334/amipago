@@ -1,13 +1,29 @@
 import { FC } from "react";
+import { IconButton, Avatar } from "@mui/material";
 
 export const UserButton: FC = () => {
   return (
-    <button
+    <IconButton
       id="user-button"
-      className="flex items-center justify-center w-14 h-14 rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-600 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 transform hover:scale-105"
       aria-label="User Profile"
+      color="primary"
+      sx={{
+        bgcolor: 'primary.main',
+        color: 'primary.contrastText',
+        width: '3.5rem',
+        height: '3.5rem',
+        boxShadow: 3,
+        '&:hover': {
+          bgcolor: 'primary.dark',
+          transform: 'scale(1.05)'
+        },
+        '&:active': {
+          transform: 'scale(0.95)'
+        },
+        transition: 'all 0.3s'
+      }}
     >
       <i className="fa fa-user" aria-hidden="true"></i>
-    </button>
+    </IconButton>
   );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import { TextField, TextFieldProps, InputAdornment } from "@mui/material";
 
 type FormFieldProps = {
   label: string;
@@ -13,7 +14,7 @@ type FormFieldProps = {
     | "url"
     | "search"
     | "none";
-} & React.InputHTMLAttributes<HTMLInputElement>;
+} & Omit<TextFieldProps, "error">;
 
 export const FormField: React.FC<FormFieldProps> = ({
   label,
@@ -24,54 +25,33 @@ export const FormField: React.FC<FormFieldProps> = ({
   inputMode,
   ...rest
 }) => {
-  // Use a static id instead of generated id
   const componentId = id || "form-field";
-  const errorId = `${componentId}-error`;
 
   return (
-    <div
-      id={`${componentId}-container`}
-      className={`flex flex-col form-field ${className || ""}`}
-    >
-      <label
-        id={`${componentId}-label`}
-        htmlFor={componentId}
-        className="text-sm font-medium text-gray-700 mb-1"
-      >
-        {label}
-      </label>
-      <div id={`${componentId}-input-wrapper`} className="relative">
-        {icon && (
-          <div
-            id={`${componentId}-icon`}
-            className="absolute inset-y-0 end-0 flex items-center pe-3 pointer-events-none"
-          >
-            <i className={`fa fa-${icon} text-gray-400`} aria-hidden="true"></i>
-          </div>
-        )}
-        <input
-          id={componentId}
-          inputMode={inputMode}
-          aria-describedby={error ? errorId : undefined}
-          aria-invalid={error ? "true" : "false"}
-          aria-errormessage={error ? errorId : undefined}
-          {...rest}
-          className={`w-full rounded-lg border-gray-300 border py-3 ${
-            icon ? "pe-10" : "pe-4"
-          } ps-4 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none transition-colors ${
-            className || ""
-          }`}
-        />
-      </div>
-      {error && (
-        <span
-          id={errorId}
-          className="text-red-500 text-sm mt-1 text-start"
-          role="alert"
-        >
-          {error}
-        </span>
-      )}
-    </div>
+    <TextField
+      id={componentId}
+      label={label}
+      error={!!error}
+      helperText={error}
+      className={`form-field ${className || ""}`}
+      inputProps={{
+        inputMode,
+        "aria-describedby": error ? `${componentId}-error` : undefined,
+        "aria-invalid": error ? "true" : "false",
+        "aria-errormessage": error ? `${componentId}-error` : undefined,
+      }}
+      InputProps={{
+        endAdornment: icon ? (
+          <InputAdornment position="end">
+            <i
+              id={`${componentId}-icon`}
+              className={`fa fa-${icon}`}
+              aria-hidden="true"
+            />
+          </InputAdornment>
+        ) : undefined,
+      }}
+      {...rest}
+    />
   );
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ExpensesList } from "../components/ExpensesList/ExpensesList";
-import NavBar from "../components/NavBar/NavBar";
+import { NavBar } from "../components/NavBar/NavBar";
 import { TopBar } from "../components/TopBar/TopBar";
 import { getExpensesSortedByUpdate } from "../services/indexedDbService";
 

@@ -1,16 +1,23 @@
 import classNames from "classnames";
 import React, { FC } from "react";
+import { Box, BoxProps } from "@mui/material";
 
 type Props = React.PropsWithChildren & {
   className?: string;
-};
-export const TopBar: FC<Props> = ({ children, className }) => {
+} & Omit<BoxProps, 'className'>;
+
+export const TopBar: FC<Props> = ({ children, className, ...boxProps }) => {
   return (
-    <div
+    <Box
       id="topbar-container"
-      className={classNames("flex w-full px-2 py-3", className)}
+      display="flex"
+      width="100%"
+      px={2}
+      py={3}
+      className={classNames(className)}
+      {...boxProps}
     >
       {children}
-    </div>
+    </Box>
   );
 };

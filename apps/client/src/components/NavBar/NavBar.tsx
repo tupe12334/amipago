@@ -1,17 +1,24 @@
+import { Box, Typography } from "@mui/material";
 import { TopBar } from "../TopBar/TopBar";
 import { UserButton } from "./UserButton";
 
-function NavBar() {
+export function NavBar() {
   return (
     <TopBar>
-      <nav id="navbar" className="flex w-full flex-row justify-between ">
-        <h1 id="navbar-title" className="text-3xl">
+      <Box
+        id="navbar"
+        component="nav"
+        display="flex"
+        width="100%"
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Typography id="navbar-title" variant="h4" component="h1">
           AmiPago
-        </h1>
+        </Typography>
         <UserButton />
-      </nav>
+      </Box>
     </TopBar>
   );
 }
-
-export default NavBar;

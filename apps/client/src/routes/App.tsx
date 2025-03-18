@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AddButton } from "../components/AddButton/AddButton";
 import { GroupListContainer } from "../components/GroupList/GroupListContainer";
-import NavBar from "../components/NavBar/NavBar";
+import { NavBar } from "../components/NavBar/NavBar";
 import { getLanguageDir } from "../i18n/main";
 import { RecentActivityView } from "./RecentActivityView";
 
@@ -111,4 +111,4 @@ function App() {
   );
 }
 
-export default App;
+export { App };

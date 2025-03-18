@@ -1,4 +1,4 @@
-import FloatingActionButton from "../FloatingActionButton/FloatingActionButton";
+import { FloatingActionButton } from "../FloatingActionButton/FloatingActionButton";
 import { useNavigate } from "react-router-dom";
 import { createExpensePath, createGroupPath } from "../../paths";
 
