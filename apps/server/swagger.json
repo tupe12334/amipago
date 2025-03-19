@@ -1,0 +1,48 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/group": {
+      "post": {
+        "operationId": "GroupController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGroupDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["Group"]
+      }
+    }
+  },
+  "info": {
+    "title": "Cats example",
+    "description": "The cats API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "cats",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CreateGroupDto": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}
