@@ -5,7 +5,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 import { QRCodeSVG } from "qrcode.react";
+import { useState } from "react";
 
 interface ShareGroupDialogProps {
   open: boolean;
@@ -20,6 +22,13 @@ export const ShareGroupDialog = ({
   groupId,
   password,
 }: ShareGroupDialogProps) => {
+  const [email, setEmail] = useState("");
+
+  const handleSendEmail = () => {
+    // TODO: Implement email sending logic
+    console.log(`Sending invitation to ${email}`);
+  };
+
   return (
     <Dialog
       id="qr-modal"
@@ -34,13 +43,36 @@ export const ShareGroupDialog = ({
         </Typography>
       </DialogTitle>
       <DialogContent>
-        <Box display="flex" justifyContent="center">
-          <QRCodeSVG
-            id="group-qr-code"
-            value={`groupId:${groupId}, password:${password}`}
-            size={180}
-            aria-label="קוד QR לשיתוף הקבוצה"
-          />
+        <Box display="flex" flexDirection="column" gap={2}>
+          <Box display="flex" justifyContent="center">
+            <QRCodeSVG
+              id="group-qr-code"
+              value={`groupId:${groupId}, password:${password}`}
+              size={180}
+              aria-label="קוד QR לשיתוף הקבוצה"
+            />
+          </Box>
+          <Box display="flex" gap={1}>
+            <TextField
+              id="share-group-email"
+              label="כתובת אימייל"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              fullWidth
+              dir="ltr"
+              aria-label="הזן כתובת אימייל לשיתוף"
+            />
+            <Button
+              id="send-group-email"
+              variant="contained"
+              onClick={handleSendEmail}
+              disabled={!email}
+              aria-label="שלח הזמנה באימייל"
+            >
+              שלח
+            </Button>
+          </Box>
         </Box>
       </DialogContent>
       <DialogActions>
