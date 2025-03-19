@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { connectAuthEmulator, getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   // Add your Firebase config here
@@ -12,3 +12,6 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+if (import.meta.env.MODE === "development") {
+  connectAuthEmulator(auth, "http://127.0.0.1:9099");
+}
