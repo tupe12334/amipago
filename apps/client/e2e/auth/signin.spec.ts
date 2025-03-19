@@ -6,12 +6,11 @@ test.describe("Sign in", () => {
     await page.waitForLoadState("networkidle");
     expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
 
-    await page.locator("#user-name-input").fill("Test User");
     await page.locator("#user-email-input").fill("test@example.com");
     await page.locator("#user-password-input").fill("password123");
     expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
 
-    await page.locator("#onboarding-submit").click();
+    await page.locator("#onboarding-auth-submit").click();
     await page.waitForURL("/", { waitUntil: "networkidle" });
 
     expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
