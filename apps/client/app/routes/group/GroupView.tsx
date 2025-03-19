@@ -13,14 +13,26 @@ import { GroupMetaData } from "../../components/GroupMetaData/GroupMetaData";
 import { StorageGroup } from "../../models/StorageGroup";
 import { StorageExpense } from "../../models/StorageExpense";
 
+/**
+ * Props interface for the GroupPageView component
+ */
 interface GroupPageProps {
+  /** The group data to display */
   group: StorageGroup;
+  /** List of expenses associated with this group */
   expenses: StorageExpense[];
+  /** Handler for back button click */
   onBackClick: () => void;
+  /** Handler for add expense button click */
   onAddExpenseClick: () => void;
+  /** Function to format currency values */
   formatCurrency: (amount: number, currency: string) => string;
 }
 
+/**
+ * View component for displaying group details page
+ * Shows group information, expenses list, members and actions
+ */
 export const GroupPageView = ({
   group,
   expenses,

@@ -11,6 +11,10 @@ import {
 } from "../../services/indexedDbService";
 import { GroupPageView } from ".";
 
+/**
+ * Container component for the Group page
+ * Manages state, data fetching, and navigation for group details
+ */
 export const GroupContainer = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const navigate = useNavigate();
@@ -20,6 +24,10 @@ export const GroupContainer = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    /**
+     * Fetches group data and associated expenses
+     * Sets error state if group not found or fetch fails
+     */
     const fetchData = async () => {
       if (!groupId) {
         setError("מזהה קבוצה לא נמצא");
@@ -46,16 +54,28 @@ export const GroupContainer = () => {
     fetchData();
   }, [groupId]);
 
+  /**
+   * Navigates back to the homepage
+   */
   const handleBackClick = () => {
     navigate("/");
   };
 
+  /**
+   * Navigates to the expense creation page for this group
+   */
   const handleAddExpenseClick = () => {
     if (groupId) {
       navigate(getCreateExpenseForGroupPath(groupId));
     }
   };
 
+  /**
+   * Formats a currency value with the appropriate locale
+   * @param amount - The amount to format
+   * @param currency - The currency code (e.g., 'ILS', 'USD')
+   * @returns Formatted currency string
+   */
   const formatCurrency = (amount: number, currency: string) => {
     return new Intl.NumberFormat("he-IL", {
       style: "currency",
