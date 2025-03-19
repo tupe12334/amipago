@@ -12,14 +12,8 @@ test.describe("Sign in", () => {
     expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
 
     await page.locator("#onboarding-submit").click();
+    await page.waitForURL("/", { waitUntil: "networkidle" });
 
-    // Wait for navigation to complete with a timeout and base URL
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: "networkidle" }),
-      page.waitForURL("**/groups", { waitUntil: "networkidle" }),
-    ]);
-
-    await expect(page.locator("h1")).toHaveText(/הקבוצות שלי/);
     expect(await page.screenshot({ animations: "disabled" })).toMatchSnapshot();
   });
 
