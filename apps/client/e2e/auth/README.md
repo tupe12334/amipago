@@ -35,6 +35,19 @@ This folder contains E2E tests for Firebase Authentication flows.
 - Form inputs use hardcoded test data
 - Text searches use Regex
 - Tests navigate using UI elements only
+- Firebase Authentication calls are intercepted and mocked
+  - All network requests to Firebase Auth endpoints are intercepted
+  - Test data mimics Firebase Auth responses
+  - Mock successful and failed authentication scenarios
+
+## Network Interception
+
+The tests use Playwright's network interception capabilities to mock Firebase Authentication responses. This ensures:
+
+- Consistent test behavior
+- No actual Firebase authentication calls
+- Ability to test error scenarios
+- Isolated test environment
 
 ## File Structure
 
