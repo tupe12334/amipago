@@ -7,8 +7,9 @@ import {
   Box,
   Button,
   CircularProgress,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
-import { FormField } from "../../components/Form/FormField";
 import {
   createUserWithEmailAndPassword,
   updateProfile,
@@ -108,31 +109,47 @@ export const OnboardingPage = () => {
           onSubmit={handleSubmit}
           sx={{ display: "flex", flexDirection: "column", gap: 3 }}
         >
-          <FormField
+          <TextField
             id="user-name-input"
             name="name"
             label="שם"
             placeholder="הזן את שמך כאן"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            error={error || undefined}
-            icon="user"
-            aria-required="true"
+            error={!!error}
+            helperText={error}
+            required
+            fullWidth
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <i className="fa fa-user" aria-hidden="true"></i>
+                </InputAdornment>
+              ),
+            }}
           />
 
-          <FormField
+          <TextField
             id="user-email-input"
             name="email"
             label="אימייל"
             placeholder="הזן את האימייל שלך כאן"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            error={error || undefined}
-            icon="envelope"
-            aria-required="true"
+            error={!!error}
+            helperText={error}
+            required
+            fullWidth
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <i className="fa fa-envelope" aria-hidden="true"></i>
+                </InputAdornment>
+              ),
+            }}
           />
 
-          <FormField
+          <TextField
             id="user-password-input"
             name="password"
             label="סיסמה"
@@ -140,9 +157,17 @@ export const OnboardingPage = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            error={error || undefined}
-            icon="lock"
-            aria-required="true"
+            error={!!error}
+            helperText={error}
+            required
+            fullWidth
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <i className="fa fa-lock" aria-hidden="true"></i>
+                </InputAdornment>
+              ),
+            }}
           />
 
           <Button
