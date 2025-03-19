@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { GroupModule } from './modules/group/group.module';
 import { PrismaModule } from 'nestjs-prisma';
 
 @Module({
-  imports: [GroupModule, PrismaModule.forRoot()],
+  imports: [],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class GroupModule {}
