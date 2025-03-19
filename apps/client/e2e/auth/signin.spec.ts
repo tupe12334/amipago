@@ -1,37 +1,6 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("Sign in", () => {
-  test.beforeEach(async ({ page }) => {
-    await page.route(
-      "**/identitytoolkit.googleapis.com/v1/**",
-      async (route) => {
-        const url = route.request().url();
-        if (url.includes("signInWithPassword")) {
-          if (route.request().postData()?.includes("test@example.com")) {
-            await route.fulfill({
-              status: 200,
-              body: JSON.stringify({
-                localId: "testUserId",
-                email: "test@example.com",
-                displayName: "Test User",
-                idToken: "fake-token",
-              }),
-            });
-          } else {
-            await route.fulfill({
-              status: 400,
-              body: JSON.stringify({
-                error: {
-                  message: "EMAIL_NOT_FOUND",
-                },
-              }),
-            });
-          }
-        }
-      },
-    );
-  });
-
   test("should sign in with valid credentials", async ({ page }) => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
