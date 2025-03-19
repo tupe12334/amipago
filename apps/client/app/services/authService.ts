@@ -1,13 +1,11 @@
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut as firebaseSignOut,
-  updateProfile,
   User as FirebaseUser,
+  updateProfile,
 } from "firebase/auth";
-import { auth } from "../config/firebase";
-import { saveUserData } from "./localStorageService";
+import { auth } from "../firebase/config";
 import { StorageUserSchema } from "../models/StorageUser";
+import { saveUserData } from "./localStorageService";
 
 export const createUser = async (
   email: string,
@@ -37,14 +35,6 @@ export const createUser = async (
 
   await saveUserData(userData);
   return userCredential.user;
-};
-
-export const signIn = async (email: string, password: string) => {
-  return signInWithEmailAndPassword(auth, email, password);
-};
-
-export const signOut = () => {
-  return firebaseSignOut(auth);
 };
 
 export const getCurrentUser = (): FirebaseUser | null => {

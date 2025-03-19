@@ -7,7 +7,6 @@ import {
   ListItemIcon,
 } from "@mui/material";
 import { signOut } from "firebase/auth";
-import { auth } from "../../firebase/config";
 
 export const UserButton: FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
