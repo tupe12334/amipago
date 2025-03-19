@@ -10,7 +10,6 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, swaggerDoc);
 
-  // Save swagger json next to main.ts
   await writeFile(
     join(__dirname, '../swagger.json'),
     JSON.stringify(document, null, 2),
