@@ -16,6 +16,7 @@ import {
 import { LoadingView } from "../../../components/LoadingView";
 import { ErrorView } from "../../../components/ErrorView";
 import { getGroupPath } from "../../../paths";
+import { ConfirmationDialog } from "../../../components/ConfirmationDialog";
 
 export const GroupSettingsContainer = () => {
   const { groupId } = useParams<{ groupId: string }>();
@@ -24,6 +25,7 @@ export const GroupSettingsContainer = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const {
     control,
@@ -85,9 +87,7 @@ export const GroupSettingsContainer = () => {
   });
 
   const handleDelete = async () => {
-    if (!groupId || !window.confirm("האם אתה בטוח שברצונך למחוק את הקבוצה?")) {
-      return;
-    }
+    if (!groupId) return;
 
     setSaving(true);
     try {
@@ -114,14 +114,23 @@ export const GroupSettingsContainer = () => {
   }
 
   return (
-    <GroupSettingsView
-      control={control}
-      errors={errors}
-      onSave={handleSave}
-      onDelete={handleDelete}
-      onCancel={handleCancel}
-      loading={saving}
-    />
+    <>
+      <GroupSettingsView
+        control={control}
+        errors={errors}
+        onSave={handleSave}
+        onDelete={() => setIsDeleteDialogOpen(true)}
+        onCancel={handleCancel}
+        loading={saving}
+      />
+      <ConfirmationDialog
+        open={isDeleteDialogOpen}
+        title="מחיקת קבוצה"
+        content="האם אתה בטוח שברצונך למחוק את הקבוצה?"
+        onConfirm={handleDelete}
+        onCancel={() => setIsDeleteDialogOpen(false)}
+      />
+    </>
   );
 };
 
