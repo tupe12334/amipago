@@ -10,6 +10,9 @@ This folder contains E2E tests for Firebase Authentication flows.
   - New user registration
   - Validation errors
   - Success redirect
+
+### Pending Implementation
+
 - Login Flow
   - Existing user login
   - Invalid credentials
@@ -17,9 +20,6 @@ This folder contains E2E tests for Firebase Authentication flows.
 - Logout Flow
   - Session termination
   - Redirect to login
-
-### Pending Implementation
-
 - Profile Management
   - Change display name
   - Update password
