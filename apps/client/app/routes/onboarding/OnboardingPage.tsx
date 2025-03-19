@@ -9,7 +9,11 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { FormField } from "../../components/Form/FormField";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { useNavigate } from "react-router-dom";
 
@@ -39,14 +43,25 @@ export const OnboardingPage = () => {
         return;
       }
 
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      );
-      await updateProfile(userCredential.user, { displayName: name });
-      setError(null);
-      navigate("/");
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password,
+        );
+        await updateProfile(userCredential.user, { displayName: name });
+        setError(null);
+        navigate("/");
+      } catch (error: any) {
+        if (error.code === "auth/email-already-in-use") {
+          // If user exists, try to sign in
+          await signInWithEmailAndPassword(auth, email, password);
+          setError(null);
+          navigate("/");
+        } else {
+          throw error;
+        }
+      }
     } catch (err) {
       setError("אירעה שגיאה. אנא נסה שנית.");
     } finally {
