@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, CircularProgress } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
 import { CreateGroupDefaultInput } from "./CreateGroupDefaultInput";
 import { CreateGroupInput, CreateGroupInputSchema } from "./CreateGroupInput";
 import { GroupType } from "../../../models/GroupType";
-import { FormField } from "../../../components/Form/FormField";
 import { FormSelect } from "../../../components/Form/FormSelect";
 import { FormSuccessScreen } from "../../../components/Form/FormSuccessScreen";
 import { useCreateGroupMutation } from "./hooks/useCreateGroupMutation";
@@ -57,23 +61,27 @@ export const CreateGroupForm = () => {
             </div>
           )}
 
-          {/* Pass name attribute to the input components */}
           <Controller
             control={control}
             name="name"
             render={({ field }) => (
-              <FormField
+              <TextField
+                {...field}
                 id="name"
-                name="name"
-                label="שם קבוצה:"
+                label="שם קבוצה"
                 placeholder="הכנס שם קבוצה"
-                error={errors.name?.message}
-                icon="users"
+                error={!!errors.name}
+                helperText={errors.name?.message}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <i className="fa fa-users" aria-hidden="true"></i>
+                    </InputAdornment>
+                  ),
+                }}
                 aria-required="true"
                 aria-describedby={errors.name ? "name-error" : undefined}
-                value={field.value}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
               />
             )}
           />
@@ -82,19 +90,26 @@ export const CreateGroupForm = () => {
             control={control}
             name="description"
             render={({ field }) => (
-              <FormField
+              <TextField
+                {...field}
                 id="description"
-                name="description"
-                label="תיאור:"
+                label="תיאור"
                 placeholder="הכנס תיאור קבוצה"
-                error={errors.description?.message}
-                icon="info-circle"
+                error={!!errors.description}
+                helperText={errors.description?.message}
+                fullWidth
+                multiline
+                rows={3}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <i className="fa fa-info-circle" aria-hidden="true"></i>
+                    </InputAdornment>
+                  ),
+                }}
                 aria-describedby={
                   errors.description ? "description-error" : undefined
                 }
-                value={field.value}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
               />
             )}
           />
