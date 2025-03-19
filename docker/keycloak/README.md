@@ -25,6 +25,14 @@ docker-compose up -d
 
 The setup includes:
 
-- The configured is `realm-config.json` and mount to the container
+- Basic realm configuration in `realm-config.json`
 - Custom Dockerfile for additional configurations
 - Environment variables defined in docker-compose.yml
+
+## Themes
+
+The setup uses custom themes configured in `themes-config.json`. Available themes:
+
+- Login theme
+- Account theme
+- Admin theme

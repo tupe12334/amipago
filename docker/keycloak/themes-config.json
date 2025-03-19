@@ -1,0 +1,16 @@
+{
+  "themes": [
+    {
+      "name": "keycloak",
+      "types": ["login", "account", "admin", "email"],
+      "locales": ["en", "he"],
+      "properties": {
+        "parent": "base",
+        "import": ["common/keycloak"],
+        "styles": ["css/login.css"],
+        "messages": ["messages"],
+        "templates": ["templates"]
+      }
+    }
+  ]
+}
