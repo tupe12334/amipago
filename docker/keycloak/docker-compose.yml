@@ -32,8 +32,6 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HTTP_RELATIVE_PATH: /auth
-    volumes:
-      - ./realm-config.json:/opt/keycloak/data/import/realm-config.json:ro
     ports:
       - "8080:8080"
     depends_on:
