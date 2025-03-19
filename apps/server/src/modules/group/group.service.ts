@@ -7,6 +7,10 @@ import { GroupDto } from './models';
 export class GroupService {
   constructor(private readonly prismaService: PrismaService) {}
 
+  async findFirst(): Promise<GroupDto | null> {
+    return this.prismaService.group.findFirst();
+  }
+
   async create(args: GroupCreateArgs): Promise<GroupDto> {
     return this.prismaService.group.create(args);
   }
