@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { createZodDto } from 'nestjs-zod/dto';
 
 const GroupSchema = z.object({
   id: z.string().cuid(),
@@ -12,3 +13,4 @@ const GroupSchema = z.object({
 });
 
 export type Group = z.infer<typeof GroupSchema>;
+export const GroupDto = createZodDto(GroupSchema);
