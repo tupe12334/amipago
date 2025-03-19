@@ -4,9 +4,11 @@ import { writeFile } from 'fs/promises';
 import { join } from 'path';
 import { AppModule } from './app.module';
 import { swaggerDoc } from './swagger/document';
+import { patchNestJsSwagger } from 'nestjs-zod';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  await patchNestJsSwagger();
 
   const document = SwaggerModule.createDocument(app, swaggerDoc);
 
