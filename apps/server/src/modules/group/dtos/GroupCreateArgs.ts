@@ -1,7 +1,8 @@
-import { createZodDto } from 'nestjs-zod';
-import { z } from 'zod';
+import { ArgsType, Field } from '@nestjs/graphql';
 import { GroupUncheckedCreateInput } from './GroupUncheckedCreateInput';
 
+@ArgsType()
 export class GroupCreateArg {
+  @Field(() => GroupUncheckedCreateInput)
   data: GroupUncheckedCreateInput;
 }

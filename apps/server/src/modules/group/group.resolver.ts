@@ -1,6 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GroupService } from './group.service';
 import { Group } from './models';
+import { GroupCreateArg } from './dtos';
 
 @Resolver('Group')
 export class GroupResolver {
@@ -11,8 +12,8 @@ export class GroupResolver {
     return this.groupService.findFirst();
   }
 
-  //   @Mutation(() => GroupDto)
-  //   async create(@Args('args') args: GroupCreateArg): Promise<GroupDto> {
-  //     return this.groupService.create(args);
-  //   }
+  @Mutation(() => Group)
+  async create(@Args() args: GroupCreateArg): Promise<Group> {
+    return this.groupService.create(args);
+  }
 }

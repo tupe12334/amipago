@@ -7,6 +7,15 @@ type Group {
   name: String!
 }
 
+input GroupUncheckedCreateInput {
+  id: String!
+  name: String!
+}
+
+type Mutation {
+  create(data: GroupUncheckedCreateInput!): Group!
+}
+
 type Query {
   findFirst: Group
 }
