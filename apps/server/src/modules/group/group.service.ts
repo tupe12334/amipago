@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
-import { GroupCreateArgs } from './dtos';
 import { Group } from './models';
+import { GroupCreateArg } from './dtos';
 
 @Injectable()
 export class GroupService {
@@ -11,7 +11,7 @@ export class GroupService {
     return this.prismaService.group.findFirst();
   }
 
-  async create(args: GroupCreateArgs): Promise<Group> {
+  async create(args: GroupCreateArg): Promise<Group> {
     return this.prismaService.group.create(args);
   }
 }
