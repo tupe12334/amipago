@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
-import { CreateGroup, GroupCreateArgs } from './dtos';
+import { GroupCreateArgs } from './dtos';
 import { GroupDto } from './models';
 
 @Injectable()
