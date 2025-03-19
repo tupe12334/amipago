@@ -14,7 +14,7 @@ import { GroupContainer } from "./group";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const OnboardingPage = lazy(() => import("../pages/OnboardingPage"));
+const OnboardingPage = lazy(() => import("./onboarding/OnboardingPage"));
 
 const LoadingFallback = () => (
   <Box

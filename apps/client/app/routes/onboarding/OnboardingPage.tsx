@@ -8,9 +8,9 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-import { FormField } from "../components/Form/FormField";
+import { FormField } from "../../components/Form/FormField";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../firebase/config";
+import { auth } from "../../firebase/config";
 import { useNavigate } from "react-router-dom";
 
 const signupSchema = z.object({

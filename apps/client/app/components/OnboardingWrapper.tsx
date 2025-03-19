@@ -1,9 +1,9 @@
 import { ReactNode, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/config";
-import { OnboardingPage } from "../pages/OnboardingPage";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
+import OnboardingPage from "../routes/onboarding/OnboardingPage";
 
 interface OnboardingWrapperProps {
   children: ReactNode;
