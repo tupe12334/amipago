@@ -12,7 +12,7 @@ import { join } from 'path';
     GroupModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      autoSchemaFile: join(process.cwd(), 'schema.graphql'),
       sortSchema: true,
     }),
     PrismaModule.forRoot(),
