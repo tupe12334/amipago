@@ -13,6 +13,7 @@ import { GroupMetaData } from "../../components/GroupMetaData/GroupMetaData";
 import { StorageGroup } from "../../models/StorageGroup";
 import { StorageExpense } from "../../models/StorageExpense";
 import { Currencies } from "../../models/Currencies";
+import { GroupMember } from "../../models/StorageGroup";
 
 /**
  * Props interface for the GroupPageView component
