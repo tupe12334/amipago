@@ -9,15 +9,21 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { FormField } from "../components/Form/FormField";
-import { useUser } from "../context/UserContext";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../firebase/config";
+import { useNavigate } from "react-router-dom";
 
-const nameSchema = z.object({
+const signupSchema = z.object({
   name: z.string().min(2, "שם חייב להכיל לפחות 2 תווים"),
+  email: z.string().email("כתובת אימייל לא תקינה"),
+  password: z.string().min(6, "סיסמה חייבת להכיל לפחות 6 תווים"),
 });
 
 export const OnboardingPage = () => {
-  const { updateUserName } = useUser();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -26,15 +32,21 @@ export const OnboardingPage = () => {
     setLoading(true);
 
     try {
-      const result = nameSchema.safeParse({ name });
+      const result = signupSchema.safeParse({ name, email, password });
 
       if (!result.success) {
         setError(result.error.errors[0].message);
         return;
       }
 
-      await updateUserName(name);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      await updateProfile(userCredential.user, { displayName: name });
       setError(null);
+      navigate("/");
     } catch (err) {
       setError("אירעה שגיאה. אנא נסה שנית.");
     } finally {
@@ -93,6 +105,31 @@ export const OnboardingPage = () => {
             aria-required="true"
           />
 
+          <FormField
+            id="user-email-input"
+            name="email"
+            label="אימייל"
+            placeholder="הזן את האימייל שלך כאן"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={error || undefined}
+            icon="envelope"
+            aria-required="true"
+          />
+
+          <FormField
+            id="user-password-input"
+            name="password"
+            label="סיסמה"
+            placeholder="הזן את הסיסמה שלך כאן"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={error || undefined}
+            icon="lock"
+            aria-required="true"
+          />
+
           <Button
             id="onboarding-submit"
             type="submit"
@@ -121,3 +158,5 @@ export const OnboardingPage = () => {
     </Container>
   );
 };
+
+export default OnboardingPage;

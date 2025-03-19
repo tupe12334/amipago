@@ -1,6 +1,7 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/config";
 import { OnboardingPage } from "../pages/OnboardingPage";
-import { useUser } from "../context/UserContext";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -9,9 +10,18 @@ interface OnboardingWrapperProps {
 }
 
 export const OnboardingWrapper = ({ children }: OnboardingWrapperProps) => {
-  const { userData, isLoading } = useUser();
+  const [isLoading, setIsLoading] = useState(true);
+  const [displayName, setDisplayName] = useState<string | null>(null);
 
-  // Show loading state until we know if the user needs onboarding
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setDisplayName(user?.displayName || null);
+      setIsLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   if (isLoading) {
     return (
       <Box
@@ -30,11 +40,9 @@ export const OnboardingWrapper = ({ children }: OnboardingWrapperProps) => {
     );
   }
 
-  // If user doesn't have a name, show onboarding
-  if (!userData?.name) {
+  if (!displayName) {
     return <OnboardingPage />;
   }
 
-  // User has completed onboarding, show the main app
   return <>{children}</>;
 };

@@ -9,10 +9,9 @@ import { FormField } from "../../../components/Form/FormField";
 import { FormSelect } from "../../../components/Form/FormSelect";
 import { FormSuccessScreen } from "../../../components/Form/FormSuccessScreen";
 import { useCreateGroupMutation } from "./hooks/useCreateGroupMutation";
-import { useUser } from "../../../context/UserContext"; // import useUser
+import { auth } from "../../../firebase/config";
 
 export const CreateGroupForm = () => {
-  const { userId } = useUser(); // retrieve current userId
   const [formSubmitted, setFormSubmitted] = useState(false);
   const { createGroup, loading, error } = useCreateGroupMutation();
 
@@ -27,12 +26,12 @@ export const CreateGroupForm = () => {
   });
 
   const onSubmit: SubmitHandler<CreateGroupInput> = async (data) => {
-    // Throw error if no userId is present
-    if (!userId) {
-      throw new Error("User ID not found.");
+    const currentUser = auth.currentUser;
+    if (!currentUser?.uid) {
+      throw new Error("User not authenticated");
     }
-    // Merge required userId into group data
-    const groupData = { ...data, userId };
+
+    const groupData = { ...data, userId: currentUser.uid };
     const success = await createGroup(groupData);
     if (success) {
       setFormSubmitted(true);

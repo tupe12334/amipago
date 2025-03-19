@@ -10,10 +10,14 @@ import { GroupListContainer } from "../components/GroupList/GroupListContainer";
 import { NavBar } from "../components/NavBar/NavBar";
 import { getLanguageDir } from "../i18n/main";
 import { RecentActivityView } from "./RecentActivityView";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/config";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const { i18n } = useTranslation();
   const [activeView, setActiveView] = useState<"groups" | "activity">("groups");
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Set the document direction based on the current language
@@ -51,6 +55,16 @@ function App() {
       document.body.style.width = "";
     };
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate("/onboarding");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
 
   return (
     <Box
