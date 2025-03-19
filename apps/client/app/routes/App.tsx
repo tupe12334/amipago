@@ -87,14 +87,6 @@ function App() {
           overflowY: "auto",
         }}
       >
-        <Typography
-          id="main-heading"
-          variant="h3"
-          component="h3"
-          sx={{ fontWeight: "bold", mb: 2 }}
-        >
-          הקבוצות שלי
-        </Typography>
         <ButtonGroup
           id="view-toggle-button-group"
           variant="contained"
