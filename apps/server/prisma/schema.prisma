@@ -18,3 +18,8 @@ model User {
   general Json
 }
 
+model Group {
+  id      String @id @default(cuid())
+  name    String
+  general Json
+}
