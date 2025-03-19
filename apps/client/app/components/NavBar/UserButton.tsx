@@ -1,12 +1,7 @@
-import { FC, useState } from "react";
-import {
-  IconButton,
-  Avatar,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-} from "@mui/material";
+import { IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material";
 import { signOut } from "firebase/auth";
+import { FC, useState } from "react";
+import { auth } from "../../firebase/config";
 
 export const UserButton: FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
