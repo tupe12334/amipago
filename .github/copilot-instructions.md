@@ -1,6 +1,6 @@
 # Instructions
 
-- Always read the README file of a folder
+- Always read the README.md file of a folder
 - The client should be in Hebrew
 - Use zod for models and form validations
 - If you use a package, import only the relevant imports and not the entire package
