@@ -13,14 +13,5 @@
   "scripts": {
     "prepare": "husky",
     "lint-staged": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "prettier --write",
-      "eslint --fix --debug"
-    ],
-    "*.{json,css,md}": [
-      "prettier --write"
-    ]
   }
 }
