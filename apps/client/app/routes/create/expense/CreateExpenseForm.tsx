@@ -21,7 +21,7 @@ import { Control, Controller, UseFormHandleSubmit } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormSuccessScreen } from "../../../components/Form/FormSuccessScreen";
 import { CreateExpenseInput } from "./CreateExpenseInput";
-import { CurrenciesSchema } from "../../../models/Currencies";
+import { CurrenciesSchema, getCurrencyIcon } from "../../../models/Currencies";
 
 interface CreateExpenseFormProps {
   groupId?: string;
@@ -279,7 +279,7 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
                   endAdornment={
                     <InputAdornment position="end">
                       <i
-                        className={`fa fa-${field.value === "ILS" ? "shekel" : "dollar"}`}
+                        className={`fa fa-${getCurrencyIcon(field.value)}`}
                         aria-hidden="true"
                       />
                     </InputAdornment>
@@ -289,7 +289,7 @@ export const CreateExpenseForm: React.FC<CreateExpenseFormProps> = ({
                     <MenuItem key={currency} value={currency}>
                       <span className="flex items-center gap-2">
                         <i
-                          className={`fa fa-${currency === "ILS" ? "shekel" : "dollar"}`}
+                          className={`fa fa-${getCurrencyIcon(currency)}`}
                           aria-hidden="true"
                         />
                         {t(`currencies.${currency}`)}

@@ -50,6 +50,9 @@ importers:
       currency-codes:
         specifier: ^2.2.0
         version: 2.2.0
+      currency-fa:
+        specifier: ^1.0.3
+        version: 1.0.3
       date-fns:
         specifier: ^2.29.3
         version: 2.30.0
@@ -1793,6 +1796,9 @@ packages:
 
   currency-codes@2.2.0:
     resolution: {integrity: sha512-vpbQc5sEYHGdTVAYUhHnKv0DWiYLRvzl/KKyqeHzBh7HD/j3UlWoScpZ9tN/jG6w2feddWoObsBbaNVu5yDapg==}
+
+  currency-fa@1.0.3:
+    resolution: {integrity: sha512-7qKLwXnZ9rlyLMYZToTD3jI3WywkxPmO4Jbif2yi/mPJmDHcQjWif127wBE7HvVEAmfu1VPEHdxoCZVkdpVgiQ==}
 
   d3-color@3.1.0:
     resolution: {integrity: sha512-zg/chbXyeBtMQ1LbD/WSoW2DpC3I0mpmPdW+ynRTj/x2DAWYrIY7qeZIHidozwV24m4iavr15lNwIwLxRmOxhA==}
@@ -4964,6 +4970,8 @@ snapshots:
     dependencies:
       first-match: 0.0.1
       nub: 0.0.0
+
+  currency-fa@1.0.3: {}
 
   d3-color@3.1.0: {}
 
