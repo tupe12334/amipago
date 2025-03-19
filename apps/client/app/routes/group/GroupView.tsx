@@ -12,6 +12,8 @@ import { GroupMembers } from "../../components/GroupMembers/GroupMembers";
 import { GroupMetaData } from "../../components/GroupMetaData/GroupMetaData";
 import { StorageGroup } from "../../models/StorageGroup";
 import { StorageExpense } from "../../models/StorageExpense";
+import { useNavigate } from "react-router-dom";
+import { getGroupSettingsPath } from "../../paths";
 
 /**
  * Props interface for the GroupPageView component
@@ -40,6 +42,7 @@ export const GroupPageView = ({
   onAddExpenseClick,
   formatCurrency,
 }: GroupPageProps) => {
+  const navigate = useNavigate();
   const [showQRCode, setShowQRCode] = useState(false);
 
   return (
@@ -74,6 +77,15 @@ export const GroupPageView = ({
         <Typography id="group-title" variant="h4" fontWeight="bold">
           {group.name}
         </Typography>
+        <Button
+          id="group-settings-button"
+          onClick={() => navigate(getGroupSettingsPath(group.id))}
+          color="primary"
+          sx={{ marginInlineStart: "auto" }}
+          aria-label="הגדרות קבוצה"
+        >
+          <i className="fa fa-cog" aria-hidden="true"></i>
+        </Button>
       </Box>
       <Box id="group-content" p={2} flexGrow={1} overflow="auto">
         <Box p={3}>

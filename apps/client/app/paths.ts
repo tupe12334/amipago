@@ -7,3 +7,6 @@ export const getCreateExpenseForGroupPath = (groupId: string) =>
 export const groupPath = "/group/:groupId";
 export const getGroupPath = (groupId: string) => `/group/${groupId}`;
 export const onboardingPath = "/onboarding";
+export const groupSettingsPath = "/groups/:groupId/settings";
+export const getGroupSettingsPath = (groupId: string) =>
+  `/groups/${groupId}/settings`;

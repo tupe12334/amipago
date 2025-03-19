@@ -6,6 +6,7 @@ import {
   createExpenseForGroupPath,
   createGroupPath,
   groupPath,
+  groupSettingsPath,
   onboardingPath,
 } from "../paths";
 import { CreateGroupPage } from "./create/group/create-group";
@@ -15,6 +16,9 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const OnboardingPage = lazy(() => import("./onboarding/OnboardingPage"));
+const GroupSettingsContainer = lazy(
+  () => import("./group/settings/GroupSettingsContainer"),
+);
 
 const LoadingFallback = () => (
   <Box
@@ -42,6 +46,10 @@ export const Router = () => {
             element={<CreateExpensePage />}
           />
           <Route path={groupPath} element={<GroupContainer />} />
+          <Route
+            path={groupSettingsPath}
+            element={<GroupSettingsContainer />}
+          />
         </Routes>
       </Suspense>
     </BrowserRouter>

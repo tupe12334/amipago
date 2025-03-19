@@ -50,7 +50,7 @@ const dbPromise = openDB<AmipagoDBSchema>(DB_NAME, DB_VERSION, {
 
 // Store a group in IndexedDB
 export const saveGroup = async (
-  groupData: z.infer<typeof StorageGroupSchema>
+  groupData: z.infer<typeof StorageGroupSchema>,
 ): Promise<number> => {
   try {
     const db = await dbPromise;
@@ -78,7 +78,7 @@ export const getAllGroups = async (): Promise<
  * Retrieves a group by its ID from IndexedDB
  */
 export const getGroupById = async (
-  id: string
+  id: string,
 ): Promise<z.infer<typeof StorageGroupSchema> | null> => {
   try {
     const db = await dbPromise;
@@ -107,10 +107,38 @@ export const updateGroupLastActivity = async (id: string): Promise<void> => {
 };
 
 /**
+ * Updates an existing group in IndexedDB
+ */
+export const updateGroup = async (
+  groupData: z.infer<typeof StorageGroupSchema>,
+): Promise<void> => {
+  try {
+    const db = await dbPromise;
+    await db.put(GROUPS_STORE, groupData);
+  } catch (error) {
+    console.error("Error updating group:", error);
+    throw error;
+  }
+};
+
+/**
+ * Deletes a group from IndexedDB
+ */
+export const deleteGroup = async (id: string): Promise<void> => {
+  try {
+    const db = await dbPromise;
+    await db.delete(GROUPS_STORE, id);
+  } catch (error) {
+    console.error("Error deleting group:", error);
+    throw error;
+  }
+};
+
+/**
  * Save an expense to IndexedDB
  */
 export const saveExpense = async (
-  expenseData: z.infer<typeof StorageExpenseSchema>
+  expenseData: z.infer<typeof StorageExpenseSchema>,
 ): Promise<number> => {
   try {
     const db = await dbPromise;
@@ -131,7 +159,7 @@ export const saveExpense = async (
  * Get all expenses for a specific group
  */
 export const getExpensesByGroupId = async (
-  groupId: string
+  groupId: string,
 ): Promise<z.infer<typeof StorageExpenseSchema>[]> => {
   try {
     const db = await dbPromise;
@@ -169,7 +197,7 @@ export const getExpensesSortedByUpdate = async (): Promise<
     const expenses = await db.getAll(EXPENSES_STORE);
     return expenses.sort(
       (a, b) =>
-        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
     );
   } catch (error) {
     console.error("Error retrieving sorted expenses:", error);
