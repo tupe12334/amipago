@@ -1,37 +1,14 @@
-import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { GroupCreateArgsDto } from './dtos';
+import { GroupService } from './group.service';
+import { GroupDto } from './models';
 
-@Resolver(() => Group)
+@Resolver(() => GroupDto)
 export class GroupResolver {
-  @Query(() => [Group])
-  async groups(): Promise<Group[]> {
-    // TODO: Implement groups query
-    return [];
-  }
+  constructor(private readonly groupService: GroupService) {}
 
-  @Query(() => Group)
-  async group(@Args('id', { type: () => ID }) id: string): Promise<Group> {
-    // TODO: Implement single group query
-    return null;
-  }
-
-  @Mutation(() => Group)
-  async create(@Args('input') input: CreateGroupInput): Promise<Group> {
-    // TODO: Implement group creation
-    return null;
-  }
-
-  @Mutation(() => Group)
-  async update(
-    @Args('id', { type: () => ID }) id: string,
-    @Args('input') input: CreateGroupInput,
-  ): Promise<Group> {
-    // TODO: Implement group update
-    return null;
-  }
-
-  @Mutation(() => Boolean)
-  async delete(@Args('id', { type: () => ID }) id: string): Promise<boolean> {
-    // TODO: Implement group deletion
-    return false;
+  @Mutation(() => GroupDto)
+  async create(@Args('args') args: GroupCreateArgsDto): Promise<GroupDto> {
+    return this.groupService.create(args);
   }
 }
